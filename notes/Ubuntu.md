@@ -1,7 +1,6 @@
 {% include Navigate.html %}  
-### Notes  
+### Notes-Ubuntu  
 
-### Ubuntu  
 #### Use other kernel version  
 ```bash
 # keep apt from upgrading kernel ver.
