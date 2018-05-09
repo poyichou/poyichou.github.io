@@ -1,4 +1,3 @@
-{% include Navigate.html %}  
 ### Notes-Ubuntu  
 
 #### Use other kernel version  

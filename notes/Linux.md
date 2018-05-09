@@ -1,4 +1,3 @@
-{% include Navigate.html %}  
 ### Notes-Linux  
 
 #### Mount a new deivce  

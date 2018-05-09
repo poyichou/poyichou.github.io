@@ -1,4 +1,3 @@
-{% include Navigate.html %}  
 ### Scripts  
 [analysis.sh](scripts/analysis.sh)  
 Find first 5 largest file under your directory  

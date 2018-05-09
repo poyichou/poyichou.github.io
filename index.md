@@ -1,2 +1,1 @@
-{% include Navigate.html %}  
 ### Welcome

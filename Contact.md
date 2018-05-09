@@ -1,4 +1,3 @@
-{% include Navigate.html %}  
 ### Contact Information  
 [Github](https://github.com/poyichou)  
 
