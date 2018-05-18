@@ -1,4 +1,4 @@
 ### Contact Information  
 [Github](https://github.com/poyichou)  
 
-[EMAIL](bob2006tw@gmail.com)  
+[EMAIL](mailto:bob2006tw@gmail.com) 
