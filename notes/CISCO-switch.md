@@ -22,8 +22,10 @@ Switch# show cdp neighbors
 #### Convert a port into a routed port
 ```bash
 # Affects only a single port of a L3 Switch
-# Makes the port into a routed port and you can apply an IP address directly to the port 
-# and can't be assigned to a certain VLAN, as its now a routed port not a switched port
+# Makes the port into a routed port 
+#   then you can apply an IP address directly to the port 
+#   but can't be assigned to a certain VLAN 
+#   as it's now a routed port not a switched port
 # Set an ip address to an interface
 Switch(config)# int [interface]
 Switch(config-if)# no switchport
@@ -38,7 +40,8 @@ Switch(config-if)# no shut
 ```
 #### Write current configuration to start-up configuration
 ```bash
-# "do wr" works in configure mode of console and "wr" works in normal console window
+# "do wr" works in configure mode of console 
+#   and "wr" works in normal console window
 Switch(config)# do wr
 #or
 Switch# wr
@@ -46,7 +49,8 @@ Switch# wr
 #### Set up OSPF  
 ```bash
 Switch(config)# router ospf [process-id]
-# Defines an interface on which OSPF runs and defines the area ID for that interface
+# Defines an interface on which OSPF runs
+#   and defines the area ID for that interface
 Switch(config-router)# network [ip-address] [wildcard-mask] area [area-id] 
 # Example
 Switch(config)# router ospf 1
@@ -69,7 +73,7 @@ Switch(config)# ip community-list 20 permit
 ```bash
 # Used in BGP below
 # Two route-map: FROM-9000 and TO-9000
-# FROM-9000: set a tag, TO-9000: obey rules of "community-list 20"
+#   FROM-9000: set a tag, TO-9000: obey rules of "community-list 20"
 # Route-map
 Switch(config)# route-map FROM-9000 permit 10
 # Set 'tag'
