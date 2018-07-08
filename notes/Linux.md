@@ -27,3 +27,19 @@ $ echo SCHEDNAME > /sys/block/DEV/queue/scheduler
 $ vim /etc/default/grub
 $ update-grub
 ```
+#### crontab  
+```bash
+# run a script as a normal user
+crontab -e
+# run a script as root
+sudo crontab -e
+# file format
+# '*' implies every interval
+# '*/n' implies every n interval
+# 'x-y' implies every interval between x and y
+# 'x,y,z' implies particular times x, y, z
+[minute(1-59)] [hour(1-23)] [date(1-31)] [month(1-12)] [day(0-6(Sunday-Friday))] [command]
+
+# Example: upgrade packages with apt every 2 hours
+* */2 * * * /usr/bin/apt update && /usr/bin/apt upgrade -y
+```
