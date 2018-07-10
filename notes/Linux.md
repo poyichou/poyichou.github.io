@@ -40,6 +40,6 @@ sudo crontab -e
 # 'x,y,z' implies particular times x, y, z
 [minute(1-59)] [hour(1-23)] [date(1-31)] [month(1-12)] [day(0-6(Sunday-Friday))] [command]
 
-# Example: upgrade packages with apt every 2 hours
-* */2 * * * /usr/bin/apt update && /usr/bin/apt upgrade -y
+# Example: upgrade packages with apt-get every 2 hours
+* */2 * * * /usr/bin/apt-get update && /usr/bin/apt-get upgrade -y
 ```
