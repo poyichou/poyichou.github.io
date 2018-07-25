@@ -23,14 +23,13 @@ apt install module-assistant
 m-a prepare
 ```
 #### apt upgrade failed in desktop version  
-Example  
 ```bash
+# Example  
 $ sudo apt upgrade
 E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)
 E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?
-```
-Solution  
-```bash
+
+# Solution  
 sudo systemctl stop apt-daily.timer
 sudo systemctl stop apt-daily.service
 ```

@@ -43,3 +43,34 @@ sudo crontab -e
 # Example: upgrade packages with apt-get every 2 hours
 * */2 * * * /usr/bin/apt-get update && /usr/bin/apt-get upgrade -y
 ```
+#### tmux
+```bash
+# Commands
+# start a new session
+$ tmux [|new -s <session name>]
+# list running sessions
+$ tmux ls
+# attach
+$ tmux a [|-t <session name>]
+# delete a session
+$ tmux kill-session -t <session_name>
+# delete all sessions
+$ tmux kill-session -a
+
+# Shortcut
+# detach
+Ctrl+b d
+# split a pane into a left and a right pane
+Ctrl+b %
+# split a pane into a top and a buttom pane
+Ctrl+b "
+# navigate panes
+Ctrl+<arrow>
+# create a window
+Ctrl+c
+# switch to previous/next/specific window
+# according to the order in status bar
+Ctrl+p/n/<number>
+# Help
+Ctrl+b ?
+```
