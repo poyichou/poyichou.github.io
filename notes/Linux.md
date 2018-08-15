@@ -41,7 +41,7 @@ sudo crontab -e
 [minute(1-59)] [hour(1-23)] [date(1-31)] [month(1-12)] [day(0-6(Sunday-Friday))] [command]
 
 # Example: upgrade packages with apt-get every 2 hours
-* */2 * * * /usr/bin/apt-get update && /usr/bin/apt-get upgrade -y
+00 */2 * * * /usr/bin/apt-get update && /usr/bin/apt-get upgrade -y
 ```
 #### tmux
 ```bash
