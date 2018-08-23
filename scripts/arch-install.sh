@@ -80,14 +80,22 @@ grub-mkconfig -o /boot/grub/grub.cfg
 mkdir /home
 echo '/home created'
 
+# For virtualbox (efi)
+# Method1
+#mkdir/boot/EFI/BOOT
+#cp /boot/EFI/GRUB/grubx64.efi /boot/EFI/BOOT/BOOTX64.EFI
+# Method2
+echo 'fs0:\EFI\grub\grubx64.efi' > /boot/startup.nsh
+
 # Pre-installation
 pacman -Syu --noconfirm --needed bash-completion gcc gdb vim openssh git valgrind dialog wget curl tmux zip unzip
 " > /mnt/archsetup.sh
 # chroot
 arch-chroot /mnt /bin/bash /archsetup.sh
-rm /mnt/archsetup.sh
+rm -f /mnt/archsetup.sh
 
 umount -R /mnt
+sync
 poweroff
 
 # Remember to remove the installation media before booting again
