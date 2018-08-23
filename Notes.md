@@ -6,4 +6,4 @@
   
 [CISCO-switch](/notes/CISCO-switch.md)  
   
-[Arch-basic-setup.md](/notes/Arch-basic-setup.md)  
+[Arch-basic-setup](/notes/Arch-basic-setup.md)  
