@@ -5,3 +5,5 @@
 [Ubuntu](/notes/Ubuntu.md)  
   
 [CISCO-switch](/notes/CISCO-switch.md)  
+  
+[Arch-basic-setup.md](/notes/Arch-basic-setup.md)  
