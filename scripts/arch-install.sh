@@ -16,7 +16,7 @@ timedatectl set-ntp true
 parted /dev/sda --script \
     mklabel gpt \
     mkpart ESP fat32 1MiB 512MiB \
-    set 1 esp on \
+    set 1 boot on \
     mkpart primary linux-swap 512MiB 2GiB \
     mkpart primary ext4 2GiB 100%
 mkfs.fat -F32 /dev/sda1
@@ -82,12 +82,9 @@ echo '/home created'
 
 # Pre-installation
 pacman -Syu --noconfirm --needed bash-completion gcc gdb vim openssh git valgrind dialog wget curl tmux zip unzip
-
-# Change password
-echo 'changing password of root:'
-passwd" > /mnt/archsetup.sh
+" > /mnt/archsetup.sh
 # chroot
-arch-chroot /mnt /bin/bash /mnt/archsetup.sh
+arch-chroot /mnt /bin/bash /archsetup.sh
 rm /mnt/archsetup.sh
 
 umount -R /mnt
