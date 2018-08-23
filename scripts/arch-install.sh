@@ -3,6 +3,7 @@
 # Note:
 #     Install archlinux on an "amd64" machine with "UEFI".
 #     Network connection and root privilege are required.
+#     For those who are not using Virtualbox, comment out the "For virtualbox (efi)" block.
 
 # ================= Partition Table ==================
 # /boot     /dev/sda1 	EFI System Partition    511 M
