@@ -6,15 +6,15 @@
 #### log in root ####
 # change root password
 passwd root
-useradd --create-home --groups wheel --shell /bin/bash bob
-# change bob password
-passwd bob
+useradd --create-home --groups wheel --shell /bin/bash <user_name>
+# change <user_name> password
+passwd <user_name>
 ```
 #### configuration  
 ```bash
 export EDITOR=vim
 visudo # comment out '%wheel ALL=(ALL) ALL'
-#### log in normal user (bob in this case) ####
+#### log in normal user ####
 # personal vim initializations
 wget -O .vimrc https://poyichou.github.io/notes/myvimrc
 # system wide vim initializations
