@@ -63,7 +63,8 @@ yaourt -S paper-icon-theme-git # mustn't as root
 
 # Plymouth
 yaourt -S plymouth # mustn't as root
-# Add plymouth to the HOOKS array in mkinitcpio.conf. It must be added after base and udev for it to work
+# Add plymouth to the HOOKS array in mkinitcpio.conf.
+# It must be added after base and udev for it to work.
 # Example: HOOKS="base udev plymouth [...] "
 sudo vim /etc/mkinitcpio.conf
 # GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
