@@ -13,7 +13,10 @@ passwd bob
 ```bash
 export EDITOR=vim
 visudo # comment out '%wheel ALL=(ALL) ALL'
+# personal vim initializations
 wget -O .vimrc https://poyichou.github.io/notes/myvimrc
+# system wide vim initializations
+sudo cp .vimrc /etc/vimrc
 wget -O .bashrc https://poyichou.github.io/notes/mybashrc
 ```
 #### for virtualbox  
