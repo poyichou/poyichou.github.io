@@ -64,13 +64,14 @@ sudo vim /etc/mkinitcpio.conf
 sudo vim /etc/default/grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo mkinitcpio -p linux
+# change gdm to gdm-plymouth
 sudo systemctl disable gdm
 sudo pacman -R gdm
 # libgdm-plymouth and libgdm are in conflict. Remove libgdm? [y/N] y
 yaourt -S gdm-plymouth
 sudo systemctl enable gdm-plymouth.service
 
-# Plymouth Themes
+# plymouth Theme
 wget -O 170783-Mageia-ColdFire.tar.gz 'https://www.opendesktop.org/p/1000019/startdownload?file_id=1460735506&file_name=170783-Mageia-ColdFire.tar.gz&file_type=application/x-gzip&file_size=2608461&url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1460735506%2Fs%2Fda7d80175bc63d720bac58d349bb7ae1%2Ft%2F1535118869%2Fu%2F%2F170783-Mageia-ColdFire.tar.gz'
 tar zxvf 170783-Mageia-ColdFire.tar.gz
 sudo cp -r Mageia-ColdFire/ /usr/share/plymouth/themes/
