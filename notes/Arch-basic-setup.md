@@ -32,7 +32,8 @@ sudo pacman -S firefox
 #### remain  
 ```bash
 sudo pacman -S gnome-control-center
-sudo pacman -S ibus ibus-chewing # set chewing in gnome-control-center => Region & Language afterward
+# set chewing in gnome-control-center => Region & Language afterward
+sudo pacman -S ibus ibus-chewing
 
 # font
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji
@@ -71,7 +72,7 @@ sudo pacman -R gdm
 yaourt -S gdm-plymouth
 sudo systemctl enable gdm-plymouth.service
 
-# plymouth Theme
+# plymouth theme
 wget -O 170783-Mageia-ColdFire.tar.gz 'https://www.opendesktop.org/p/1000019/startdownload?file_id=1460735506&file_name=170783-Mageia-ColdFire.tar.gz&file_type=application/x-gzip&file_size=2608461&url=https%3A%2F%2Fdl.opendesktop.org%2Fapi%2Ffiles%2Fdownload%2Fid%2F1460735506%2Fs%2Fda7d80175bc63d720bac58d349bb7ae1%2Ft%2F1535118869%2Fu%2F%2F170783-Mageia-ColdFire.tar.gz'
 tar zxvf 170783-Mageia-ColdFire.tar.gz
 sudo cp -r Mageia-ColdFire/ /usr/share/plymouth/themes/
