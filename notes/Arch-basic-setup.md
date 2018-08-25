@@ -1,6 +1,6 @@
 ### Notes-Arch-basic-setup  
 
-#### Basic setup after installation of Arch Linux with Script/arch-install.sh  
+#### Basic setup after installation of Arch Linux with shell script at Scripts -> arch-install.sh  
 #### create an user  
 ```bash
 #### log in root ####
@@ -29,16 +29,16 @@ sudo pacman -S virtualbox-guest-utils # choose 2
 ```bash
 sudo pacman -S gnome-shell gdm gnome-tweak-tool
 sudo systemctl enable gdm
-sudo pacman -S sakura # terminal emulator
+# terminal emulator
+sudo pacman -S sakura
 
 sudo pacman -S firefox
 # reboot to see if succeeded
 ```
 #### remain  
 ```bash
-sudo pacman -S gnome-control-center
-# set chewing in gnome-control-center => Region & Language afterward
-sudo pacman -S ibus ibus-chewing
+# set chewing in gnome-control-center -> Region & Language afterward
+sudo pacman -S gnome-control-center ibus ibus-chewing
 
 # font
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji
@@ -56,7 +56,7 @@ cd yaourt/
 makepkg -si
 
 cd ~
-# ajust with gnome-tweak-tool afterward
+# change theme with gnome-tweak-tool afterward
 # theme
 sudo pacman -S arc-gtk-theme
 # icon theme
@@ -70,9 +70,10 @@ yaourt -S plymouth # mustn't as root
 sudo vim /etc/mkinitcpio.conf
 # GRUB_CMDLINE_LINUX_DEFAULT="quiet splash [...] "
 sudo vim /etc/default/grub
+# generate the main configuration file of grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo mkinitcpio -p linux
-# change gdm to gdm-plymouth
+# replace gdm with gdm-plymouth
 sudo systemctl disable gdm
 sudo pacman -R gdm
 # libgdm-plymouth and libgdm are in conflict. Remove libgdm? [y/N] y
