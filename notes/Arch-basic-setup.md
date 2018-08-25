@@ -21,23 +21,25 @@ wget -O .vimrc https://poyichou.github.io/notes/myvimrc
 sudo cp .vimrc /etc/vimrc
 wget -O .bashrc https://poyichou.github.io/notes/mybashrc
 ```
-#### for virtualbox  
-```bash
-sudo pacman -S virtualbox-guest-utils # choose 2
-```
 #### destop  
 ```bash
 sudo pacman -S gnome-shell gdm gnome-tweak-tool
+# To unlock option gnome-tweak-tool -> Appearance -> Shell,
+# enable option gnome-tweak-tool -> Extensions -> User themes later
+sudo pacman -S gnome-shell-extensions
 sudo systemctl enable gdm
 # terminal emulator
 sudo pacman -S sakura
 
-sudo pacman -S firefox
 # reboot to see if succeeded
+```
+#### for virtualbox  
+```bash
+sudo pacman -S virtualbox-guest-utils # choose 2
 ```
 #### remain  
 ```bash
-# set chewing in gnome-control-center -> Region & Language afterward
+# set chewing in gnome-control-center -> Region & Language later
 sudo pacman -S gnome-control-center ibus ibus-chewing
 
 # font
@@ -56,7 +58,7 @@ cd yaourt/
 makepkg -si
 
 cd ~
-# change theme with gnome-tweak-tool afterward
+# change theme with gnome-tweak-tool later
 # theme
 sudo pacman -S arc-gtk-theme
 # icon theme
@@ -86,6 +88,8 @@ wget -O 170783-Mageia-ColdFire.tar.gz <download_link>
 tar zxvf 170783-Mageia-ColdFire.tar.gz
 sudo cp -r Mageia-ColdFire/ /usr/share/plymouth/themes/
 sudo plymouth-set-default-theme -R Mageia-ColdFire
+
+sudo pacman -S firefox
 # reboot to check if succeeded
 ```
 #### media  
