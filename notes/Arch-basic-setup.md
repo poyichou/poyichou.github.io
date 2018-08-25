@@ -93,3 +93,9 @@ sudo pacman -S gthumb
 # player
 sudo pacman -S vlc
 ```
+#### cron (crontab)
+```bash
+sudo pacman -S cronie
+sudo systemctl enable cronie.service
+sudo systemctl start cronie.service
+```
