@@ -14,6 +14,10 @@
 timedatectl set-ntp true
 
 # Partition
+# both 
+#   parted /dev/sda --script set 1 esp on
+#   parted /dev/sda --script set 1 boot on
+# would work
 parted /dev/sda --script \
     mklabel gpt \
     mkpart ESP fat32 1MiB 512MiB \
