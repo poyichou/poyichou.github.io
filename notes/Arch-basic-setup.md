@@ -86,3 +86,10 @@ sudo cp -r Mageia-ColdFire/ /usr/share/plymouth/themes/
 sudo plymouth-set-default-theme -R Mageia-ColdFire
 # reboot to check if succeeded
 ```
+#### media  
+```bash
+# photo management
+sudo pacman -S gthumb
+# player
+sudo pacman -S vlc
+```
