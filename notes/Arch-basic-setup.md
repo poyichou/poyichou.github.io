@@ -39,7 +39,7 @@ sudo pacman -S sakura
 ```bash
 sudo pacman -S virtualbox-guest-utils # choose 2
 ```
-#### remain (After executing this block, refer [Arch Wiki](https://wiki.archlinux.org/index.php/GDM#Log-in_screen_background_image) to change log-in screen background image. )  
+#### remain (After executing this block, refer [Arch Wiki](https://wiki.archlinux.org/index.php/GDM#Log-in_screen_background_image) to change log-in screen background image.)  
 ```bash
 # set chewing in gnome-control-center -> Region & Language later
 sudo pacman -S gnome-control-center ibus ibus-chewing
