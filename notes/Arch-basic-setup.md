@@ -27,6 +27,8 @@ sudo pacman -S gnome-shell gdm gnome-tweak-tool
 # To unlock option gnome-tweak-tool -> Appearance -> Shell,
 # enable option gnome-tweak-tool -> Extensions -> User themes later
 sudo pacman -S gnome-shell-extensions
+# add option gnome-tweak-tool -> Extensions -> Dash to dock
+yaourt -S gnome-shell-extension-dash-to-dock
 sudo systemctl enable gdm
 # terminal emulator
 sudo pacman -S sakura
