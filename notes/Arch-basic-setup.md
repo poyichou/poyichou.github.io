@@ -94,6 +94,7 @@ sudo plymouth-set-default-theme -R Mageia-ColdFire
 sudo pacman -S firefox
 # reboot to check if succeeded
 ```
+refer [Arch Wiki](https://wiki.archlinux.org/index.php/GDM#Log-in_screen_background_image) to change log-in screen background image.  
 #### media  
 ```bash
 # photo management
