@@ -27,6 +27,12 @@ $ echo SCHEDNAME > /sys/block/DEV/queue/scheduler
 $ vim /etc/default/grub
 $ update-grub
 ```
+#### ssh: connect to host xxx.xxx.xxx.xxx port 22: Connection refused   
+```bash
+# add "ssh: ALL"
+sudo vim /etc/hosts.allow
+sudo systemctl restart sshd
+```
 #### crontab  
 ```bash
 # run a script as a normal user
