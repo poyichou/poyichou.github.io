@@ -3,9 +3,9 @@
 #### Mount a new deivce  
 if your device file is /dev/hda1  
 ```bash
-#Create a new filesystem using the ext4 filesystem type:  
+# Create a new filesystem using the ext4 filesystem type:  
 $ mke2fs -t ext4 /dev/hda1
-#Mount
+# Mount
 $ mount -t ext4 /dev/hda1 /wherever
 ```
 #### Change time zone (for example: change to CDT)  
@@ -14,31 +14,31 @@ $ cp /usr/share/zoneinfo/America/Chicago /etc/localtime
 ```
 #### Disk Scheduler  
 ```bash
-#check available disk schedulers (in my case, cfq is in use).
+# check available disk schedulers (in my case, cfq is in use).
 $ cat /sys/block/sda/queue/scheduler
 noop deadline [cfq]
-#enable specific disk scheduler (for example, cfq)
-#SCHEDNAME = Desired I/O scheduler
-#DEV = device name (e.g., hda)
+# enable specific disk scheduler (for example, cfq)
+# SCHEDNAME = Desired I/O scheduler
+# DEV = device name (e.g., hda)
 $ echo SCHEDNAME > /sys/block/DEV/queue/scheduler
-#To make it consistent after reboot
-#On Grub 2
-#Add "elevator=noop" to the GRUB_CMDLINE_LINUX_DEFAULT line.
+# To make it consistent after reboot
+# On Grub 2
+# Add "elevator=noop" to the GRUB_CMDLINE_LINUX_DEFAULT line.
 $ vim /etc/default/grub
 $ update-grub
 ```
 #### ssh: connect to host xxx.xxx.xxx.xxx port 22: Connection refused   
 ```bash
 # add "ssh: ALL"
-sudo vim /etc/hosts.allow
-sudo systemctl restart sshd
+$ sudo vim /etc/hosts.allow
+$ sudo systemctl restart sshd
 ```
 #### crontab  
 ```bash
 # run a script as a normal user
-crontab -e
+$ crontab -e
 # run a script as root
-sudo crontab -e
+$ sudo crontab -e
 # file format
 # '*' implies every interval
 # '*/n' implies every n interval
@@ -79,4 +79,15 @@ Ctrl+b <arrow>
 Ctrl+b %
 # split a pane into a top and a buttom pane
 Ctrl+b "
+```
+#### gdm-plymouth  
+```bash
+# After `systemctl status gdm-plymouth.service`
+
+# gdm-password][691]: PAM unable to dlopen(/usr/lib/security/pam_gnome_keyring.so): ****
+# gdm-password][691]: PAM adding faulty module: /usr/lib/security/pam_gnome_keyring.so
+
+# Install gnome-keyring
+# Example
+$ sudo pacman -S gnome-keyring
 ```
