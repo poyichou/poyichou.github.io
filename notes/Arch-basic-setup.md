@@ -27,8 +27,6 @@ sudo pacman -S gnome-shell gdm gnome-tweak-tool
 # To unlock option gnome-tweak-tool -> Appearance -> Shell,
 # enable option gnome-tweak-tool -> Extensions -> User themes later
 sudo pacman -S gnome-shell-extensions
-# add option gnome-tweak-tool -> Extensions -> Dash to dock
-yaourt -S gnome-shell-extension-dash-to-dock
 sudo systemctl enable gdm
 # terminal emulator
 sudo pacman -S sakura
@@ -49,25 +47,23 @@ sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji
 # solve terminal emulator character overlap
 sudo pacman -S ttf-dejavu
 
-# install  yaourt
-sudo pacman -S --needed base-devel git wget yajl
+# install yay (in substitution for yaourt)
 cd /tmp
-git clone https://aur.archlinux.org/package-query.git
-cd package-query/
-makepkg -si && cd /tmp/
-git clone https://aur.archlinux.org/yaourt.git
-cd yaourt/
+git clone https://aur.archlinux.org/yay.git
+cd yay
 makepkg -si
 
 cd ~
+# add option gnome-tweak-tool -> Extensions -> Dash to dock
+yay -S gnome-shell-extension-dash-to-dock # mustn't as root
 # change theme with gnome-tweak-tool later
 # theme
 sudo pacman -S arc-gtk-theme
 # icon theme
-yaourt -S paper-icon-theme-git # mustn't as root
+yay -S paper-icon-theme-git # mustn't as root
 
 # Plymouth
-yaourt -S plymouth # mustn't as root
+yay -S plymouth # mustn't as root
 # Add plymouth to the HOOKS array in mkinitcpio.conf.
 # It must be added after base and udev for it to work.
 # Example: HOOKS="base udev plymouth [...] "
@@ -81,7 +77,7 @@ sudo mkinitcpio -p linux
 sudo systemctl disable gdm
 sudo pacman -R gdm
 # libgdm-plymouth and libgdm are in conflict. Remove libgdm? [y/N] y
-yaourt -S gdm-plymouth # mustn't as root
+yay -S gdm-plymouth # mustn't as root
 sudo systemctl enable gdm-plymouth.service
 
 # Plymouth Theme
