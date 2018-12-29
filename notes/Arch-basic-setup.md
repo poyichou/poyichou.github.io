@@ -107,3 +107,8 @@ sudo pacman -S cronie
 sudo systemctl enable cronie.service
 sudo systemctl start cronie.service
 ```
+#### Problem solution  
+```bash
+# error: libexiv2: signature from "Eli Schwartz <schwartz@archlinux.org>" is unknown trust
+sudo pacman -S archlinux-keyring
+```
