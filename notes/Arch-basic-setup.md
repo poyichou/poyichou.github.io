@@ -37,7 +37,7 @@ sudo pacman -S sakura
 ```bash
 sudo pacman -S virtualbox-guest-utils # choose 2
 ```
-#### remain (After executing this block, refer [Arch Wiki](https://wiki.archlinux.org/index.php/GDM#Log-in_screen_background_image) to change log-in screen background image.)  
+#### remain (After executing this block, refer [Arch Wiki](https://wiki.archlinux.org/index.php/GDM#Log-in_screen_background_image) to change login screen background image.)  
 ```bash
 # set chewing in gnome-control-center -> Region & Language later
 sudo pacman -S gnome-control-center ibus ibus-chewing
@@ -107,4 +107,6 @@ sudo systemctl start cronie.service
 ```bash
 # error: libexiv2: signature from "Eli Schwartz <schwartz@archlinux.org>" is unknown trust
 sudo pacman -S archlinux-keyring
+# changing login screen background image mentioned above doesn't work
+=> Disable "High Contrast" option at the top bar on the login screen
 ```
