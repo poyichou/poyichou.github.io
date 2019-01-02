@@ -96,6 +96,8 @@ sudo pacman -S firefox
 sudo pacman -S gthumb
 # player
 sudo pacman -S vlc
+# PDF reader
+sudo pacman -S okular
 ```
 #### cron (crontab)
 ```bash
