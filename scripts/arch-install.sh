@@ -49,6 +49,7 @@ sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 #rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 
 # Install the base packages
+pacman -Sy --noconfirm archlinux-keyring
 pacstrap /mnt base base-devel
 
 # genfstab
