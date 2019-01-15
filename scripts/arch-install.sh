@@ -86,7 +86,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 mkdir /home
 echo '/home created'
 
-# For virtualbox (efi)
+# For virtualbox (efi) (Remember to enable EFI in Machine->System->Extended Features)
 # Method1
 #mkdir/boot/EFI/BOOT
 #cp /boot/EFI/GRUB/grubx64.efi /boot/EFI/BOOT/BOOTX64.EFI
