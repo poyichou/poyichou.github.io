@@ -5,9 +5,12 @@
 * {box-sizing: border-box;}
 .col {
   float: left;
-  width: 16.66%;
+  width: 25%;
   text-align: center;
 }
-div.absolute {
-  position: absolute;
+.avatar {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
 }
