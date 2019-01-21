@@ -95,6 +95,8 @@ echo 'fs0:\EFI\grub\grubx64.efi' > /boot/startup.nsh
 
 # Pre-installation
 pacman -Syu --noconfirm --needed bash-completion gcc gdb vim openssh git valgrind dialog wget curl tmux zip unzip sudo wpa_supplicant
+# For those who want to have dual OS with win10
+#pacman -S --noconfirm os-prober
 
 # Dhcpcd (Network)
 systemctl enable dhcpcd.service
