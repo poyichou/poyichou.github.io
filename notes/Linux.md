@@ -91,3 +91,25 @@ Ctrl+b "
 # Example
 $ sudo pacman -S gnome-keyring
 ```
+#### establish a wireless connection with netctl
+```bash
+# require package "wpa_passphrase"
+# dhcpcd.service should be active
+
+# If profile file is not exists
+# generate profile file and establish a connection 
+# set -o flag to obfuscate the wireless passphrase
+$ sudo wifi-menu -o # choose the ssid, enter the password if required
+
+# Once profile file has been generated
+# to establish/stop a connection
+# <profile file> is only the file name, not full path
+$ sudo netctl [start|stop] <profile file>
+
+# To enable/reenable a profile to start at boot
+# use reenable after changing profile file
+$ sudo netctl [enable|reenable] <profile file>
+
+# If you want to use dhcpcd manually
+$ sudo dhcpcd <interface> # check interface with "ip link"
+```
