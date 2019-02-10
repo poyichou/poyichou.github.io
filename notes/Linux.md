@@ -12,6 +12,10 @@ $ mount -t ext4 /dev/hda1 /wherever
 ```bash
 $ cp /usr/share/zoneinfo/America/Chicago /etc/localtime
 ```
+#### Analyze size of folder content
+```bash
+$ ncdu
+```
 #### Disk Scheduler  
 ```bash
 # check available disk schedulers (in my case, cfq is in use).
