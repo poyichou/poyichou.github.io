@@ -7,3 +7,7 @@ Machine->Settings->Display, increase Video Memory
 ```bash
 Machine->Settings->Graphics Controller, select VBoxVGA  
 ```
+#### Problem: clipboard of host and guest not shared  
+```bash
+/usr/bin/VBoxClient-all
+```
