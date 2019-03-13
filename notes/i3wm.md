@@ -2,7 +2,7 @@
 
 #### To install  
 ```bash
-$ sudo pacman -S i3wm i3status feh
+$ sudo pacman -S i3-wm i3status feh
 ```
 #### To set a wallpaper  
 ```bash
