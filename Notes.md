@@ -13,3 +13,5 @@
 [Virtualbox](/notes/Virtualbox.md)  
   
 [Arch](/notes/Arch.md)  
+  
+[i3wm](/notes/i3wm.md)  
