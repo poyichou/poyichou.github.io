@@ -8,7 +8,7 @@ $ sudo pacman -S i3-wm i3status feh
 ```bash
 # add this lines at the end of ~/.config/i3/config
 exec_always VBoxClient-all # for i3wm installed in Virtualbox guest OS
-exec_always feh --bg-fill ~/wallpaper/livie.jpg # set a static wallpaper
+exec_always feh --bg-fill /path/of/the/wallpaper # set a static wallpaper
 ```
 #### Basic tips  
 ```bash
