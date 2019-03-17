@@ -4,10 +4,11 @@
 ```bash
 $ sudo pacman -S i3-wm i3status feh
 ```
-#### To set a wallpaper  
+#### Basic set up  
 ```bash
-# add this line at the end of ~/.profile
-feh --bg-fill /path/of/the/paper.jpg
+# add this lines at the end of ~/.config/i3/config
+exec_always VBoxClient-all # for i3wm installed in Virtualbox guest OS
+exec_always feh --bg-fill ~/wallpaper/livie.jpg # set a static wallpaper
 ```
 #### Basic tips  
 ```bash
