@@ -2,9 +2,6 @@
 [Network Programming](https://github.com/poyichou/np_project)  
 Network Programming projects in NCTU in 2017    
   
-[Operating-System-Design](https://github.com/poyichou/Operating-System-Design)  
-CS423 projects in UIUC in sping 2018    
-  
 [Aligorithm Note](https://github.com/poyichou/aligorithm_note)  
 Notes for Algorithm in NCTU (OCW)  
   
