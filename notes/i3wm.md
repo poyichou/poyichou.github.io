@@ -2,7 +2,7 @@
 
 #### To install  
 ```bash
-$ sudo pacman -S i3-wm i3status feh
+$ sudo pacman -S i3-wm i3status i3lock feh lxappearance
 ```
 #### Basic set up  
 ```bash
@@ -25,4 +25,10 @@ Ctrl + w or $mod + Shift + q
 $mod + <num>
 # shift a window to another workspace
 $mod + Shift + num
+
+# lock screen with the paper
+i3lock -i /path/of/the/paper
+
+# set themes
+lxappearance
 ```
