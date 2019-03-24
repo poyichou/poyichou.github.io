@@ -9,6 +9,8 @@ $ sudo pacman -S i3-wm i3status i3lock feh lxappearance
 # add this lines at the end of ~/.config/i3/config
 exec_always VBoxClient-all # for i3wm installed in Virtualbox guest OS
 exec_always feh --bg-fill /path/of/the/wallpaper # set a static wallpaper
+workspace_layout tabbed
+bindsym $mod+Shift+x exec i3lock -i /path/of/the/paper.png
 ```
 #### Basic tips  
 ```bash
@@ -25,9 +27,6 @@ Ctrl + w or $mod + Shift + q
 $mod + <num>
 # shift a window to another workspace
 $mod + Shift + num
-
-# lock screen with the paper
-i3lock -i /path/of/the/paper
 
 # set themes
 lxappearance
