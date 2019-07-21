@@ -117,3 +117,15 @@ $ sudo netctl [enable|reenable] <profile file>
 # If you want to use dhcpcd manually
 $ sudo dhcpcd <interface> # check interface with "ip link"
 ```
+#### error when establishing a wireless connection with netctl
+```bash
+# error code
+Job for netctl@xxxxxx.service failed because the control process exited with error code.
+See "systemctl status "netctl@xxxxxx.service"" and "journalctl -xe" for details.
+# solution
+sudo systemctl stop dhcpcd.service
+sudo systemctl disable dhcpcd.service
+sudo rm /var/lib/dhcpcd/*.lease # and reboot
+sudo wifi-menu -o
+sudo dhcpcd <interface> # check interface with "ip link"
+```
