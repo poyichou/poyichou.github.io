@@ -98,6 +98,8 @@ sudo pacman -S gthumb
 sudo pacman -S vlc
 # PDF reader
 sudo pacman -S okular
+# file manager
+sudo pacman -S nautilus
 ```
 #### cron (crontab)
 ```bash
