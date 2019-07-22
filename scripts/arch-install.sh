@@ -79,6 +79,9 @@ pacman -S --noconfirm grub efibootmgr
 grub-install /dev/sda --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 # For intel CPU
 pacman -S --noconfirm intel-ucode
+# For those who want to have dual OS with win10 installed
+#pacman -S --noconfirm os-prober
+#os-prober
 # Generate the main configuration file
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -95,8 +98,6 @@ echo 'fs0:\EFI\grub\grubx64.efi' > /boot/startup.nsh
 
 # Pre-installation
 pacman -Syu --noconfirm --needed bash-completion gcc gdb vim openssh git valgrind dialog wget curl tmux zip unzip sudo wpa_supplicant
-# For those who want to have dual OS with win10
-#pacman -S --noconfirm os-prober
 
 # Dhcpcd (Network)
 systemctl enable dhcpcd.service
