@@ -100,6 +100,8 @@ sudo pacman -S vlc
 sudo pacman -S okular
 # file manager
 sudo pacman -S nautilus
+# sound server and its front end (GUI)
+sudo pacman -S pulseaudio pavucontrol
 ```
 #### cron (crontab)
 ```bash
