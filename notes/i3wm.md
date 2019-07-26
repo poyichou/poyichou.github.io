@@ -2,7 +2,7 @@
 
 #### To install  
 ```bash
-$ sudo pacman -S i3-wm i3lock feh lxappearance
+$ sudo pacman -S i3-wm i3lock feh lxappearance compton
 # i3status-rust
 $ yay -S i3status-rust-git tf-font-awesome-4
 $ sudo pacman -S iw
@@ -12,6 +12,8 @@ $ sudo pacman -S iw
 cd ~/.config/i3
 wget https://poyichou.github.io/config_file/i3_config -O config
 wget https://poyichou.github.io/config_file/i3_status_rs.toml -O status.toml
+cd ~/.config
+wget https://poyichou.github.io/config_file/compton.conf
 ```
 #### Basic tips  
 ```bash
