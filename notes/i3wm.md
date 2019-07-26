@@ -2,15 +2,16 @@
 
 #### To install  
 ```bash
-$ sudo pacman -S i3-wm i3status i3lock feh lxappearance
+$ sudo pacman -S i3-wm i3lock feh lxappearance
+# i3status-rust
+$ yay -S i3status-rust-git tf-font-awesome-4
+$ sudo pacman -S iw
 ```
 #### Basic set up  
 ```bash
-# add this lines at the end of ~/.config/i3/config
-exec_always VBoxClient-all # for i3wm installed in Virtualbox guest OS
-exec_always feh --bg-fill /path/of/the/wallpaper # set a static wallpaper
-workspace_layout tabbed
-bindsym $mod+Shift+x exec i3lock -i /path/of/the/paper.png
+cd ~/.config/i3
+wget https://poyichou.github.io/config_file/i3_config -O config
+wget https://poyichou.github.io/config_file/i3_status_rs.toml -O status.toml
 ```
 #### Basic tips  
 ```bash

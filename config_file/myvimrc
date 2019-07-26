@@ -24,7 +24,7 @@ set smartindent  " 設定 smartindent
 set confirm      " 操作過程有衝突時，以明確的文字來詢問
 set history=100  " 保留 100 個使用過的指令
 
-colorscheme darkblue
+colorscheme default
 set cursorline   " 顯示目前的游標位置
 "hi CursorLine cterm=none ctermbg=DarkGrey ctermfg=White "set color of highlight
 

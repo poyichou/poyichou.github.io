@@ -1,0 +1,43 @@
+theme = "solarized-dark"
+
+icons = "awesome"
+
+[[block]]
+block = "net"
+device = "wlp2s0"
+ssid = true
+ip = true
+speed_up = false
+graph_up = true
+interval = 5
+
+[[block]]
+block = "memory"
+format_mem = "{Mum}MB/{MTm}MB({Mup}%)"
+format_swap = "{SUm}MB/{STm}MB({SUp}%)"
+display_type = "memory"
+icons = true
+clickable = true
+interval = 5
+warning_mem = 80
+warning_swap = 80
+critical_mem = 95
+critical_swap = 95
+
+[[block]]
+block = "cpu"
+interval = 1
+format = "{barchart} {utilization}% {frequency}GHz"
+
+[[block]]
+block = "sound"
+
+[[block]]
+block = "battery"
+driver = "upower"
+format = "{percentage}% {time}"
+
+[[block]]
+block = "time"
+interval = 60
+format = "%a %B/%d/%Y %R"

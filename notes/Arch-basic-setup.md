@@ -16,10 +16,10 @@ export EDITOR=vim
 visudo # comment out '%wheel ALL=(ALL) ALL'
 #### log in normal user ####
 # personal vim initializations
-wget -O .vimrc https://poyichou.github.io/notes/myvimrc
+wget -O .vimrc https://poyichou.github.io/config_file/myvimrc
 # system wide vim initializations
 sudo cp .vimrc /etc/vimrc
-wget -O .bashrc https://poyichou.github.io/notes/mybashrc
+wget -O .bashrc https://poyichou.github.io/config_file/mybashrc
 ```
 #### destop  
 ```bash
