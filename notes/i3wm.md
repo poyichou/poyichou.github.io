@@ -2,18 +2,22 @@
 
 #### To install  
 ```bash
-$ sudo pacman -S i3-wm i3lock feh lxappearance compton
+$ sudo pacman -S i3-wm i3lock feh lxappearance compton acpilight
 # i3status-rust
 $ yay -S i3status-rust-git tf-font-awesome-4
 $ sudo pacman -S iw
 ```
 #### Basic set up  
 ```bash
-cd ~/.config/i3
-wget https://poyichou.github.io/config_file/i3_config -O config
-wget https://poyichou.github.io/config_file/i3_status_rs.toml -O status.toml
-cd ~/.config
-wget https://poyichou.github.io/config_file/compton.conf
+$ cd ~/.config/i3
+$ wget https://poyichou.github.io/config_file/i3_config -O config
+$ wget https://poyichou.github.io/config_file/i3_status_rs.toml -O status.toml
+$ cd ~/.config
+$ wget https://poyichou.github.io/config_file/compton.conf
+
+$ cd /etc/udev/rules.d/
+$ sudo wget https://poyichou.github.io/config_file/backlight.rules
+$ sudo usermod -a -G video <username>
 ```
 #### Basic tips  
 ```bash
