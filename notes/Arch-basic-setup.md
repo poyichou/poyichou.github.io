@@ -29,7 +29,9 @@ sudo pacman -S gnome-shell gdm gnome-tweak-tool
 sudo pacman -S gnome-shell-extensions
 sudo systemctl enable gdm
 # terminal emulator
-sudo pacman -S sakura
+sudo pacman -S termite compton
+mkdir -p ~/.config/termite/
+wget -O ~/.config/termite/config https://poyichou.github.io/config_file/termite_config
 
 # reboot to see if succeeded
 ```
