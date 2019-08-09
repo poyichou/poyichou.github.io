@@ -104,6 +104,8 @@ sudo pacman -S okular
 sudo pacman -S nautilus
 # sound server and its front end (GUI)
 sudo pacman -S pulseaudio pavucontrol
+# Screen capture
+sudo pacman -S deepin-screenshot
 ```
 #### cron (crontab)
 ```bash
