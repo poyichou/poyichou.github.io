@@ -1,3 +1,6 @@
+[options]
+clickable_url = false
+
 [colors]
 # Base16 Default Dark
 # Author: Chris Kempson (http://chriskempson.com)
