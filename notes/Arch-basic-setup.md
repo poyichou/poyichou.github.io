@@ -1,6 +1,6 @@
 ### Notes-Arch-basic-setup  
 
-#### Basic setup after installation of Arch Linux with shell script at Scripts -> arch-install.sh  
+#### Basic setup after installation of Arch Linux with shell script at [Scripts](/Scripts.md) -> arch-install.sh  
 #### create an user  
 ```bash
 #### log in root ####
