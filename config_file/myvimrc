@@ -8,7 +8,6 @@ syntax on        " 語法上色顯示
 set nocompatible " VIM 不使用和 VI 相容的模式
 set smarttab
 set autoindent
-"set ai           " 自動縮排
 set shiftwidth=8 " 設定 existing 縮排寬度 = 4 
 set tabstop=8    " inserting tab 的字元數
 set softtabstop=8
@@ -32,3 +31,6 @@ set laststatus=2
 set statusline=%4*%<\%m%<[%f\%r%h%w]\ [%{&ff},%{&fileencoding},%Y]%=\[Position=%l,%v,%p%%]
 set noswapfile
 set paste "no Indentation while pasting (Ctrl-V)
+"for search
+set ignorecase
+set smartcase
