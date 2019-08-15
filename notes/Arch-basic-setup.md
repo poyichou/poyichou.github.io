@@ -100,8 +100,8 @@ sudo pacman -S gthumb
 sudo pacman -S vlc
 # PDF reader
 sudo pacman -S okular
-# file manager
-sudo pacman -S nautilus
+# file manager, console file manager
+sudo pacman -S nautilus ranger
 # sound server and its front end (GUI)
 sudo pacman -S pulseaudio pavucontrol
 # Screen capture
