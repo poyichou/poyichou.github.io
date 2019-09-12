@@ -102,8 +102,8 @@ sudo pacman -S vlc
 sudo pacman -S okular
 # file manager, console file manager
 sudo pacman -S nautilus ranger
-# sound server and its front end (GUI)
-sudo pacman -S pulseaudio pavucontrol
+# sound server, sound server for headphone and the front end (GUI)
+sudo pacman -S pulseaudio pulseaudio-jack pavucontrol
 # Screen capture
 sudo pacman -S deepin-screenshot
 ```
