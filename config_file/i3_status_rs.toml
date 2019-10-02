@@ -48,3 +48,4 @@ format = "{percentage}% {time}"
 block = "time"
 interval = 60
 format = "%Y-%m-%d %R %a"
+on_click = "evolution"

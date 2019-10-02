@@ -92,7 +92,7 @@ sudo plymouth-set-default-theme -R Mageia-ColdFire
 sudo pacman -S firefox
 # reboot to check if succeeded
 ``` 
-#### media  
+#### Useful-tool  
 ```bash
 # photo management
 sudo pacman -S gthumb
@@ -106,6 +106,8 @@ sudo pacman -S nautilus ranger
 sudo pacman -S pulseaudio pulseaudio-jack pavucontrol
 # Screen capture
 sudo pacman -S deepin-screenshot
+# Managing email, calendars, contacts, tasks, and notes
+sudo pacman -S evolution
 ```
 #### cron (crontab)
 ```bash
