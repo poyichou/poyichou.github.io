@@ -46,6 +46,13 @@ format = "{percentage}% {time}"
 
 [[block]]
 block = "time"
-interval = 60
-format = "%Y-%m-%d %R %a"
+format = "%Y-%m-%d %a"
 on_click = "evolution"
+[[block]]
+block = "time"
+format = "%R"
+on_click = "zenity --calendar"
+
+[[block]]
+block = "pacman"
+interval = 10
