@@ -8,6 +8,3 @@ A simple dialog style web browser
 [arch-install.sh](scripts/arch-install.sh)  
 Install Arch Linux for amd64 machine with UEFI (Virtualbox issue handled)  
 
-temporary
-[reverse_shell.sh](scripts/reverse_shell.sh)
-[test.js](scripts/test.js)
