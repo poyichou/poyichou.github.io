@@ -180,9 +180,9 @@ bar {
     }
 }
 # exec_always VBoxClient-all # for i3wm installed in Virtualbox guest OS
-exec_always feh --bg-fill ~/wallpaper/Lady.png # set a static wallpaper
+#exec_always feh --bg-fill /path/of/the/wallpaper # set a static wallpaper
 workspace_layout tabbed
-bindsym $mod+Shift+x exec i3lock -t -i /home/poyichou/wallpaper/god_eater_Fenrir.png
+bindsym $mod+Shift+x exec i3lock -t -i /path/of/the/paper.png
 exec --no-startup-id compton
 
 # Pulse Audio controls
@@ -200,7 +200,7 @@ focus_follows_mouse no
 exec_always test $(xrandr | grep -v disconnected | grep connected | wc -l) -le 2 && \
 	xrandr --output HDMI-1-2 --auto --right-of HDMI-1 &&\
 	xrandr --output HDMI-1 --auto --right-of HDMI-1-2 &&\
-	feh --bg-fill ~/Wallpapers/img_mainvisual.jpg --bg-fill ~/wallpaper/devil-may-cry-5-3840x2160-nero-4k-14497.jpg
+	feh --bg-fill /path/of/the/wallpaper_right --bg-fill /path/of/the/wallpaper_left
 exec_always ibus-daemon -d
 # To get 'deepin screenshot copy to clipboard' to work
 exec_always xfce4-clipman &
