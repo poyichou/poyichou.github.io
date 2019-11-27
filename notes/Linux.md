@@ -18,7 +18,12 @@ $ ncdu
 ```
 #### Bind a binary to a local port
 ```bash
+# method 1
 ncat -vc [binary] -kl 127.0.0.1 [port] 
+# method 2
+rm -f /tmp/f; mkfifo /tmp/f
+while [ 1 ]; do cat /tmp/f | [binary] 2>&1 | nc -l 127.0.0.1 [port] > /tmp/f; done
+rm -f /tmp/f
 ```
 #### Disk Scheduler  
 ```bash
