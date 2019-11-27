@@ -16,6 +16,10 @@ $ cp /usr/share/zoneinfo/America/Chicago /etc/localtime
 ```bash
 $ ncdu
 ```
+#### Bind a binary to a local port
+```bash
+ncat -vc [binary] -kl 127.0.0.1 [port] 
+```
 #### Disk Scheduler  
 ```bash
 # check available disk schedulers (in my case, cfq is in use).
