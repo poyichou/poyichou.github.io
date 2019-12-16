@@ -1,0 +1,33 @@
+theme = "solarized-dark"
+
+icons = "awesome"
+
+[[block]]
+block = "memory"
+format_mem = "Mem {Mup}%"
+format_swap = "{SUm}MB/{STm}MB({SUp}%)"
+display_type = "memory"
+icons = true
+clickable = true
+interval = 5
+warning_mem = 80
+warning_swap = 80
+critical_mem = 95
+critical_swap = 95
+
+[[block]]
+block = "cpu"
+interval = 1
+format = "CPU {utilization}%"
+
+[[block]]
+block = "sound"
+
+[[block]]
+block = "time"
+format = "%Y-%m-%d %a"
+[[block]]
+block = "custom"
+command = "date +%H:%M"
+on_click = "zenity --calendar"
+
