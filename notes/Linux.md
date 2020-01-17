@@ -46,6 +46,12 @@ $ update-grub
 $ sudo vim /etc/hosts.allow
 $ sudo systemctl restart sshd
 ```
+#### big5 garbled in compressed file (take zip for example)
+```
+$ sudo apt-get install convmv
+$ LANG=C unzip file.zip
+$ convmv -f big5 -t utf8 -r --notest *
+```
 #### crontab  
 ```bash
 # run a script as a normal user
