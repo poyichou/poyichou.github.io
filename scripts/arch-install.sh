@@ -71,7 +71,7 @@ echo '127.0.0.1	localhost.localdomain	localhost	 arch
 ::1	localhost.localdomain	localhost	 arch' >> /etc/hosts
 
 # Initramfs
-pacman -S --noconfirm linux
+pacman -S --noconfirm linux linux-firmware
 mkinitcpio -p linux
 
 # boot loader (grub)
