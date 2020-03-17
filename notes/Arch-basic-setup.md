@@ -96,8 +96,8 @@ sudo pacman -S firefox
 ```bash
 # photo management
 sudo pacman -S gthumb
-# player
-sudo pacman -S vlc
+# player and theme for the player
+sudo pacman -S vlc qt5-styleplugins # qt5-style-plugins on apt
 # PDF reader
 sudo pacman -S okular
 # file manager, console file manager
