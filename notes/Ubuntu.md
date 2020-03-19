@@ -17,6 +17,13 @@ dpkg --list | grep linux-image
 apt purge linux-image-4.8.0-42-generic
 apt autoremove
 ```
+#### Check if Ubuntu needs a reboot (usually after apt upgrade)
+```
+# needs if file exists
+cat /var/run/reboot-required
+# list packages cause the need of reboot
+cat /var/run/reboot-required.pkgs
+```
 #### Before kernel programming  
 ```bash
 apt install module-assistant
