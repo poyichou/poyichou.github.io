@@ -105,7 +105,7 @@ sudo pacman -S nautilus ranger
 # sound server, sound server for headphone and the front end (GUI)
 sudo pacman -S pulseaudio pulseaudio-jack pavucontrol
 # Screen capture
-sudo pacman -S deepin-screenshot
+sudo pacman -S gnome-screenshot
 # Managing email, calendars, contacts, tasks, and notes
 sudo pacman -S evolution
 ```
