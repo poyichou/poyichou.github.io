@@ -36,7 +36,15 @@ set ignorecase
 set smartcase
 " To generate cscope.out, cscope -Rbqk
 if filereadable("cscope.out")
-   cs add cscope.out   
+    " auto update cscope.out if outdate
+    let cscope_time = system("stat cscope.out | grep Modify")
+    let newest_file = split(system("ls -tc | head -n1"), '\n')[0]
+    let newest_time = system("stat " . newest_file . " | grep Modify")
+    if cscope_time != newest_time
+        let result = system("cscope -Rbqk")
+    endif
+    
+    cs add cscope.out   
 endif
 set cscopeverbose
 
