@@ -200,7 +200,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%
 bindsym XF86AudioMute exec --no-startup-id amixer -D pulse set Master 1+ toggle
 
 # Screen shot
-bindsym Print exec deepin-screenshot --fullscreen
+bindsym Print exec gnome-screenshot -c
 
 focus_follows_mouse no
 
@@ -210,6 +210,6 @@ exec_always test $(xrandr | grep -v disconnected | grep connected | wc -l) -le 2
 	xrandr --output HDMI-1 --auto --right-of HDMI-1-2 &&\
 	feh --bg-fill /path/of/the/wallpaper_right --bg-fill /path/of/the/wallpaper_left
 exec_always ibus-daemon -d
-# To get 'deepin screenshot copy to clipboard' to work
+# To get '`gnome-screenshot -c` copy to clipboard' to work
 exec_always xfce4-clipman &
 #exec_always test $(xrandr | grep -v disconnected | grep connected | wc -l) -le 2 && xrandr --output HDMI-1 --auto --right-of HDMI-1-2

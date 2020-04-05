@@ -196,4 +196,4 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
 # Screen shot
-bindsym Print exec deepin-screenshot --fullscreen
+bindsym Print exec gnome-screenshot -c
