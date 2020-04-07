@@ -52,6 +52,11 @@ $ sudo apt-get install convmv
 $ LANG=C unzip file.zip
 $ convmv -f big5 -t utf8 -r --notest *
 ```
+#### USB is read only in Nautilus when it is not
+```
+# it's a bug of Nautilus
+killall nautilus
+```
 #### crontab  
 ```bash
 # run a script as a normal user
