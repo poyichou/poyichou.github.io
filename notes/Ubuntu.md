@@ -39,4 +39,13 @@ E: Unable to lock the administration directory (/var/lib/dpkg/), is another proc
 # Solution  
 sudo systemctl stop apt-daily.timer
 sudo systemctl stop apt-daily.service
+
+# Example 2
+$ sudo apt upgrade
+E: Could not get lock /var/lib/dpkg/lock-frontend - open (11: Resource temporarily unavailable)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?
+
+# Solution
+# Get process id using this file and kill SIGKILL to it
+sudo kill -s 9 $(sudo fuser /var/lib/dpkg/lock-frontend)
 ```
