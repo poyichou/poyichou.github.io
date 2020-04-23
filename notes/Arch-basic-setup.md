@@ -35,6 +35,12 @@ wget -O ~/.config/termite/config https://poyichou.github.io/config_file/termite_
 
 # reboot to see if succeeded
 ```
+#### notebook touchpad
+```
+# advanced touchpad fearue control
+sudo pacman -S xf86-input-synaptics
+sudo wget -O /etc/X11/xorg.conf.d/70-synaptics.conf https://poyichou.github.io/config_file/70-synaptics.conf
+```
 #### for virtualbox  
 ```bash
 sudo pacman -S virtualbox-guest-utils # choose 2
