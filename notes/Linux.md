@@ -149,3 +149,13 @@ sudo rm /var/lib/dhcpcd/*.lease # and reboot
 sudo wifi-menu -o
 sudo dhcpcd <interface> # check interface with "ip link"
 ```
+#### beep sound
+```
+# To enable the beep sound, make sure that pcspkr module is exist
+lsmod | grep pcspkr
+# If doesn't exist, to install related package, take ubuntu for example
+sudo apt install beep
+# remove pcspkr in blacklist
+sudo vim /etc/modprobe.d/blacklist.conf # remove "blacklist pcspkr"
+reboot # reboot to make change of /etc/modprobe.d/blacklist.conf take effect
+```
