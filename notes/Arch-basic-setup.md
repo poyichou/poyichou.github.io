@@ -98,6 +98,10 @@ sudo plymouth-set-default-theme -R Mageia-ColdFire
 sudo pacman -S firefox
 # reboot to check if succeeded
 ``` 
+#### Notebook mousepad
+```
+sudo wget -O /etc/X11/xorg.conf.d/70-synaptics.conf https://poyichou.github.io/config_file/70-synaptics.conf
+```
 #### Useful-tool  
 ```bash
 # photo management
