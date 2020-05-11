@@ -150,7 +150,7 @@ sudo wifi-menu -o
 sudo dhcpcd <interface> # check interface with "ip link"
 ```
 #### "No cast destinations found" in Chromium and Google Chrome on Linux
-`chrome://flags/#load-media-router-component-extension` -> `Load Media Router Component Extension`, change `Default` to `Enabled:.
+`chrome://flags/#load-media-router-component-extension` -> `Load Media Router Component Extension`, change `Default` to `Enabled`.
 #### beep sound
 ```
 # To enable the beep sound, make sure that pcspkr module is exist
