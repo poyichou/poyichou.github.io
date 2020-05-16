@@ -136,6 +136,14 @@ $ sudo netctl [enable|reenable] <profile file>
 
 # If you want to use dhcpcd manually
 $ sudo dhcpcd <interface> # check interface with "ip link"
+
+## netctl-auto
+# To enable auto connect to exist profile
+$ sudo systemctl enable netctl-auto@<wireless interface>.service
+$ sudo systemctl start netctl-auto@<wireless interface>.service
+
+# Switch to another ssid
+$ sudo netctl-auto switch-to <profile file>
 ```
 #### error when establishing a wireless connection with netctl
 ```bash
