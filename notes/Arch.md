@@ -18,3 +18,12 @@ stuck on boot (displaying \_)
 5.poweroff
 6.remove live usb and boot
 ```
+#### error when yay -S xxx or yay -Syu
+curl: (33) HTTP server doesn't seem to support byte ranges. Cannot resume.
+==> ERROR: Failure while downloading https://github.com/xxx
+    Aborting...
+error downloading sources:xxx
+```
+# solution
+yay -Scc # clean cache
+```
