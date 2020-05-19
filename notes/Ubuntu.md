@@ -49,3 +49,8 @@ E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is an
 # Get process id using this file and kill SIGKILL to it
 sudo kill -s 9 $(sudo fuser /var/lib/dpkg/lock-frontend)
 ```
+#### grub still hides after GRUB_TIMEOUT set > 0
+```
+sudo vim /etc/default/grub # add GRUB_TIMEOUT_STYLE="menu"
+sudo update-grub
+```
