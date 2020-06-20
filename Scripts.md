@@ -8,3 +8,6 @@ A simple dialog style web browser
 [arch-install.sh](scripts/arch-install.sh)  
 Install Arch Linux for amd64 machine with UEFI (Virtualbox issue handled)  
 
+[http_download_server.py](scripts/http_download_server.py)  
+A simple HTTP download server for file sharing  
+
