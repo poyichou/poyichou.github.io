@@ -213,3 +213,10 @@ exec_always ibus-daemon -d
 # To get '`gnome-screenshot -c` copy to clipboard' to work
 exec_always xfce4-clipman &
 #exec_always test $(xrandr | grep -v disconnected | grep connected | wc -l) -le 2 && xrandr --output HDMI-1 --auto --right-of HDMI-1-2
+
+# The middle button over a titlebar kills the window
+bindsym --release button2 kill
+
+# The right button toggles floating
+bindsym button3 floating toggle
+bindsym $mod+button3 floating toggle
