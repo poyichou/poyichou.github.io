@@ -169,3 +169,19 @@ sudo apt install beep
 sudo vim /etc/modprobe.d/blacklist.conf # remove "blacklist pcspkr"
 reboot # reboot to make change of /etc/modprobe.d/blacklist.conf take effect
 ```
+#### Disable/re-enable suspend
+```
+# disable
+sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+# re-enable
+sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
+```
+#### Monitor 802.11 packets
+```
+# put WiFi interface in monitor mode
+sudo iw dev <wlan interface> interface add mon0 type monitor
+sudo ip link set mon0 up
+sudo wireshark -I # in monitor mode, monitor on mon0
+# remove virtual interface afterwards
+sudo iw dev mon0 interface del
+```
