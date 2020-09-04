@@ -52,6 +52,14 @@ $ sudo apt-get install convmv
 $ LANG=C unzip file.zip
 $ convmv -f big5 -t utf8 -r --notest *
 ```
+#### unzip produce 'unsupported compression method 99'
+```
+# may caused by WinRAR/WinZIP default encryption method (i.e. AES)
+# currently not supported by unzip
+# alternative: 7z, take ubuntu for example
+$ sudo apt install p7zip-full
+$ 7z x <file.zip>
+```
 #### USB is read only in Nautilus when it is not
 ```
 # it's a bug of Nautilus
