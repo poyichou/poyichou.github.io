@@ -17,3 +17,5 @@
 [i3wm](/notes/i3wm.md)  
 
 [Docker](/notes/Docker.md)  
+
+[Arduino](/notes/Arduino.md)  
