@@ -24,7 +24,7 @@ class HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         with open(FILEPATH, 'rb') as f:
             self.send_response(200)
             self.send_header("Content-Type", 'application/zip')
-            self.send_header("Content-Disposition", f'filename="{FILEPATH}"')
+            self.send_header("Content-Disposition", f'filename="{FILEPATH.encode("utf-8").decode("latin1")}"')
             self.end_headers()
             shutil.copyfileobj(f, self.wfile)
 
