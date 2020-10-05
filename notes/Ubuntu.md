@@ -54,3 +54,11 @@ sudo kill -s 9 $(sudo fuser /var/lib/dpkg/lock-frontend)
 sudo vim /etc/default/grub # add GRUB_TIMEOUT_STYLE="menu"
 sudo update-grub
 ```
+#### Disable autosuspend in GDM3 login screen
+```
+# To print setting, which print suspend and 1200 respectively
+sudo dbus-launch gsettings get org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type
+sudo dbus-launch gsettings get org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout
+# To turn off suspension
+sudo dbus-launch gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
+```
