@@ -39,7 +39,8 @@ E: Unable to lock the administration directory (/var/lib/dpkg/), is another proc
 # Solution  
 sudo systemctl stop apt-daily.timer
 sudo systemctl stop apt-daily.service
-
+```
+```
 # Example 2
 $ sudo apt upgrade
 E: Could not get lock /var/lib/dpkg/lock-frontend - open (11: Resource temporarily unavailable)
@@ -48,6 +49,24 @@ E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is an
 # Solution
 # Get process id using this file and kill SIGKILL to it
 sudo kill -s 9 $(sudo fuser /var/lib/dpkg/lock-frontend)
+```
+```
+# Example 3
+$ poweroff
+Operation inhibited by "APT" (PID 2815 "unattended-upgr", user root), reason is "APT is installing or removing packages".
+Please retry operation after closing inhibitors and logging out other users.
+Alternatively, ignore inhibitors and users with 'systemctl poweroff -i'.
+# Solution
+sudo vim /etc/apt/apt.conf.d/20auto-upgrades
+```
+file /etc/apt/apt.conf.d/20auto-upgrades
+```
+APT::Periodic::Update-Package-Lists "0";
+APT::Periodic::Unattended-Upgrade "1";
+```
+Then
+```
+sudo apt update && sudo apt upgrade
 ```
 #### grub still hides after GRUB_TIMEOUT set > 0
 ```
