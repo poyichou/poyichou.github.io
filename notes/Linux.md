@@ -193,3 +193,12 @@ sudo wireshark -I # in monitor mode, monitor on mon0
 # remove virtual interface afterwards
 sudo iw dev mon0 interface del
 ```
+#### Make Grub remember last choice
+```
+# put following in /etc/default/grub
+#GRUB_DEFAULT=saved
+#GRUB_SAVEDEFAULT=true
+$ sudo update-grub
+# or for some distribution without update-grub
+$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
