@@ -61,3 +61,6 @@ nmap zd :cs find d <C-R>=expand("<cword>")<CR><CR>
 nnoremap py I# <ESC>
 " comment out a line of c code when press gcc
 nnoremap gcc I/* <ESC>A */<ESC>
+
+" toggle nu
+nmap nu :set nu!<CR>
