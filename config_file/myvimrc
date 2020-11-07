@@ -6,11 +6,13 @@ set encoding=utf-8
 set fileencodings=utf-8,cp950
 syntax on        " 語法上色顯示
 set nocompatible " VIM 不使用和 VI 相容的模式
-set smarttab
-set autoindent
-set shiftwidth=8 " 設定 existing 縮排寬度 = 4 
-set tabstop=8    " inserting tab 的字元數
-set softtabstop=8
+
+set shiftwidth=4 " 設定 existing 縮排寬度 
+set tabstop=4    " inserting tab 的字元數
+set softtabstop=4 "方便在開啟了et後使用退格（backspace）鍵，每次退格將刪除X個空格
+
+set smarttab	 " 在行首按TAB將加入sw個空格，否則加入ts個空格
+"set autoindent
 set expandtab   " 用 space 代替 tab
 
 set ruler        " 顯示右下角設定值
@@ -19,7 +21,7 @@ set ic           " 設定搜尋忽略大小寫
 set ru           " 第幾行第幾個字
 set hlsearch     " 設定高亮度顯示搜尋結果
 set incsearch    " 在關鍵字還沒完全輸入完畢前就顯示結果
-set smartindent  " 設定 smartindent
+set smartindent  " 設定 smartindent, include autoindent
 set confirm      " 操作過程有衝突時，以明確的文字來詢問
 set history=100  " 保留 100 個使用過的指令
 
@@ -30,11 +32,11 @@ set cursorline   " 顯示目前的游標位置
 set laststatus=2
 set statusline=%4*%<\%m%<[%f\%r%h%w]\ [%{&ff},%{&fileencoding},%Y]%=\[Position=%l,%v,%p%%]
 set noswapfile
-set paste "no Indentation while pasting (Ctrl-V)
+"set paste "no Indentation while pasting (Ctrl-V)
 "for search
 set ignorecase
 set smartcase
-" To generate cscope.out, cscope -Rbqk
+" To generate cscope.out at first, cscope -Rbqk
 if filereadable("cscope.out")
     " auto update cscope.out if outdate
     let cscope_time = system("stat cscope.out | grep Modify")
@@ -64,3 +66,8 @@ nnoremap gcc I/* <ESC>A */<ESC>
 
 " toggle nu
 nmap nu :set nu!<CR>
+" NERDTree
+" To install for vim ver 8+
+" git clone https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
+" vim -u NONE -c "helptags ~/.vim/pack/vendor/start/nerdtree/doc" -c q
+nmap ner :NERDTree<CR>
