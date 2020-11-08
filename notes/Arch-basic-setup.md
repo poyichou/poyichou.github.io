@@ -107,7 +107,7 @@ sudo pacman -S vlc qt5-styleplugins # qt5-style-plugins on apt
 # PDF reader
 sudo pacman -S okular
 # file manager, console file manager
-sudo pacman -S nautilus ranger
+sudo pacman -S pcmanfm ranger
 # sound server, sound server for headphone and the front end (GUI)
 sudo pacman -S pulseaudio pulseaudio-jack pavucontrol
 # Screen capture
