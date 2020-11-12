@@ -115,6 +115,9 @@ sudo pacman -S gnome-screenshot
 sudo pacman -S flameshot
 # Managing email, calendars, contacts, tasks, and notes
 sudo pacman -S evolution
+# disk storage analysis
+sudo pacman -S ncdu
+cargo install du-dust # dust, du like tool
 ```
 #### cron (crontab)
 ```bash
