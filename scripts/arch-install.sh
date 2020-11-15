@@ -32,25 +32,25 @@ swapon /dev/sda2
 
 # mount
 mount /dev/sda3 /mnt
-mkdir /mnt/boot
-mount /dev/sda1 /mnt/boot
+mkdir -p /mnt/boot/EFI
+mount /dev/sda1 /mnt/boot/EFI
 
-# select mirrors
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-# extract all the servers of Taiwan
-awk '
-/^## Taiwan$/ { f=1; print $0; next }
-f==0 { next }
-/^$/ { exit }
-{ print $0; f=0 }' /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
-# uncomment every mirror
-sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
-# only output the 6 fastest mirrors
-#rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+## select mirrors
+#cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+## extract all the servers of Taiwan for old version of mirrorlist
+#awk '
+#/^## Taiwan$/ { f=1; print $0; next }
+#f==0 { next }
+#/^$/ { exit }
+#{ print $0; f=0 }' /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+## uncomment every mirror
+#sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
+## only output the 6 fastest mirrors
+##rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 
 # Install the base packages
 pacman -Sy --noconfirm archlinux-keyring
-pacstrap /mnt base base-devel linux linux-firmware
+pacstrap /mnt base base-devel
 
 # genfstab
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -76,7 +76,7 @@ mkinitcpio -p linux
 
 # boot loader (grub)
 pacman -S --noconfirm grub efibootmgr
-grub-install /dev/sda --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+grub-install /dev/sda --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 # For intel CPU
 pacman -S --noconfirm intel-ucode
 # For those who want to have dual OS with win10 installed
@@ -89,18 +89,25 @@ grub-mkconfig -o /boot/grub/grub.cfg
 mkdir /home
 echo '/home created'
 
+# Previous problem solution
 # For virtualbox (efi) (Remember to enable EFI in Machine->System->Extended Features)
 # Method1
 #mkdir/boot/EFI/BOOT
 #cp /boot/EFI/GRUB/grubx64.efi /boot/EFI/BOOT/BOOTX64.EFI
 # Method2
-echo 'fs0:\EFI\grub\grubx64.efi' > /boot/startup.nsh
+#echo 'fs0:\EFI\grub\grubx64.efi' > /boot/startup.nsh
 
 # Pre-installation
 pacman -Syu --noconfirm --needed bash-completion gcc gdb vim openssh git valgrind dialog wget curl tmux zip unzip sudo wpa_supplicant netctl dhcpcd man-db man-pages texinfo
 
 # Dhcpcd (Network)
 systemctl enable dhcpcd.service
+
+# ============================================================================
+# ==================== Remember to change it after reboot ====================
+# ============================================================================
+# set defualt password
+echo -e 'root\nroot' | passwd root
 " > /mnt/archsetup.sh
 # chroot
 arch-chroot /mnt /bin/bash /archsetup.sh
