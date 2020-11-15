@@ -50,7 +50,7 @@ sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 
 # Install the base packages
 pacman -Sy --noconfirm archlinux-keyring
-pacstrap /mnt base base-devel
+pacstrap /mnt base base-devel linux linux-firmware
 
 # genfstab
 genfstab -U /mnt >> /mnt/etc/fstab
