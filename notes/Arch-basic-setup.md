@@ -106,8 +106,8 @@ sudo pacman -S gthumb
 sudo pacman -S vlc qt5-styleplugins # qt5-style-plugins on apt
 # PDF reader
 sudo pacman -S okular
-# file manager. gui:pcmanfm, nautilus, console:ranger
-sudo pacman -S pcmanfm nautilus ranger
+# file manager. gui:pcmanfm, nautilus, console:ranger, vifm; vifm is convenient for renaming files
+sudo pacman -S pcmanfm nautilus ranger vifm
 # sound server, sound server for headphone and the front end (GUI)
 sudo pacman -S pulseaudio pulseaudio-jack pavucontrol
 # Screen capture
