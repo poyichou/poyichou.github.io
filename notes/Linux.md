@@ -153,6 +153,23 @@ $ sudo systemctl start netctl-auto@<wireless interface>.service
 # Switch to another ssid
 $ sudo netctl-auto switch-to <profile file>
 ```
+#### netctl configuration file for 802.1X (PEAP-MSCHAP v2)
+```
+Description='A descriptive name'
+Interface=wlp2s0
+Connection=wireless
+Security=wpa-configsection
+ESSID=SSID
+IP=dhcp
+WPAConfigSection=(
+    'ssid="SSID"'
+    'key_mgmt=WPA-EAP'
+    'eap=PEAP'
+    'identity="MYIDENTITY"'
+    'password="MYPASSWORD"'
+    'phase2="auth=MSCHAPV2"'
+)
+```
 #### error when establishing a wireless connection with netctl
 ```bash
 # error code
