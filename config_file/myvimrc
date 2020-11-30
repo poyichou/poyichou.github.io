@@ -71,3 +71,14 @@ nmap nu :set nu!<CR>
 " git clone https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
 " vim -u NONE -c "helptags ~/.vim/pack/vendor/start/nerdtree/doc" -c q
 nmap ner :NERDTree<CR>
+
+# keys for easy navigation between splits 
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+nnoremap <C-Up> <C-W><Up>
+nnoremap <C-Down> <C-W><Down>
+nnoremap <C-Left> <C-W><Left>
+nnoremap <C-Right> <C-W><Right>
