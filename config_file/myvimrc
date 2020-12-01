@@ -78,7 +78,13 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-nnoremap <C-Up> <C-W><Up>
-nnoremap <C-Down> <C-W><Down>
-nnoremap <C-Left> <C-W><Left>
-nnoremap <C-Right> <C-W><Right>
+" set mouse mode to do such as resize split with mouse
+" make vim more like gui
+nmap mou :set mouse=a<CR>
+
+" To use jedi
+"   In ubuntu,
+"     apt install vim-python-jedi
+"     vim-addons install python-jedi
+" No pop up completion after typing a dot
+let g:jedi#popup_on_dot = 0
