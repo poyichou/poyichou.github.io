@@ -36,3 +36,6 @@ $mod + Shift + num
 # set themes
 lxappearance
 ```
+#### Problems
+- After running `i3-dmenu-desktop --dmenu="cat"`, random grids appear  
+Something triggered `/usr/lib/xscreensaver/abstractile`, to stop it, `pkill abstractile`
