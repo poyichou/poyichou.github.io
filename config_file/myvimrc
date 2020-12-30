@@ -88,3 +88,9 @@ nmap mou :set mouse=a<CR>
 "     vim-addons install python-jedi
 " No pop up completion after typing a dot
 let g:jedi#popup_on_dot = 0
+
+" COPY VISUAL BLOCK TO CLIPBOARD
+"   to check if supported :echo has('clipboard')
+"   if not, install vim-gtk3
+" usage: (cut | copy | paste)
+"   "[+|*][x|y|p]
