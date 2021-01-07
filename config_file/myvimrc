@@ -58,6 +58,8 @@ nmap ze :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap zf :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap zi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap zd :cs find d <C-R>=expand("<cword>")<CR><CR>
+" Update cscope database if you don't want rerun vim
+nnoremap CS :!cscope -Rbqk<CR>:cs reset<CR><CR>
 
 " comment out a line of python script when press py
 nnoremap py I# <ESC>
