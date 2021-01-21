@@ -187,7 +187,10 @@ WPAConfigSection=(
     'phase2="auth=MSCHAPV2"'
 )
 ```
-To generate nthash of password, `echo -n MYPASSWORD | iconv -t utf16le | openssl md4`
+To generate nthash of password
+```
+echo -n MYPASSWORD | iconv -t utf16le | openssl md4
+```
 #### error when establishing a wireless connection with netctl
 ```bash
 # error code
