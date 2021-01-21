@@ -170,6 +170,24 @@ WPAConfigSection=(
     'phase2="auth=MSCHAPV2"'
 )
 ```
+#### netctl configuration file for 802.1X (PEAP-MSCHAP v2) while hash password instead of plaintext
+```
+Description='A descriptive name'
+Interface=wlp2s0
+Connection=wireless
+Security=wpa-configsection
+ESSID=SSID
+IP=dhcp
+WPAConfigSection=(
+    'ssid="SSID"'
+    'key_mgmt=WPA-EAP'
+    'eap=PEAP'
+    'identity="MYIDENTITY"'
+    'password=hash:NT_HASH_OF_PASSWORD_HERE'
+    'phase2="auth=MSCHAPV2"'
+)
+```
+To generate nthash of password, `echo -n MYPASSWORD | iconv -t utf16le | openssl md4`
 #### error when establishing a wireless connection with netctl
 ```bash
 # error code
