@@ -17,6 +17,15 @@ $ cd /etc/udev/rules.d/
 $ sudo wget https://poyichou.github.io/config_file/backlight.rules
 $ sudo usermod -a -G video <username>
 ```
+#### To use gesture
+```
+# Install fusuma
+$ sudo pacman -S libinput xdotool ruby
+$ yay -S ruby-fusuma
+$ mkdir ~/.config/fusuma/
+$ wget -O ~/.config/fusuma/config.yml poyichou.github.io/config_file/fusuma_config.yml
+$ fusuma # To run
+```
 #### Basic tips  
 ```bash
 # open a terminal

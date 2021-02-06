@@ -1,0 +1,21 @@
+swipe:
+  3:
+    up:
+      command: 'xdotool key ctrl+plus'
+    down:
+      command: 'xdotool key ctrl+minus'
+  4:
+    left:
+      command: exec i3 focus right
+    right:
+      command: exec i3 focus left
+    up:
+      command: exec i3 focus down
+    down:
+      command: exec i3 focus up
+
+threshold:
+  swipe: 0.4
+
+interval:
+  swipe: 0.8
