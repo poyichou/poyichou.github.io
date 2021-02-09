@@ -4,6 +4,10 @@ swipe:
       command: 'xdotool key ctrl+plus'
     down:
       command: 'xdotool key ctrl+minus'
+    left:
+      command: exec i3 workspace next
+    right:
+      command: exec i3 workspace prev
   4:
     left:
       command: exec i3 focus right
