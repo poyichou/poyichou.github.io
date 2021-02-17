@@ -1,5 +1,5 @@
 '''
-download FILEPATH whenever GET
+download FILENAME whenever GET
 '''
 try:
     import http.server as BaseHTTPServer  # Python 3.x
@@ -13,9 +13,10 @@ if len(sys.argv) < 2:
     print(f'usage: python {__file__} <share file> [port]')
     exit()
 elif '/' not in sys.argv[1]:
-    FILEPATH = sys.argv[1]
+    FILENAME = sys.argv[1]
 else:
-    FILEPATH = sys.argv[1].split('/')[-1]
+    FILENAME = sys.argv[1].split('/')[-1]
+FILEPATH = sys.argv[1]
 
 PORT = 7000 if len(sys.argv) < 3 else int(sys.argv[2])
 
@@ -24,7 +25,7 @@ class HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         with open(FILEPATH, 'rb') as f:
             self.send_response(200)
             self.send_header("Content-Type", 'application/zip')
-            self.send_header("Content-Disposition", f'filename="{FILEPATH.encode("utf-8").decode("latin1")}"')
+            self.send_header("Content-Disposition", f'filename="{FILENAME.encode("utf-8").decode("latin1")}"')
             self.end_headers()
             shutil.copyfileobj(f, self.wfile)
 
@@ -37,7 +38,7 @@ def test(HandlerClass=HTTPRequestHandler,
     httpd = BaseHTTPServer.HTTPServer(server_address, HandlerClass)
 
     sa = httpd.socket.getsockname()
-    print("Serving HTTP on {0[0]} port {0[1]} ... {1}".format(sa, FILEPATH))
+    print("Serving HTTP on {0[0]} port {0[1]} ... {1}".format(sa, FILENAME))
     try:
         httpd.serve_forever()
     except KeyboardInterrupt as e:
