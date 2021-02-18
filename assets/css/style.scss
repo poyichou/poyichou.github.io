@@ -1,11 +1,6 @@
 ---
 ---
-.wrapper {
-  max-width:1000px;
-}
-section {
- max-width:1000px;
-}
+
 @import "{{ site.theme }}";
 * {box-sizing: border-box;}
 .col {
@@ -18,4 +13,10 @@ section {
   margin-left: auto;
   margin-right: auto;
   width: 100px;
+}
+.wrapper {
+  max-width:1000px;
+}
+section {
+ max-width:1000px;
 }
