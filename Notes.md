@@ -1,79 +1,27 @@
 ### Notes  
   
-[Linux](/notes/Linux.md)  
-{% capture details %}
-{% include_relative notes/Linux.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="Linux" %}
   
-[Ubuntu](/notes/Ubuntu.md)  
-{% capture details %}
-{% include_relative notes/Ubuntu.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="Ubuntu" %}
   
-[CISCO-switch](/notes/CISCO-switch.md)  
-{% capture details %}
-{% include_relative notes/CISCO-switch.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="CISCO-switch" %}
   
-[Arch-basic-setup](/notes/Arch-basic-setup.md)  
-{% capture details %}
-{% include_relative notes/Arch-basic-setup.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="Arch-basic-setup" %}
   
-[Latex](/notes/Latex.md)  
-{% capture details %}
-{% include_relative notes/Latex.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="Latex" %}
   
-[Virtualbox](/notes/Virtualbox.md)  
-{% capture details %}
-{% include_relative notes/Virtualbox.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="Virtualbox" %}
   
-[Arch](/notes/Arch.md)  
-{% capture details %}
-{% include_relative notes/Arch.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="Arch" %}
   
-[i3wm](/notes/i3wm.md)  
-{% capture details %}
-{% include_relative notes/i3wm.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="i3wm" %}
 
-[Docker](/notes/Docker.md)  
-{% capture details %}
-{% include_relative notes/Docker.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="Docker" %}
 
-[Arduino](/notes/Arduino.md)  
-{% capture details %}
-{% include_relative notes/Arduino.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="Arduino" %}
 
-[Android](/notes/Android.md)  
-{% capture details %}
-{% include_relative notes/Android.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="Android" %}
 
-[GNS3](/notes/GNS3.md)  
-{% capture details %}
-{% include_relative notes/GNS3.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="GNS3" %}
 
-[web-tools](/notes/web-tools.md)  
-{% capture details %}
-{% include_relative notes/web-tools.md %}
-{% endcapture %}
-{% capture summary %}View{% endcapture %}{% include details.html %}
+{% include note_template.md content="web-tools" %}
