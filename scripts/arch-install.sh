@@ -2,6 +2,7 @@
 
 # Note:
 #     Install archlinux on an "amd64" machine with "UEFI".
+#     To check whether your host running uefi or not, check /sys/firmware/efi exist or not.
 #     Network connection and root privilege are required.
 #     For those who are not using Virtualbox, comment out the "For virtualbox (efi)" block.
 
