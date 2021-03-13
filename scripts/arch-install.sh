@@ -47,8 +47,8 @@ bios_mbr_partition() {
     parted /dev/sda --script \
         mklabel msdos \
         mkpart primary linux-swap 1MiB 1GiB \
-        set 2 boot on \
-        mkpart primary ext4 1GiB 100%
+        mkpart primary ext4 1GiB 100% \
+        set 2 boot on
     mkfs.ext4 /dev/sda2
     # initialize partition for swap
     mkswap /dev/sda1
