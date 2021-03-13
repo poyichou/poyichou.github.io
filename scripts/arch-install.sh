@@ -1,40 +1,66 @@
 #!/bin/sh
 
 # Note:
-#     Install archlinux on an "amd64" machine with "UEFI".
+#     Install archlinux on an "amd64" machine with "UEFI" by default.
 #     To check whether your host running uefi or not, check /sys/firmware/efi exist or not.
 #     Network connection and root privilege are required.
 #     For those who are not using Virtualbox, comment out the "For virtualbox (efi)" block.
 
-# ================= Partition Table ==================
-# /boot     /dev/sda1 	EFI System Partition    511 M
-# [SWAP]    /dev/sda2 	Linux swap              1.5 G
-# /         /dev/sda3 	Linux                   rest 
-# ====================================================
 
 timedatectl set-ntp true
 
-# Partition
-# both 
-#   parted /dev/sda --script set 1 esp on
-#   parted /dev/sda --script set 1 boot on
-# would work
-parted /dev/sda --script \
-    mklabel gpt \
-    mkpart ESP fat32 1MiB 512MiB \
-    set 1 boot on \
-    mkpart primary linux-swap 512MiB 2GiB \
-    mkpart primary ext4 2GiB 100%
-mkfs.fat -F32 /dev/sda1
-mkfs.ext4 /dev/sda3
-# initialize partition for swap
-mkswap /dev/sda2
-swapon /dev/sda2
+efi_gpt_partition() {
+    # 
+    # ============ GPT/UEFI Partition Table ==============
+    # /boot     /dev/sda1 	EFI System Partition    511 M
+    # [SWAP]    /dev/sda2 	Linux swap              1.5 G
+    # /         /dev/sda3 	Linux                   rest 
+    # ====================================================
+    # 
+    # both 
+    #   parted /dev/sda --script set 1 esp on
+    #   parted /dev/sda --script set 1 boot on
+    # would work
+    parted /dev/sda --script \
+        mklabel gpt \
+        mkpart ESP fat32 1MiB 512MiB \
+        set 1 boot on \
+        mkpart primary linux-swap 512MiB 2GiB \
+        mkpart primary ext4 2GiB 100%
+    mkfs.fat -F32 /dev/sda1
+    mkfs.ext4 /dev/sda3
+    # initialize partition for swap
+    mkswap /dev/sda2
+    swapon /dev/sda2
+    
+    # mount
+    mount /dev/sda3 /mnt
+    mkdir -p /mnt/boot/EFI
+    mount /dev/sda1 /mnt/boot/EFI
+}
 
-# mount
-mount /dev/sda3 /mnt
-mkdir -p /mnt/boot/EFI
-mount /dev/sda1 /mnt/boot/EFI
+bios_mbr_partition() {
+    # ============ MBR/BIOS Partition Table ==============
+    # [SWAP]    /dev/sda1 	Linux swap              1   G
+    # /         /dev/sda2 	Linux                   rest 
+    # ====================================================
+    parted /dev/sda --script \
+        mklabel msdos \
+        mkpart primary linux-swap 1MiB 1GiB \
+        set 2 boot on \
+        mkpart primary ext4 1GiB 100%
+    mkfs.ext4 /dev/sda2
+    # initialize partition for swap
+    mkswap /dev/sda1
+    swapon /dev/sda1
+    
+    # mount
+    mount /dev/sda2 /mnt
+}
+
+efi_gpt_partition
+# different choice
+#bios_mbr_partition
 
 ## select mirrors
 #cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
@@ -78,6 +104,8 @@ mkinitcpio -p linux
 # boot loader (grub)
 pacman -S --noconfirm grub efibootmgr
 grub-install /dev/sda --target=x86_64-efi --bootloader-id=grub_uefi --recheck
+# For MBR/BIOS
+#grub-install /dev/sda
 # For intel CPU
 pacman -S --noconfirm intel-ucode
 # For those who want to have dual OS with win10 installed
