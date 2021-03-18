@@ -25,3 +25,5 @@
 {% include note_template.md content="GNS3" %}
 
 {% include note_template.md content="web-tools" %}
+
+{% include note_template.md content="fonts" %}
