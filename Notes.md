@@ -27,3 +27,5 @@
 {% include note_template.md content="web-tools" %}
 
 {% include note_template.md content="fonts" %}
+
+{% include note_template.md content="Nintendo_Switch" %}
