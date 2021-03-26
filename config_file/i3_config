@@ -197,3 +197,18 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 
 # Screen shot
 bindsym Print exec gnome-screenshot -c
+
+exec --no-startup-id ibus-daemon -d
+# when zenity run, place the window at the position of mouse
+for_window [class="Zenity"] move position mouse
+
+focus_follows_mouse no
+
+# The middle button over a titlebar kills the window
+bindsym --release button2 kill
+
+# The right button toggles floating
+bindsym button3 floating toggle
+bindsym $mod+button3 floating toggle
+
+exec_always fusuma # mouse pad gesture
