@@ -5,6 +5,7 @@
 $ sudo pacman -S i3-wm i3lock feh lxappearance acpilight
 # i3status-rust
 $ yay -S i3status-rust-git ttf-font-awesome-4
+# from now on, you can use pacman -S i3status-rust, the one in AUR is latest development version
 $ sudo pacman -S iw
 ```
 #### Basic set up  
