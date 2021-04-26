@@ -10,3 +10,6 @@ Simple socket in golang
   
 [social_media_rails](https://github.com/poyichou/social_media_rails)  
 social media-like web app in ruby on rails  
+
+[Huffman-encode-decode](https://github.com/poyichou/Huffman-encode-decode)  
+Simple implementation of huffman coding  
