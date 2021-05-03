@@ -8,6 +8,7 @@ add-apt-repository ppa:snwh/ppa # for paper icon
 apt install paper-icon-theme
 apt install ibus ibus-chewing
 apt install fonts-noto fonts-noto-cjk fonts-noto-color-emoji
-apt install gcc make libc6-dev-i386 pack zip python3-pip wireshark-qt # for development
+# pip3 install --upgrade pip
+# pip3 install paramiko
+apt install gcc make libc6-dev-i386 liballegro4-dev zip python3-pip wireshark-qt # for development
 apt install firefox nautilus
-pip3 install paramiko
