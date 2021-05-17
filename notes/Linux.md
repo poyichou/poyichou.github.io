@@ -240,3 +240,12 @@ $ sudo update-grub
 # or for some distribution without update-grub
 $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
+#### Disable GDM auto suspend
+```
+# configure policy on ac, for battery, change ac below to battery
+sudo su gdm -s /bin/bash -c "dbus-launch gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'"
+sudo su gdm -s /bin/bash -c "dbus-launch gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0"
+# To verify changes
+sudo su gdm -s /bin/bash -c "gsettings list-recursively org.gnome.settings-daemon.plugins.power"
+# Restart GDM to activate your changes. 
+```
