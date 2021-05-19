@@ -249,3 +249,15 @@ sudo su gdm -s /bin/bash -c "dbus-launch gsettings set org.gnome.settings-daemon
 sudo su gdm -s /bin/bash -c "gsettings list-recursively org.gnome.settings-daemon.plugins.power"
 # Restart GDM to activate your changes. 
 ```
+#### Laptop modify backlight fail
+xbacklight -get
+No outputs have backlight property
+add file `/etc/X11/xorg.conf.d/20-intel.conf`
+first check if `/sys/class/backlight/intel_backlight` exists
+```
+Section "Device"
+    Identifier  "Intel Graphics"
+    Driver      "intel"
+    Option      "Backlight"  "intel_backlight"
+EndSection
+```
