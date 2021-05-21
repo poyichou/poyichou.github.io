@@ -271,9 +271,9 @@ sdc      8:32   1 235.5G  0 disk
 sdd      8:48   1 114.6G  0 disk 
 └─sdd1   8:49   1 114.6G  0 part
 ```
-- To shrink, shrink filesystem then partition
-- To enlarge, enlarge partition then filesystem
-- Check filesystem
+- To shrink, shrink filesystem then partition  
+- To enlarge, enlarge partition then filesystem  
+- Check filesystem  
 ```
 $ sudo e2fsck /dev/sdc2
 e2fsck 1.46.2 (28-Feb-2021)
@@ -287,7 +287,7 @@ Pass 4: Checking reference counts
 Pass 5: Checking group summary information
 /dev/sdc2: 204536/15409152 files (0.2% non-contiguous), 3147421/61608704 block
 ```
-- resize ext2/ext3/ext4 file system
+- resize ext2/ext3/ext4 file system  
 ```
 $ sudo resize2fs /dev/sdc2 114G
 resize2fs 1.46.2 (28-Feb-2021)
@@ -295,7 +295,7 @@ Resizing the filesystem on /dev/sdc2 to 29884416 (4k) blocks.
 The filesystem on /dev/sdc2 is now 29884416 (4k) blocks long.
 
 ```
-- Shrink partition
+- Shrink partition  
 ```
 $ sudo fdisk /dev/sdc
 
@@ -352,7 +352,7 @@ Calling ioctl() to re-read partition table.
 Syncing disks.
 
 ```
-- Recheck filesystem
+- Recheck filesystem  
 ```
 $ sudo e2fsck -f /dev/sdc2
 e2fsck 1.46.2 (28-Feb-2021)
@@ -364,7 +364,7 @@ Pass 4: Checking reference counts
 Pass 5: Checking group summary information
 /dev/sdc2: 204536/7471104 files (0.8% non-contiguous), 2649209/29884416 blocks
 ```
-- Move whole os from sdc to sdd
+- Move whole os from sdc to sdd  
 ```
 $ sudo dd if=/dev/sdc of=/dev/sdd # traditional way
 #or
