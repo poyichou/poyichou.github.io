@@ -8,14 +8,17 @@ $ mke2fs -t ext4 /dev/hda1
 # Mount
 $ mount -t ext4 /dev/hda1 /wherever
 ```
+---
 #### Change time zone (for example: change to CDT)  
 ```bash
 $ cp /usr/share/zoneinfo/America/Chicago /etc/localtime
 ```
+---
 #### Analyze size of folder content
 ```bash
 $ ncdu
 ```
+---
 #### Bind a binary to a local port
 ```bash
 # method 1
@@ -25,6 +28,7 @@ rm -f /tmp/f; mkfifo /tmp/f
 while [ 1 ]; do cat /tmp/f | [binary] 2>&1 | nc -l 127.0.0.1 [port] > /tmp/f; done
 rm -f /tmp/f
 ```
+---
 #### Disk Scheduler  
 ```bash
 # check available disk schedulers (in my case, cfq is in use).
@@ -40,18 +44,21 @@ $ echo SCHEDNAME > /sys/block/DEV/queue/scheduler
 $ vim /etc/default/grub
 $ update-grub
 ```
+---
 #### ssh: connect to host xxx.xxx.xxx.xxx port 22: Connection refused   
 ```bash
 # add "ssh: ALL"
 $ sudo vim /etc/hosts.allow
 $ sudo systemctl restart sshd
 ```
+---
 #### big5 garbled in compressed file (take zip for example)
 ```
 $ sudo apt-get install convmv
 $ LANG=C unzip file.zip
 $ convmv -f big5 -t utf8 -r --notest *
 ```
+---
 #### unzip produce 'unsupported compression method 99'
 ```
 # may caused by WinRAR/WinZIP default encryption method (i.e. AES)
@@ -60,11 +67,13 @@ $ convmv -f big5 -t utf8 -r --notest *
 $ sudo apt install p7zip-full
 $ 7z x <file.zip>
 ```
+---
 #### USB is read only in Nautilus when it is not
 ```
 # it's a bug of Nautilus
 killall nautilus
 ```
+---
 #### crontab  
 ```bash
 # run a script as a normal user
@@ -81,6 +90,7 @@ $ sudo crontab -e
 # Example: upgrade packages with apt-get every 2 hours
 00 */2 * * * /usr/bin/apt-get update && /usr/bin/apt-get upgrade -y
 ```
+---
 #### tmux
 ```bash
 # Commands
@@ -112,6 +122,7 @@ Ctrl+b %
 # split a pane into a top and a buttom pane
 Ctrl+b "
 ```
+---
 #### gdm-plymouth  
 ```bash
 # After `systemctl status gdm-plymouth.service`
@@ -123,6 +134,7 @@ Ctrl+b "
 # Example
 $ sudo pacman -S gnome-keyring
 ```
+---
 #### establish a wireless connection with netctl
 ```bash
 # require package "wpa_passphrase"
@@ -153,6 +165,7 @@ $ sudo systemctl start netctl-auto@<wireless interface>.service
 # Switch to another ssid
 $ sudo netctl-auto switch-to <profile file>
 ```
+---
 #### netctl configuration file for 802.1X (PEAP-MSCHAP v2)
 ```
 Description='A descriptive name'
@@ -170,6 +183,7 @@ WPAConfigSection=(
     'phase2="auth=MSCHAPV2"'
 )
 ```
+---
 #### netctl configuration file for 802.1X (PEAP-MSCHAP v2) while hash password instead of plaintext
 ```
 Description='A descriptive name'
@@ -191,6 +205,7 @@ To generate nthash of password
 ```
 echo -n MYPASSWORD | iconv -t utf16le | openssl md4
 ```
+---
 #### error when establishing a wireless connection with netctl
 ```bash
 # error code
@@ -203,8 +218,10 @@ sudo rm /var/lib/dhcpcd/*.lease # and reboot
 sudo wifi-menu -o
 sudo dhcpcd <interface> # check interface with "ip link"
 ```
+---
 #### "No cast destinations found" in Chromium and Google Chrome on Linux
 `chrome://flags/#load-media-router-component-extension` -> `Load Media Router Component Extension`, change `Default` to `Enabled`.
+---
 #### beep sound
 ```
 # To enable the beep sound, make sure that pcspkr module is exist
@@ -215,6 +232,7 @@ sudo apt install beep
 sudo vim /etc/modprobe.d/blacklist.conf # remove "blacklist pcspkr"
 reboot # reboot to make change of /etc/modprobe.d/blacklist.conf take effect
 ```
+---
 #### Disable/re-enable suspend
 ```
 # disable
@@ -222,6 +240,7 @@ sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.ta
 # re-enable
 sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
 ```
+---
 #### Monitor 802.11 packets
 ```
 # put WiFi interface in monitor mode
@@ -231,6 +250,7 @@ sudo wireshark -I # in monitor mode, monitor on mon0
 # remove virtual interface afterwards
 sudo iw dev mon0 interface del
 ```
+---
 #### Make Grub remember last choice
 ```
 # put following in /etc/default/grub
@@ -240,6 +260,7 @@ $ sudo update-grub
 # or for some distribution without update-grub
 $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
+---
 #### Disable GDM auto suspend
 ```
 # configure policy on ac, for battery, change ac below to battery
@@ -249,6 +270,7 @@ sudo su gdm -s /bin/bash -c "dbus-launch gsettings set org.gnome.settings-daemon
 sudo su gdm -s /bin/bash -c "gsettings list-recursively org.gnome.settings-daemon.plugins.power"
 # Restart GDM to activate your changes. 
 ```
+---
 #### Laptop modify backlight fail
 xbacklight -get
 No outputs have backlight property
@@ -261,6 +283,7 @@ Section "Device"
     Option      "Backlight"  "intel_backlight"
 EndSection
 ```
+---
 #### Move whole os to smaller drive (w/ example, i.e. sdc->sdd)
 ```
 $ lsblk # not related blocks truncated
@@ -271,9 +294,9 @@ sdc      8:32   1 235.5G  0 disk
 sdd      8:48   1 114.6G  0 disk 
 └─sdd1   8:49   1 114.6G  0 part
 ```
-- To shrink, shrink filesystem then partition  
-- To enlarge, enlarge partition then filesystem  
-- Check filesystem  
+To shrink, shrink filesystem then partition  
+To enlarge, enlarge partition then filesystem  
+Check filesystem  
 ```
 $ sudo e2fsck /dev/sdc2
 e2fsck 1.46.2 (28-Feb-2021)
@@ -287,7 +310,7 @@ Pass 4: Checking reference counts
 Pass 5: Checking group summary information
 /dev/sdc2: 204536/15409152 files (0.2% non-contiguous), 3147421/61608704 block
 ```
-- resize ext2/ext3/ext4 file system  
+resize ext2/ext3/ext4 file system  
 ```
 $ sudo resize2fs /dev/sdc2 114G
 resize2fs 1.46.2 (28-Feb-2021)
@@ -295,7 +318,7 @@ Resizing the filesystem on /dev/sdc2 to 29884416 (4k) blocks.
 The filesystem on /dev/sdc2 is now 29884416 (4k) blocks long.
 
 ```
-- Shrink partition  
+Shrink partition  
 ```
 $ sudo fdisk /dev/sdc
 
@@ -352,7 +375,7 @@ Calling ioctl() to re-read partition table.
 Syncing disks.
 
 ```
-- Recheck filesystem  
+Recheck filesystem  
 ```
 $ sudo e2fsck -f /dev/sdc2
 e2fsck 1.46.2 (28-Feb-2021)
@@ -364,7 +387,7 @@ Pass 4: Checking reference counts
 Pass 5: Checking group summary information
 /dev/sdc2: 204536/7471104 files (0.8% non-contiguous), 2649209/29884416 blocks
 ```
-- Move whole os from sdc to sdd  
+Move whole os from sdc to sdd  
 ```
 $ sudo dd if=/dev/sdc of=/dev/sdd # traditional way
 #or
