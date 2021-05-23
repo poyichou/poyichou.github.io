@@ -443,4 +443,6 @@ The filesystem on /dev/sdd2 is now 29912827 (4k) blocks long.
 sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[a-z ]*/& usbcore.autosuspend=-1/' /etc/default/grub
 sudo update-grub2
 reboot
+# to check result, should be -1
+cat /sys/module/usbcore/parameters/autosuspend
 ```
