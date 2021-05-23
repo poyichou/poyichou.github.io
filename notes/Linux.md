@@ -435,3 +435,12 @@ Resizing the filesystem on /dev/sdd2 to 29912827 (4k) blocks.
 The filesystem on /dev/sdd2 is now 29912827 (4k) blocks long.
 
 ```
+---
+#### Disable USB autosuspend (useful when your os is installed in USB drive)
+```
+# modify usbcore.autosuspend kernel module parameter, suppose the bootloader is grub2
+# usbcore.autosuspend=<delay second>, -1 to disable
+sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[a-z ]*/& usbcore.autosuspend=-1/' /etc/default/grub
+sudo update-grub2
+reboot
+```
