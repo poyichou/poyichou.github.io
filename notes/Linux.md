@@ -394,3 +394,44 @@ $ sudo dd if=/dev/sdc of=/dev/sdd # traditional way
 $ sudo su -s /bin/bash -c 'pv -s 122944486912 -S < /dev/sdc > /dev/sdd' # speed up and show progress, 122944486912 equals 240125951 (end of partition) * 512 byte
 65.4GiB 0:47:32 [22.2MiB/s] [============>                                    ] 27% ETA 2:03:31
 ```
+partition sdd if you want to use 100% unallocated space
+```
+$ sudo parted /dev/sdd
+GNU Parted 3.4
+Using /dev/sdd
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) p
+Model: SanDisk Ultra USB 3.0 (scsi)
+Disk /dev/sdd: 123GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags: 
+
+Number  Start   End    Size   File system  Name                  Flags
+ 1      1049kB  538MB  537MB  fat32        EFI System Partition  boot, esp
+ 2      538MB   123GB  122GB  ext4
+
+(parted) resizepart 2
+End?  [123GB]? 100%
+(parted) q
+Information: You may need to update /etc/fstab.
+```
+```
+$ sudo e2fsck -f /dev/sdd2
+e2fsck 1.46.2 (28-Feb-2021)
+Pass 1: Checking inodes, blocks, and sizes
+Inode 8 extent tree (at level 2) could be narrower.  Optimize<y>? yes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+/dev/sdd2: 204544/7471104 files (0.8% non-contiguous), 2653626/29884416 blocks
+```
+resize ext4 filesystem to fit
+```
+$ sudo resize2fs /dev/sdd2
+resize2fs 1.46.2 (28-Feb-2021)
+Resizing the filesystem on /dev/sdd2 to 29912827 (4k) blocks.
+The filesystem on /dev/sdd2 is now 29912827 (4k) blocks long.
+
+```
