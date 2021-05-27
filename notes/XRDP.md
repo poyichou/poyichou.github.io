@@ -1,7 +1,9 @@
 ### Notes-XRDP  
-Test environment
-- Server: xrdp
-- Client: Remmina
+Test environment  
+```
+Server: xrdp
+Client: Remmina
+```
 ---
 #### Cannot start i3wm   
 Add following before other exec command in /etc/xrdp/startwm.sh
