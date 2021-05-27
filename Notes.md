@@ -29,3 +29,5 @@
 {% include note_template.md content="fonts" %}
 
 {% include note_template.md content="Nintendo_Switch" %}
+
+{% include note_template.md content="XRDP" %}
