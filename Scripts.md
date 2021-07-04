@@ -31,3 +31,11 @@
 {% endcapture %}
 {% capture summary %}A simple HTTP download server for file sharing{% endcapture %}{% include details.html %}
 
+[multi_line_progress.sh](scripts/multi_line_progress.sh)  
+{% capture details %}
+    {% highlight python %}
+{% include_relative scripts/multi_line_progress.sh %}
+    {% endhighlight %}
+{% endcapture %}
+{% capture summary %}A simple test for printing multiple progress bar{% endcapture %}{% include details.html %}
+
