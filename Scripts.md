@@ -33,7 +33,7 @@
 
 [multi_line_progress.sh](scripts/multi_line_progress.sh)  
 {% capture details %}
-    {% highlight python %}
+    {% highlight bash %}
 {% include_relative scripts/multi_line_progress.sh %}
     {% endhighlight %}
 {% endcapture %}
