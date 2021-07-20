@@ -96,3 +96,7 @@ let g:jedi#popup_on_dot = 0
 "   if not, install vim-gtk3
 " usage: (cut | copy | paste)
 "   "[+|*][x|y|p]
+
+" search visually selected text
+"  to use, visually select, press '//'
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
