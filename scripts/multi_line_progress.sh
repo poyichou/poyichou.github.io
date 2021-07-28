@@ -1,7 +1,7 @@
 #!/bin/sh
 # Just a simple test for printing multiple progress bar
 
-function ECHO() {
+ECHO() {
     echo $@
     [ -z "$up" ] && up=1 || up=$((up+1)) # set lines to move up afterwards
 }
