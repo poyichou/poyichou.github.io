@@ -118,6 +118,8 @@ sudo pacman -S evolution
 # disk storage analysis
 sudo pacman -S ncdu
 cargo install du-dust # dust, du like tool
+# fancy system monitoring
+sudo pacman -S gnome-system-monitor conky
 ```
 #### cron (crontab)
 ```bash
