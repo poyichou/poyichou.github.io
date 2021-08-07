@@ -104,8 +104,8 @@ sudo pacman -S firefox
 sudo pacman -S gthumb
 # player and theme for the player
 sudo pacman -S vlc qt5-styleplugins # qt5-style-plugins on apt
-# PDF reader
-sudo pacman -S okular
+# PDF reader (default viewer of KDE/Gnome)
+sudo pacman -S okular evince
 # file manager. gui:pcmanfm, nautilus, console:ranger, vifm; vifm is convenient for renaming files
 sudo pacman -S pcmanfm nautilus ranger vifm
 # sound server, sound server for headphone and the front end (GUI)
