@@ -18,6 +18,7 @@ font pango:monospace 8
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
+#font pango:Klee One, DejaVu Sans Mono, FontAwesome 10
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -157,7 +158,7 @@ bar {
     #output HDMI-1-2
     font pango:DejaVu Sans Mono, FontAwesome 12
     position bottom
-    status_command i3status-rs ~/.config/i3/status_left.toml
+    status_command i3status-rs ~/.config/i3/status.toml
     colors {
         separator #666666
         background #222222
@@ -190,13 +191,16 @@ bindsym Print exec gnome-screenshot -c
 focus_follows_mouse no
 
 # dual screen
-exec_always test $(xrandr | grep -v disconnected | grep connected | wc -l) -le 2 && \
-	xrandr --output HDMI-1-2 --auto --right-of HDMI-1 &&\
-	xrandr --output HDMI-1 --auto --right-of HDMI-1-2 &&\
-	feh --bg-fill /path/of/the/wallpaper_right --bg-fill /path/of/the/wallpaper_left
-exec_always ibus-daemon -d
+# To use autorandr --change afterward
+#   autorandr --save dual
+exec_always --no-startup-id autorandr --change && feh --bg-fill ~/wallpaper/tifa2.jpg --bg-fill ~/wallpaper/aerith.jpeg
+#exec_always test $(xrandr | grep -v disconnected | grep connected | wc -l) -le 2 && \
+#	xrandr --output HDMI-1-2 --auto --right-of HDMI-1 &&\
+#	xrandr --output HDMI-1 --auto --right-of HDMI-1-2 &&\
+#	feh --bg-fill ~/wallpaper/tifa2.jpg --bg-fill ~/wallpaper/aerith.jpeg
+exec_always ibus-daemon -d -r
 # To get '`gnome-screenshot -c` copy to clipboard' to work
-exec_always xfce4-clipman &
+#exec_always xfce4-clipman &
 #exec_always test $(xrandr | grep -v disconnected | grep connected | wc -l) -le 2 && xrandr --output HDMI-1 --auto --right-of HDMI-1-2
 
 # The middle button over a titlebar kills the window
