@@ -26,9 +26,11 @@ tshark -o esp.enable_null_encryption_decode_heuristic:TRUE [other option]
 #### Log in to Termux environment
 Termux is a good tool if you need to run program such as python, tshark in android
 You can later install tsu to get `sudo` in Termux
-- Prerequisite
-  - rooted Android phone
-  - Install Termux from Google Play
+Prerequisite
+```
+rooted Android phone
+Install Termux from Google Play
+```
 In Termux
 ```
 $ pkg install root-repo # don't append other package here, install it until you succeed
