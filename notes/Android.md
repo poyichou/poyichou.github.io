@@ -54,3 +54,10 @@ ssh -p 8022 root@localhost
 ## option 1, through wifi
 ssh root@<local ip address>
 ```
+To get `sudo`
+```
+# Magisk user
+$ pkg install tsu
+# Super SU user
+# follow https://gitlab.com/st42/termux-sudo
+```
