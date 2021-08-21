@@ -41,7 +41,8 @@ $ mkdir ~/.ssh
 In Linux
 ```
 $ adb push .ssh/id_rsa.pub /sdcard # generate your own ssh key before
-$ adb shell su
+$ adb shell
+$ su
 # cd /data/data/com.termux/files/home/.ssh/
 # cat /sdcard/id_rsa.pub >> authorized_keys
 # chmod 600 authorized_keys
