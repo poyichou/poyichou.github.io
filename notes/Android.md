@@ -21,8 +21,8 @@ https://github.com/hasanbulat/tshark-arm64
 tshark -G currentprefs | grep 'esp\.'
 # esp auto decode if null decryption
 tshark -o esp.enable_null_encryption_decode_heuristic:TRUE [other option]
----
 ```
+---
 #### Log in to Termux environment
 Termux is a good tool if you need to run program such as python, tshark in android
 You can later install tsu to get `sudo` in Termux
