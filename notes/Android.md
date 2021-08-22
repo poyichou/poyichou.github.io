@@ -62,3 +62,20 @@ $ pkg install tsu
 # Super SU user
 # follow https://gitlab.com/st42/termux-sudo
 ```
+To install sklearn in termux
+```
+$ pkg install python wget proot clang fftw libzmq freetype libpng pkg-config
+$ curl -LO https://its-pointless.github.io/setup-pointless-repo.sh
+$ bash setup-pointless-repo.sh
+$ pkg install numpy scipy
+$ termux-chroot
+$ pip install -U pip
+$ pip uninstall joblib
+$ pip install joblib==0.11 Cython wheel gcc-10
+$ ln -s /data/data/com.termux/files/usr/bin/gfortran-10 /data/data/com.termux/files/usr/bin/gfortran
+$ ln -s /data/data/com.termux/files/usr/lib/libgfortran.so.5 /data/data/com.termux/files/usr/lib/libgfortran.so
+# -v for verbose mode to recognize problems if failed
+$ NPY_NUM_BUILD_JOBS=1 pip install scikit-learn==0.23.2 -v
+# or
+$ NPY_NUM_BUILD_JOBS=1 pip install scikit-learn -v
+```
