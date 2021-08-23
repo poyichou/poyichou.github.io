@@ -64,14 +64,14 @@ $ pkg install tsu
 ```
 To install sklearn in termux
 ```
-$ pkg install python wget proot clang fftw libzmq freetype libpng pkg-config
+$ pkg install python wget proot clang fftw libzmq freetype libpng pkg-config gcc-10
 $ curl -LO https://its-pointless.github.io/setup-pointless-repo.sh
 $ bash setup-pointless-repo.sh
 $ pkg install numpy scipy
 $ termux-chroot
 $ pip install -U pip
 $ pip uninstall joblib
-$ pip install joblib==0.11 Cython wheel gcc-10
+$ pip install joblib==0.11 Cython wheel
 $ ln -s /data/data/com.termux/files/usr/bin/gfortran-10 /data/data/com.termux/files/usr/bin/gfortran
 $ ln -s /data/data/com.termux/files/usr/lib/libgfortran.so.5 /data/data/com.termux/files/usr/lib/libgfortran.so
 # -v for verbose mode to recognize problems if failed
