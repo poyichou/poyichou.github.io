@@ -36,7 +36,7 @@ In Termux
 $ pkg install root-repo # don't append other package here, install it until you succeed
 $ pkg install openssh
 $ sshd # to kill later, killall sshd
-$ mkdir ~/.ssh
+$ mkdir ~/.ssh # do if ~/.ssh not exist
 ```
 In Linux
 ```
@@ -45,7 +45,7 @@ $ adb shell
 $ su
 # cd /data/data/com.termux/files/home/.ssh/
 # cat /sdcard/id_rsa.pub >> authorized_keys
-# chmod 600 authorized_keys
+# chmod 600 authorized_keys # do if authorized_keys not 600
 ```
 To use in Linux
 ```
@@ -64,10 +64,10 @@ $ pkg install tsu
 ```
 To install sklearn in termux
 ```
-$ pkg install python wget proot clang fftw libzmq freetype libpng pkg-config gcc-10
+$ pkg install python wget proot clang fftw libzmq freetype libpng pkg-config
 $ curl -LO https://its-pointless.github.io/setup-pointless-repo.sh
 $ bash setup-pointless-repo.sh
-$ pkg install numpy scipy
+$ pkg install openblas gcc-10
 $ termux-chroot
 $ pip install -U pip
 $ pip uninstall joblib
@@ -76,6 +76,4 @@ $ ln -s /data/data/com.termux/files/usr/bin/gfortran-10 /data/data/com.termux/fi
 $ ln -s /data/data/com.termux/files/usr/lib/libgfortran.so.5 /data/data/com.termux/files/usr/lib/libgfortran.so
 # -v for verbose mode to recognize problems if failed
 $ NPY_NUM_BUILD_JOBS=1 pip install scikit-learn==0.23.2 -v
-# or
-$ NPY_NUM_BUILD_JOBS=1 pip install scikit-learn -v
 ```
