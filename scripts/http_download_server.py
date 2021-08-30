@@ -10,13 +10,24 @@ import shutil
 import sys
 
 if len(sys.argv) < 2:
-    print(f'usage: python {__file__} <share file> [port]')
+    print('usage: python {} <share file> [port]'.format(__file__))
     exit()
-elif '/' not in sys.argv[1]:
-    FILENAME = sys.argv[1]
-else:
-    FILENAME = sys.argv[1].split('/')[-1]
-FILEPATH = sys.argv[1]
+
+FILEPATH = os.path.abspath(sys.argv[1])
+FILENAME = os.path.basename(FILEPATH)
+
+if os.path.isdir(FILEPATH): # folder, send zipped file instead
+    import zipfile
+    ZIP_PATH = '/tmp/{}.zip'.format(FILENAME)
+    with zipfile.ZipFile(ZIP_PATH, 'w', zipfile.ZIP_DEFLATED) as zf:
+        for root, dirs, files in os.walk(FILEPATH):
+            for file_name in files:
+                zf.write(os.path.join(root, file_name), '{}/{}'.format(FILENAME, file_name))
+
+    FILENAME = os.path.basename(ZIP_PATH)
+    FILEPATH = ZIP_PATH
+
+
 
 PORT = 7000 if len(sys.argv) < 3 else int(sys.argv[2])
 
@@ -25,7 +36,7 @@ class HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         with open(FILEPATH, 'rb') as f:
             self.send_response(200)
             self.send_header("Content-Type", 'application/zip')
-            self.send_header("Content-Disposition", f'filename="{FILENAME.encode("utf-8").decode("latin1")}"')
+            self.send_header("Content-Disposition", 'filename="{}"'.format(FILENAME.encode("utf-8").decode("latin1")))
             self.end_headers()
             shutil.copyfileobj(f, self.wfile)
 
