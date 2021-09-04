@@ -25,3 +25,8 @@ Add following in python code.
 import os
 os.environ['JOBLIB_TEMP_FOLDER'] = '/tmp'
 ```
+Solution 3  
+Increase /dev/shm size with such command.  
+```
+docker run --shm-size=512m <image-name>
+```
