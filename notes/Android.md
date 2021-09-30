@@ -55,6 +55,13 @@ ssh -p 8022 root@localhost
 ## option 1, through wifi
 ssh root@<local ip address>
 ```
+To disable SSH host key checking for localhost
+append following in "~/.ssh/config"
+```
+Host localhost
+   StrictHostKeyChecking no
+   UserKnownHostsFile=/dev/null
+```
 To get `sudo`
 ```
 # Magisk user
