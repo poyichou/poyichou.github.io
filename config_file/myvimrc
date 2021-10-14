@@ -100,3 +100,7 @@ let g:jedi#popup_on_dot = 0
 " search visually selected text
 "  to use, visually select, press '//'
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
+"disable bell/visual bell altogether
+set vb              " enable vim's internal visual bell
+set t_vb=           " set the effect of the vim visual bell to do nothing
