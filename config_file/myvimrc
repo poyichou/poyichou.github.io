@@ -36,19 +36,6 @@ set noswapfile
 "for search
 set ignorecase
 set smartcase
-" To generate cscope.out at first, cscope -Rbqk
-if filereadable("cscope.out")
-    " auto update cscope.out if outdate
-    let cscope_time = system("stat cscope.out | grep Modify")
-    let newest_file = split(system("ls -tc | head -n1"), '\n')[0]
-    let newest_time = system("stat " . newest_file . " | grep Modify")
-    if cscope_time != newest_time
-        let result = system("cscope -Rbqk")
-    endif
-    
-    cs add cscope.out   
-endif
-set cscopeverbose
 
 nmap zs :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap zg :cs find g <C-R>=expand("<cword>")<CR><CR>
@@ -59,7 +46,7 @@ nmap zf :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap zi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap zd :cs find d <C-R>=expand("<cword>")<CR><CR>
 " Update cscope database if you don't want rerun vim
-nnoremap CS :!cscope -Rbqk<CR>:cs reset<CR><CR>
+"nnoremap CS :!cscope -Rbqk<CR>:cs reset<CR><CR>
 
 " comment out a line of python script when press py
 nnoremap py I# <ESC>
@@ -104,3 +91,28 @@ vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 "disable bell/visual bell altogether
 set vb              " enable vim's internal visual bell
 set t_vb=           " set the effect of the vim visual bell to do nothing
+
+" To generate cscope.out at first, cscope -Rbqk
+function! Find_cscope_out_upward()
+    let current_dir = getcwd()
+    let cscope_out = findfile("cscope.out", current_dir . ";") " find cscope.out upward
+    return cscope_out
+endfunction
+
+function! Update_cscope_out()
+    let cscope_out = Find_cscope_out_upward() " find cscope.out upward
+    if !empty(cscope_out) && filereadable(cscope_out)
+        let src_root = fnamemodify(cscope_out, ":h")
+        let result = system("cd ". src_root . " ;cscope -Rbqk")
+    endif
+endfunction
+
+" find cscope.out upward
+let cscope_out = Find_cscope_out_upward()
+if !empty(cscope_out) && filereadable(cscope_out)
+    silent exe "cs add" cscope_out
+    set csre " make cscope aware of path of cscope.out instead of just search through relative path
+endif
+set cscopeverbose
+
+nnoremap CS :call Update_cscope_out()<CR>:cs reset<CR><CR>
