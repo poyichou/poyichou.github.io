@@ -207,3 +207,12 @@ function dirdiff()
     DIR2=$(printf '%q' "$1"); shift
     vim $@ -c "DirDiff $DIR1 $DIR2"
 }
+function update_config()
+{
+    echo "updating"
+    echo "~/.vimrc"
+    curl -s -o ~/.vimrc  -L poyichou.github.io/config_file/myvimrc
+    echo "~/.bashrc"
+    curl -s -o ~/.bashrc -L poyichou.github.io/config_file/mybashrc
+    source ~/.bashrc
+}
