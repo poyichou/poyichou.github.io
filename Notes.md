@@ -31,3 +31,5 @@
 {% include note_template.md content="Nintendo_Switch" %}
 
 {% include note_template.md content="XRDP" %}
+
+{% include note_template.md content="Windows" %}
