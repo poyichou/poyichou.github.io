@@ -1,13 +1,13 @@
-### Notes-Latex  
+# Notes-Latex  
 
-#### Installation  
+## Installation  
 ```bash
 # contains most TeX Live packages
 sudo pacman -S texlive-most
 # contains packages providing character sets and features for non-English languages
 sudo pacman -S texlive-lang
 ```
-#### To use chinese  
+## To use chinese  
 ```latex
 \usepackage{CJKutf8} % add
 ...
@@ -17,7 +17,7 @@ sudo pacman -S texlive-lang
 \end{CJK} % add
 \end{document} 
 ```
-#### Problem:  
+## Problem:  
 ```latex
 % Description:
 %   It happens when compiling with pdflatex while using \tableofcontents

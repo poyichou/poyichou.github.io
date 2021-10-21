@@ -1,6 +1,6 @@
-### Notes-Nintendo_Switch  
+# Notes-Nintendo_Switch  
 
-#### Audio coexistence with desktop for online chat  
+## Audio coexistence with desktop for online chat  
 - Sum up: Output Switch audio to a destop, then output both desktop and Switch audio with the desktop. So that you can play Switch along with Discord or other chat app in the desktop.  
 - Requirement  
   - desktop with Win10 x1  

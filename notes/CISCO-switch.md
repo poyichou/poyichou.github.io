@@ -1,6 +1,6 @@
-### Notes-CISCO switch  
+# Notes-CISCO switch  
   
-#### Some basic commands  
+## Some basic commands  
 ```bash
 # Enables privileged EXEC mode(enter your password if prompted) 
 Switch> en
@@ -10,7 +10,7 @@ Switch# conf t
 Switch(config-if)# exit
 Switch(config-if)# end
 ```
-#### Some "show" commands  
+## Some "show" commands  
 ```bash
 # Show all the interfaces
 Switch# show int br
@@ -19,7 +19,7 @@ Switch# show bgp
 Switch# show ip route
 Switch# show cdp neighbors
 ```
-#### Convert a port into a routed port
+## Convert a port into a routed port
 ```bash
 # Affects only a single port of a L3 Switch
 # Makes the port into a routed port 
@@ -30,7 +30,7 @@ Switch# show cdp neighbors
 Switch(config)# int [interface]
 Switch(config-if)# no switchport
 ```
-#### Set IP address to an interface    
+## Set IP address to an interface    
 ```bash
 # Set an IP address to an interface
 Switch(config)# int [interface]
@@ -38,7 +38,7 @@ Switch(config-if)# ip add [ip.addr.you.want] [the.mask.of.ip]
 # No shutdown
 Switch(config-if)# no shut
 ```
-#### Write current configuration to start-up configuration
+## Write current configuration to start-up configuration
 ```bash
 # "do wr" works in configure mode of console 
 #   and "wr" works in normal console window
@@ -46,7 +46,7 @@ Switch(config)# do wr
 #or
 Switch# wr
 ```
-#### Set up OSPF  
+## Set up OSPF  
 ```bash
 Switch(config)# router ospf [process-id]
 # Defines an interface on which OSPF runs
@@ -58,13 +58,13 @@ Switch(config-router)# network 10.0.0.0 0.0.0.7 area 0
 Switch(config-router)# network 13.0.0.0 0.0.255.255 area 0
 ```
 
-#### Set up CDP (for cisco devices, use CDP instead of LLDP)  
+## Set up CDP (for cisco devices, use CDP instead of LLDP)  
 ```bash
 Switch(config)# no cdp log mismatch duplex
 Switch(config)# cdp timer 30
 Switch(config)# cdp holdtime 120
 ```
-#### Set up route map (example)
+## Set up route map (example)
 ```bash
 # Community-list 20, deny traffic with "tag" "7000:10"
 Switch(config)# ip community-list 20 deny 7000:10
@@ -82,7 +82,7 @@ Switch(config)# route-map TO-9000 permit 30
 # Only allows traffic that "community-list 20" allows (see above)
 Switch(config-if)# match community 20
 ```
-#### Set up BGP (example)  
+## Set up BGP (example)  
 ```bash
 Switch(config)# router bgp 8000
 Switch(config-router)# no synchronization

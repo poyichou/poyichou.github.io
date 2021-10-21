@@ -1,13 +1,13 @@
-### Notes-Latex  
+# Notes-Latex  
 
-#### tcpdump in docker cannot open 
+## tcpdump in docker cannot open 
 ```
 # Error message:
 #tcpdump: error while loading shared libraries: libcrypto.so.1.0.0: cannot open shared object file: Permission denied
 mv /usr/sbin/tcpdump /usr/bin/tcpdump
 ```
 ---
-#### Python causes IOError: [Errno 28] No space left on device 
+## Python causes IOError: [Errno 28] No space left on device 
 ```
 Python throw exception 'IOError: [Errno 28] No space left on device' while there's still lots of space on disk.  
 'joblib' might try to parallelize jobs.  

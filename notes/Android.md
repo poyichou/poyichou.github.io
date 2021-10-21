@@ -1,6 +1,6 @@
-### Notes-Android  
+# Notes-Android  
 
-#### Problem solution
+## Problem solution
 in adb shell, even w/ root privilege  
 note that android 10 seems to prevent anything from mounting system as R/W, so solution above may not work anymore.
 ```bash
@@ -23,7 +23,7 @@ tshark -G currentprefs | grep 'esp\.'
 tshark -o esp.enable_null_encryption_decode_heuristic:TRUE [other option]
 ```
 ---
-#### Log in to Termux environment
+## Log in to Termux environment
 Termux is a good tool if you need to run program such as python, tshark in android
 You can later install tsu to get `sudo` in Termux
 Prerequisite

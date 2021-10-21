@@ -1,6 +1,6 @@
-### Notes-Windows  
+# Notes-Windows  
 
-#### Shell environment
+## Shell environment
 Install [git-for-windows](https://github.com/git-for-windows/git/wiki/Technical-overview) instead of normal Git.  
 Use the included bash for shell environment.  
 ```

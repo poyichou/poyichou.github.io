@@ -1,7 +1,7 @@
-### Notes-Arch-basic-setup  
+# Notes-Arch-basic-setup  
 
-#### Basic setup after installation of Arch Linux with shell script at [Scripts](https://poyichou.github.io/Scripts.html) -> arch-install.sh  
-#### create an user  
+## Basic setup after installation of Arch Linux with shell script at [Scripts](https://poyichou.github.io/Scripts.html) -> arch-install.sh  
+## create an user  
 ```bash
 #### log in root ####
 # change root password
@@ -10,7 +10,7 @@ useradd --create-home --groups wheel --shell /bin/bash <user_name>
 # change <user_name> password
 passwd <user_name>
 ```
-#### configuration  
+## configuration  
 ```bash
 export EDITOR=vim
 visudo # comment out '%wheel ALL=(ALL) ALL'
@@ -21,7 +21,7 @@ wget -O .vimrc https://poyichou.github.io/config_file/myvimrc
 sudo cp .vimrc /etc/vimrc
 wget -O .bashrc https://poyichou.github.io/config_file/mybashrc
 ```
-#### destop  
+## destop  
 ```bash
 sudo pacman -S gnome-shell gdm gnome-tweak-tool
 # To unlock option gnome-tweak-tool -> Appearance -> Shell,
@@ -35,17 +35,17 @@ wget -O ~/.config/termite/config https://poyichou.github.io/config_file/termite_
 
 # reboot to see if succeeded
 ```
-#### notebook touchpad
+## notebook touchpad
 ```
 # advanced touchpad fearue control
 sudo pacman -S xf86-input-synaptics
 sudo wget -O /etc/X11/xorg.conf.d/70-synaptics.conf https://poyichou.github.io/config_file/70-synaptics.conf
 ```
-#### for virtualbox  
+## for virtualbox  
 ```bash
 sudo pacman -S virtualbox-guest-utils # choose 2
 ```
-#### remain (After executing this block, refer [Arch Wiki](https://wiki.archlinux.org/index.php/GDM#Log-in_screen_background_image) to change login screen background image.)  
+## remain (After executing this block, refer [Arch Wiki](https://wiki.archlinux.org/index.php/GDM#Log-in_screen_background_image) to change login screen background image.)  
 ```bash
 # set chewing in gnome-control-center -> Region & Language later
 sudo pacman -S gnome-control-center ibus ibus-chewing
@@ -98,7 +98,7 @@ sudo plymouth-set-default-theme -R Mageia-ColdFire
 sudo pacman -S firefox
 # reboot to check if succeeded
 ``` 
-#### Useful-tool  
+## Useful-tool  
 ```bash
 # photo management
 sudo pacman -S gthumb
@@ -121,13 +121,13 @@ cargo install du-dust # dust, du like tool
 # fancy system monitoring
 sudo pacman -S gnome-system-monitor conky
 ```
-#### cron (crontab)
+## cron (crontab)
 ```bash
 sudo pacman -S cronie
 sudo systemctl enable cronie.service
 sudo systemctl start cronie.service
 ```
-#### Problem solution  
+## Problem solution  
 ```bash
 # error: libexiv2: signature from "Eli Schwartz <schwartz@archlinux.org>" is unknown trust
 sudo pacman -S archlinux-keyring

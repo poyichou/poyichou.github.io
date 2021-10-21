@@ -1,6 +1,6 @@
-### Notes-GNS3  
+# Notes-GNS3  
   
-#### Install instructions for Ubuntu(-based)  
+## Install instructions for Ubuntu(-based)  
 ```bash
 sudo add-apt-repository ppa:gns3/ppa
 sudo apt update                                
@@ -30,7 +30,7 @@ sudo usermod -aG kvm <user_name>
 sudo usermod -aG wireshark <user_name>
 sudo usermod -aG docker <user_name>
 ```
-#### some error
+## some error
 ```bash
 # If not install dynamips:i386
 Error: Could not send Dynamips command 'vm get_status "AUTOIDLEPC"' to x.x.x.x:xxxxx: Connection lost, process running: False

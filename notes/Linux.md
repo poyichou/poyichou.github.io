@@ -1,6 +1,6 @@
-### Notes-Linux  
+# Notes-Linux  
 
-#### Mount a new deivce  
+## Mount a new deivce  
 if your device file is /dev/hda1  
 ```bash
 # Create a new filesystem using the ext4 filesystem type:  
@@ -9,17 +9,17 @@ $ mke2fs -t ext4 /dev/hda1
 $ mount -t ext4 /dev/hda1 /wherever
 ```
 ---
-#### Change time zone (for example: change to CDT)  
+## Change time zone (for example: change to CDT)  
 ```bash
 $ cp /usr/share/zoneinfo/America/Chicago /etc/localtime
 ```
 ---
-#### Analyze size of folder content
+## Analyze size of folder content
 ```bash
 $ ncdu
 ```
 ---
-#### Bind a binary to a local port
+## Bind a binary to a local port
 ```bash
 # method 1
 ncat -vc [binary] -kl 127.0.0.1 [port] 
@@ -29,7 +29,7 @@ while [ 1 ]; do cat /tmp/f | [binary] 2>&1 | nc -l 127.0.0.1 [port] > /tmp/f; do
 rm -f /tmp/f
 ```
 ---
-#### Disk Scheduler  
+## Disk Scheduler  
 ```bash
 # check available disk schedulers (in my case, cfq is in use).
 $ cat /sys/block/sda/queue/scheduler
@@ -45,21 +45,21 @@ $ vim /etc/default/grub
 $ update-grub
 ```
 ---
-#### ssh: connect to host xxx.xxx.xxx.xxx port 22: Connection refused   
+## ssh: connect to host xxx.xxx.xxx.xxx port 22: Connection refused   
 ```bash
 # add "ssh: ALL"
 $ sudo vim /etc/hosts.allow
 $ sudo systemctl restart sshd
 ```
 ---
-#### big5 garbled in compressed file (take zip for example)
+## big5 garbled in compressed file (take zip for example)
 ```
 $ sudo apt-get install convmv
 $ LANG=C unzip file.zip
 $ convmv -f big5 -t utf8 -r --notest *
 ```
 ---
-#### unzip produce 'unsupported compression method 99'
+## unzip produce 'unsupported compression method 99'
 ```
 # may caused by WinRAR/WinZIP default encryption method (i.e. AES)
 # currently not supported by unzip
@@ -68,13 +68,13 @@ $ sudo apt install p7zip-full
 $ 7z x <file.zip>
 ```
 ---
-#### USB is read only in Nautilus when it is not
+## USB is read only in Nautilus when it is not
 ```
 # it's a bug of Nautilus
 killall nautilus
 ```
 ---
-#### crontab  
+## crontab  
 ```bash
 # run a script as a normal user
 $ crontab -e
@@ -91,7 +91,7 @@ $ sudo crontab -e
 00 */2 * * * /usr/bin/apt-get update && /usr/bin/apt-get upgrade -y
 ```
 ---
-#### tmux
+## tmux
 ```bash
 # Commands
 # start a new session
@@ -123,7 +123,7 @@ Ctrl+b %
 Ctrl+b "
 ```
 ---
-#### gdm-plymouth  
+## gdm-plymouth  
 ```bash
 # After `systemctl status gdm-plymouth.service`
 
@@ -135,7 +135,7 @@ Ctrl+b "
 $ sudo pacman -S gnome-keyring
 ```
 ---
-#### establish a wireless connection with netctl
+## establish a wireless connection with netctl
 ```bash
 # require package "wpa_passphrase"
 # dhcpcd.service should be active
@@ -166,7 +166,7 @@ $ sudo systemctl start netctl-auto@<wireless interface>.service
 $ sudo netctl-auto switch-to <profile file>
 ```
 ---
-#### netctl configuration file for 802.1X (PEAP-MSCHAP v2)
+## netctl configuration file for 802.1X (PEAP-MSCHAP v2)
 ```
 Description='A descriptive name'
 Interface=wlp2s0
@@ -184,7 +184,7 @@ WPAConfigSection=(
 )
 ```
 ---
-#### netctl configuration file for 802.1X (PEAP-MSCHAP v2) while hash password instead of plaintext
+## netctl configuration file for 802.1X (PEAP-MSCHAP v2) while hash password instead of plaintext
 ```
 Description='A descriptive name'
 Interface=wlp2s0
@@ -206,7 +206,7 @@ To generate nthash of password
 echo -n MYPASSWORD | iconv -t utf16le | openssl md4
 ```
 ---
-#### error when establishing a wireless connection with netctl
+## error when establishing a wireless connection with netctl
 ```bash
 # error code
 Job for netctl@xxxxxx.service failed because the control process exited with error code.
@@ -219,10 +219,10 @@ sudo wifi-menu -o
 sudo dhcpcd <interface> # check interface with "ip link"
 ```
 ---
-#### "No cast destinations found" in Chromium and Google Chrome on Linux
+## "No cast destinations found" in Chromium and Google Chrome on Linux
 `chrome://flags/#load-media-router-component-extension` -> `Load Media Router Component Extension`, change `Default` to `Enabled`.
 ---
-#### beep sound
+## beep sound
 ```
 # To enable the beep sound, make sure that pcspkr module is exist
 lsmod | grep pcspkr
@@ -233,7 +233,7 @@ sudo vim /etc/modprobe.d/blacklist.conf # remove "blacklist pcspkr"
 reboot # reboot to make change of /etc/modprobe.d/blacklist.conf take effect
 ```
 ---
-#### Disable/re-enable suspend
+## Disable/re-enable suspend
 ```
 # disable
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
@@ -241,7 +241,7 @@ sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.ta
 sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
 ```
 ---
-#### Monitor 802.11 packets
+## Monitor 802.11 packets
 ```
 # put WiFi interface in monitor mode
 sudo iw dev <wlan interface> interface add mon0 type monitor
@@ -251,7 +251,7 @@ sudo wireshark -I # in monitor mode, monitor on mon0
 sudo iw dev mon0 interface del
 ```
 ---
-#### Make Grub remember last choice
+## Make Grub remember last choice
 ```
 # put following in /etc/default/grub
 #GRUB_DEFAULT=saved
@@ -261,7 +261,7 @@ $ sudo update-grub
 $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 ---
-#### Disable GDM auto suspend
+## Disable GDM auto suspend
 ```
 # configure policy on ac, for battery, change ac below to battery
 sudo su gdm -s /bin/bash -c "dbus-launch gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'"
@@ -271,7 +271,7 @@ sudo su gdm -s /bin/bash -c "gsettings list-recursively org.gnome.settings-daemo
 # Restart GDM to activate your changes. 
 ```
 ---
-#### Laptop modify backlight fail
+## Laptop modify backlight fail
 xbacklight -get
 No outputs have backlight property
 add file `/etc/X11/xorg.conf.d/20-intel.conf`
@@ -284,7 +284,7 @@ Section "Device"
 EndSection
 ```
 ---
-#### Move whole os to smaller drive (w/ example, i.e. sdc->sdd)
+## Move whole os to smaller drive (w/ example, i.e. sdc->sdd)
 ```
 $ lsblk # not related blocks truncated
 NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
@@ -436,7 +436,7 @@ The filesystem on /dev/sdd2 is now 29912827 (4k) blocks long.
 
 ```
 ---
-#### Disable USB autosuspend (useful when your os is installed in USB drive)
+## Disable USB autosuspend (useful when your os is installed in USB drive)
 ```
 # modify usbcore.autosuspend kernel module parameter, suppose the bootloader is grub2
 # usbcore.autosuspend=<delay second>, -1 to disable
