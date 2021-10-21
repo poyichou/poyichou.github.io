@@ -1,4 +1,4 @@
-### Notes  
+# Notes  
   
 {% include note_template.md content="Linux" %}
   
