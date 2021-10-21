@@ -94,7 +94,7 @@ $ sudo pacman -S gnome-keyring
 ```
 ---
 ## "No cast destinations found" in Chromium and Google Chrome on Linux
-`chrome://flags/#load-media-router-component-extension` -> `Load Media Router Component Extension`, change `Default` to `Enabled`.
+`chrome://flags/#load-media-router-component-extension` -> `Load Media Router Component Extension`, change `Default` to `Enabled`.  
 ---
 ## beep sound
 ```
