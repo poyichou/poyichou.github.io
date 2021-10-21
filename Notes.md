@@ -2,6 +2,10 @@
   
 {% include note_template.md content="Linux" %}
   
+{% include note_template.md content="disk" %}
+  
+{% include note_template.md content="networking" %}
+  
 {% include note_template.md content="Ubuntu" %}
   
 {% include note_template.md content="CISCO-switch" %}
