@@ -2,4 +2,4 @@
 layout: post
 author: poyichou
 ---
-Start working in Realtek
+Oroal exam in NYCU
