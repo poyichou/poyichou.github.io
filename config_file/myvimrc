@@ -94,8 +94,10 @@ set t_vb=           " set the effect of the vim visual bell to do nothing
 
 " To generate cscope.out at first, cscope -Rbqk
 function! Find_cscope_out_upward()
-    let current_dir = getcwd()
-    let cscope_out = findfile("cscope.out", current_dir . ";") " find cscope.out upward
+    "let current_dir = getcwd()
+    let full_file_path = expand("%:p:h")
+    let file_dir = fnamemodify(full_file_path, ":h")
+    let cscope_out = findfile("cscope.out", file_dir . ";") " find cscope.out upward
     return cscope_out
 endfunction
 
