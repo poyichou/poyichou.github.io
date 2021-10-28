@@ -37,6 +37,7 @@ set noswapfile
 set ignorecase
 set smartcase
 
+" find directly
 nmap zs :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap zg :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap zc :cs find c <C-R>=expand("<cword>")<CR><CR>
@@ -45,6 +46,17 @@ nmap ze :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap zf :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap zi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap zd :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+" find after pressing enter, used for words that need modification
+nmap as :cs find s <C-R>=expand("<cword>")<CR>
+nmap ag :cs find g <C-R>=expand("<cword>")<CR>
+nmap ac :cs find c <C-R>=expand("<cword>")<CR>
+nmap at :cs find t <C-R>=expand("<cword>")<CR>
+nmap ae :cs find e <C-R>=expand("<cword>")<CR>
+nmap af :cs find f <C-R>=expand("<cfile>")<CR>
+nmap ai :cs find i ^<C-R>=expand("<cfile>")<CR>$
+nmap ad :cs find d <C-R>=expand("<cword>")<CR>
+
 " Update cscope database if you don't want rerun vim
 "nnoremap CS :!cscope -Rbqk<CR>:cs reset<CR><CR>
 
@@ -83,6 +95,10 @@ let g:jedi#popup_on_dot = 0
 "   if not, install vim-gtk3
 " usage: (cut | copy | paste)
 "   "[+|*][x|y|p]
+if has('clipboard') " copy/cut to system clipboard
+    noremap YY "+y<CR>
+    noremap XX "+x<CR>
+endif
 
 " search visually selected text
 "  to use, visually select, press '//'
@@ -91,6 +107,8 @@ vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 "disable bell/visual bell altogether
 set vb              " enable vim's internal visual bell
 set t_vb=           " set the effect of the vim visual bell to do nothing
+
+set clipboard=      " `:set clipboard` to check current value, if unnamed, vim will use system clipboard as copy/change buffer
 
 " To generate cscope.out at first, cscope -Rbqk
 function! Find_cscope_out_upward()
@@ -110,11 +128,15 @@ function! Update_cscope_out()
 endfunction
 
 " find cscope.out upward
-let cscope_out = Find_cscope_out_upward()
-if !empty(cscope_out) && filereadable(cscope_out)
-    silent exe "cs add" cscope_out
-    set csre " make cscope aware of path of cscope.out instead of just search through relative path
-endif
-set cscopeverbose
+function! Add_cscope_out()
+    let cscope_out = Find_cscope_out_upward()
+    if !empty(cscope_out) && filereadable(cscope_out)
+        silent exe "cs add" cscope_out
+        set csre " make cscope aware of path of cscope.out instead of just search through relative path
+    endif
+    set cscopeverbose
+endfunction
 
-nnoremap CS :call Update_cscope_out()<CR>:cs reset<CR><CR>
+let ret = Add_cscope_out()
+
+nnoremap CS :cs kill -1<CR>:call Update_cscope_out()<CR>:call Add_cscope_out()<CR><CR>
