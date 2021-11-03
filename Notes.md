@@ -37,3 +37,5 @@
 {% include note_template.md content="XRDP" %}
 
 {% include note_template.md content="Windows" %}
+
+{% include note_template.md content="Git" %}
