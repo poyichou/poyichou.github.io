@@ -16,7 +16,7 @@ Set up commit hook
 # e.g. curl -L http://gerrit-review.googlesource.com/tools/hooks/commit-msg
 curl -L http://<Gerrit Server>/tools/hooks/commit-msg
 # 2. Put `commit-msg` into local `.git/hooks/`
-# 3. If submodules exist, put `commit-msg` into corresponding `hooks/` in the same `.git/`
+# 3. If submodules exist, put `commit-msg` into corresponding `hooks/` in `modules/` in the same `.git/`
 ```
 Commit
 ```bash
