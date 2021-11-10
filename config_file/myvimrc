@@ -125,7 +125,7 @@ function! Update_cscope_out()
     let cscope_out = Find_cscope_out_upward() " find cscope.out upward
     if !empty(cscope_out) && filereadable(cscope_out)
         let src_root = fnamemodify(cscope_out, ":h")
-        cd `=src_root`
+        execute 'cd' fnameescape(src_root)
         let result = system("cscope -Rbqk")
         cd - " cd back to last directory
     endif
