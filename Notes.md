@@ -39,3 +39,5 @@
 {% include note_template.md content="Windows" %}
 
 {% include note_template.md content="Git" %}
+
+{% include note_template.md content="Visual-Studio" %}
