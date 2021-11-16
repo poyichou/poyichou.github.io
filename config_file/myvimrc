@@ -38,24 +38,24 @@ set ignorecase
 set smartcase
 
 " find directly
-nmap zs :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap zg :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap zc :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap zt :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap ze :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap zf :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap zi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap zd :cs find d <C-R>=expand("<cword>")<CR><CR>
+nmap zs ZS<CR>
+nmap zg ZG<CR>
+nmap zc ZC<CR>
+nmap zt ZT<CR>
+nmap ze ZE<CR>
+nmap zf ZF<CR>
+nmap zi ZI<CR>
+nmap zd ZD<CR>
 
 " find after pressing enter, used for words that need modification
-nmap as :cs find s <C-R>=expand("<cword>")<CR>
-nmap ag :cs find g <C-R>=expand("<cword>")<CR>
-nmap ac :cs find c <C-R>=expand("<cword>")<CR>
-nmap at :cs find t <C-R>=expand("<cword>")<CR>
-nmap ae :cs find e <C-R>=expand("<cword>")<CR>
-nmap af :cs find f <C-R>=expand("<cfile>")<CR>
-nmap ai :cs find i ^<C-R>=expand("<cfile>")<CR>$
-nmap ad :cs find d <C-R>=expand("<cword>")<CR>
+nmap ZS :cs find s <C-R>=expand("<cword>")<CR>
+nmap ZG :cs find g <C-R>=expand("<cword>")<CR>
+nmap ZC :cs find c <C-R>=expand("<cword>")<CR>
+nmap ZT :cs find t <C-R>=expand("<cword>")<CR>
+nmap ZE :cs find e <C-R>=expand("<cword>")<CR>
+nmap ZF :cs find f <C-R>=expand("<cfile>")<CR>
+nmap ZI :cs find i ^<C-R>=expand("<cfile>")<CR>$
+nmap ZD :cs find d <C-R>=expand("<cword>")<CR>
 
 " Update cscope database if you don't want rerun vim
 "nnoremap CS :!cscope -Rbqk<CR>:cs reset<CR><CR>
