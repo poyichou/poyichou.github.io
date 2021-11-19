@@ -144,3 +144,13 @@ endfunction
 let ret = Add_cscope_out()
 
 nnoremap CS :cs kill -1<CR>:call Update_cscope_out()<CR>:call Add_cscope_out()<CR>
+
+" to install taglist,
+"   1.install ctags
+"   2.download taglist zip file
+"     copy plugin/taglist.vim to ~/.vim/plugin
+"     copy doc/taglist.txt to ~/.vim/doc
+nmap <F8> :TlistToggle<CR><CR>
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+set ut=100
