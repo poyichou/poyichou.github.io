@@ -79,6 +79,11 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+nmap <A-Down> <C-J>
+nmap <A-Up> <C-K>
+nmap <A-Right> <C-L>
+nmap <A-Left> <C-H>
+
 " set mouse mode to do such as resize split with mouse
 " make vim more like gui
 nmap mou :set mouse=a<CR>
@@ -154,3 +159,8 @@ nmap <F8> :TlistToggle<CR><CR>
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 set ut=100
+
+" to install linediff,
+"   download linediff.zip
+"   unzip then into ~/.vim
+vnoremap  LD :'<,'>Linediff<CR>
