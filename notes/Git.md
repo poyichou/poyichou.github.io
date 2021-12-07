@@ -31,3 +31,13 @@ Push
 # e.g. git push origin master:refs/for/master
 git push origin <local branch>:refs/for/<remote branch>
 ```
+---
+## UTF-16 problem  
+Situations on utf-16 encoded file
+`git diff` and `git log -p <utf16 file>` shows `Binary files a/xxx and b/xxx differ` instead of text content,  
+`git log -p --text <utf16 file>` garbled in content.  
+Solution  
+```
+git config --global diff.utf16.textconv "iconv -f utf-16 -t utf-8"
+echo "<utf16 file> diff=utf16" >> <repo root>/.gitattributes
+```
