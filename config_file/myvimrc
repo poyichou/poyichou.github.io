@@ -118,11 +118,9 @@ set clipboard=      " `:set clipboard` to check current value, if unnamed, vim w
 " To generate cscope.out at first, cscope -Rbqk
 function! Find_cscope_out_upward()
     "let current_dir = getcwd()
-    if !exists("s:cscope_out") || empty(s:cscope_out) || !filereadable(s:cscope_out)
-        let full_file_path = expand("%:p:h")
-        let file_dir = fnamemodify(full_file_path, ":h")
-        let s:cscope_out = findfile("cscope.out", file_dir . ";") " find cscope.out upward, static variable
-    endif
+    let full_file_path = expand("%:p:h")
+    let file_dir = fnamemodify(full_file_path, ":h")
+    let s:cscope_out = findfile("cscope.out", file_dir . ";") " find cscope.out upward, static variable
     return s:cscope_out
 endfunction
 
