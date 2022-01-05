@@ -162,3 +162,13 @@ set ut=100
 "   download linediff.zip
 "   unzip then into ~/.vim
 vnoremap  LD :'<,'>Linediff<CR>
+
+" Use F10 to toggle folding
+set foldmethod=syntax
+set nofoldenable " prevent closing all fold
+set foldlevel=4 " higher than 0 to avoid za/zc closing all fold
+"toggle fold
+inoremap <F10> <C-O>za
+nnoremap <F10> za
+onoremap <F10> <C-C>za
+vnoremap <F10> zf
