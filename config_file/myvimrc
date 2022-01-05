@@ -3,7 +3,7 @@ set bg=dark
 filetype indent on
 " 檔案編碼
 set encoding=utf-8
-set fileencodings=utf-8,cp950
+set fileencodings=utf-8,cp950,utf-16le
 syntax on        " 語法上色顯示
 set nocompatible " VIM 不使用和 VI 相容的模式
 
