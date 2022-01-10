@@ -59,6 +59,9 @@ nmap ZF :cs find f <C-R>=expand("<cfile>")<CR>
 nmap ZI :cs find i ^<C-R>=expand("<cfile>")<CR>$
 nmap ZD :cs find d <C-R>=expand("<cword>")<CR>
 
+" grep cword recursively
+noremap gr :tab vs<CR>:vimgrep <C-R>=expand("<cword>")<CR> **/*.c **/*.h **/*.cpp<CR>:copen<CR>
+
 " Update cscope database if you don't want rerun vim
 "nnoremap CS :!cscope -Rbqk<CR>:cs reset<CR><CR>
 
