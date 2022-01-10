@@ -37,28 +37,6 @@ set noswapfile
 set ignorecase
 set smartcase
 
-" cscope color
-hi ModeMsg ctermfg=brown ctermbg=none
-" find directly
-nmap zs ZS<CR>
-nmap zg ZG<CR>
-nmap zc ZC<CR>
-nmap zt ZT<CR>
-nmap ze ZE<CR>
-nmap zf ZF<CR>
-nmap zi ZI<CR>
-nmap zd ZD<CR>
-
-" find after pressing enter, used for words that need modification
-nmap ZS :cs find s <C-R>=expand("<cword>")<CR>
-nmap ZG :cs find g <C-R>=expand("<cword>")<CR>
-nmap ZC :cs find c <C-R>=expand("<cword>")<CR>
-nmap ZT :cs find t <C-R>=expand("<cword>")<CR>
-nmap ZE :cs find e <C-R>=expand("<cword>")<CR>
-nmap ZF :cs find f <C-R>=expand("<cfile>")<CR>
-nmap ZI :cs find i ^<C-R>=expand("<cfile>")<CR>$
-nmap ZD :cs find d <C-R>=expand("<cword>")<CR>
-
 " grep cword recursively
 noremap gr :tab vs<CR>:vimgrep <C-R>=expand("<cword>")<CR> **/*.c **/*.h **/*.cpp<CR>:copen<CR>
 
@@ -72,11 +50,6 @@ nnoremap gcc I/* <ESC>A */<ESC>
 
 " toggle nu
 nmap nu :set nu!<CR>
-" NERDTree
-" To install for vim ver 8+
-" git clone https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
-" vim -u NONE -c "helptags ~/.vim/pack/vendor/start/nerdtree/doc" -c q
-nmap <F9> :NERDTreeToggle<CR>
 
 " keys for easy navigation between splits 
 nnoremap <C-J> <C-W><C-J>
@@ -149,31 +122,66 @@ function! Add_cscope_out()
     set cscopeverbose
 endfunction
 
-let ret = Add_cscope_out()
+if 1 " cscope_support
+    " cscope color
+    hi ModeMsg ctermfg=brown ctermbg=none
+    " find
+    nmap zs ZS<CR>
+    nmap zg ZG<CR>
+    nmap zc ZC<CR>
+    nmap zt ZT<CR>
+    nmap ze ZE<CR>
+    nmap zf ZF<CR>
+    nmap zi ZI<CR>
+    nmap zd ZD<CR>
 
-nnoremap CS :cs kill -1<CR>:call Update_cscope_out()<CR>:call Add_cscope_out()<CR>
+    nmap ZS :cs find s <C-R>=expand("<cword>")<CR>
+    nmap ZG :cs find g <C-R>=expand("<cword>")<CR>
+    nmap ZC :cs find c <C-R>=expand("<cword>")<CR>
+    nmap ZT :cs find t <C-R>=expand("<cword>")<CR>
+    nmap ZE :cs find e <C-R>=expand("<cword>")<CR>
+    nmap ZF :cs find f <C-R>=expand("<cfile>")<CR>
+    nmap ZI :cs find i ^<C-R>=expand("<cfile>")<CR>$
+    nmap ZD :cs find d <C-R>=expand("<cword>")<CR>
+    let ret = Add_cscope_out()
+    nnoremap CS :cs kill -1<CR>:call Update_cscope_out()<CR>:call Add_cscope_out()<CR>
+endif
 
-" to install taglist,
-"   1.install ctags
-"   2.download taglist zip file
-"     copy plugin/taglist.vim to ~/.vim/plugin
-"     copy doc/taglist.txt to ~/.vim/doc
-nmap <F8> :TlistToggle<CR><CR>
-let Tlist_Show_One_File=1
-let Tlist_Exit_OnlyWindow=1
-set ut=100
+if 1 " taglist_support
+    " to install taglist,
+    "   1.install ctags
+    "   2.download taglist zip file
+    "     copy plugin/taglist.vim to ~/.vim/plugin
+    "     copy doc/taglist.txt to ~/.vim/doc
+    nmap <F8> :TlistToggle<CR><CR>
+    let Tlist_Show_One_File=1
+    let Tlist_Exit_OnlyWindow=1
+    set ut=100
+endif
 
-" to install linediff,
-"   download linediff.zip
-"   unzip then into ~/.vim
-vnoremap  LD :'<,'>Linediff<CR>
+if 1 " NERDTree_support
+    " NERDTree
+    " To install for vim ver 8+
+    " git clone https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
+    " vim -u NONE -c "helptags ~/.vim/pack/vendor/start/nerdtree/doc" -c q
+    nmap <F9> :NERDTreeToggle<CR>
+endif
 
-" Use F10 to toggle folding
-set foldmethod=syntax
-set nofoldenable " prevent closing all fold
-set foldlevel=4 " higher than 0 to avoid za/zc closing all fold
-"toggle fold
-inoremap <F10> <C-O>za
-nnoremap <F10> za
-onoremap <F10> <C-C>za
-vnoremap <F10> zf
+if 1 " linediff_support
+    " to install linediff,
+    "   download linediff.zip
+    "   unzip then into ~/.vim
+    vnoremap  LD :'<,'>Linediff<CR>
+endif
+
+if 1 " fold_support
+    " Use F10 to toggle folding
+    set foldmethod=syntax
+    set nofoldenable " prevent closing all fold
+    set foldlevel=4 " higher than 0 to avoid za/zc closing all fold
+    "toggle fold
+    inoremap <F10> <C-O>za
+    nnoremap <F10> za
+    onoremap <F10> <C-C>za
+    vnoremap <F10> zf
+endif
