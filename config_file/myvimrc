@@ -37,6 +37,8 @@ set noswapfile
 set ignorecase
 set smartcase
 
+" cscope color
+hi ModeMsg ctermfg=brown ctermbg=none
 " find directly
 nmap zs ZS<CR>
 nmap zg ZG<CR>
