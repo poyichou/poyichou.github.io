@@ -41,3 +41,5 @@
 {% include note_template.md content="Git" %}
 
 {% include note_template.md content="Visual-Studio" %}
+
+{% include note_template.md content="Vim" %}
