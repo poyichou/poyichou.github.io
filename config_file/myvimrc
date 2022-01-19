@@ -38,7 +38,11 @@ set ignorecase
 set smartcase
 
 " grep cword recursively
-noremap gr :tab vs<CR>:vimgrep <C-R>=expand("<cword>")<CR> **/*.c **/*.h **/*.cpp<CR>:copen<CR>
+nmap gr GR<CR>:copen<CR>
+nnoremap GR :tab vs<CR>:vimgrep <C-R>=expand("<cword>")<CR> **/*.c **/*.h **/*.cpp
+" grep selected words recursively
+vmap gr GR<CR>:copen<CR>
+vnoremap GR y:tab vs<CR>:vimgrep <C-R>" **/*.c **/*.h **/*.cpp
 
 " Update cscope database if you don't want rerun vim
 "nnoremap CS :!cscope -Rbqk<CR>:cs reset<CR><CR>
@@ -79,8 +83,8 @@ let g:jedi#popup_on_dot = 0
 " usage: (cut | copy | paste)
 "   "[+|*][x|y|p]
 if has('clipboard') " copy/cut to system clipboard
-    noremap YY "+y<CR>
-    noremap XX "+x<CR>
+    noremap YY "+y
+    noremap XX "+x
 endif
 
 " search visually selected text
@@ -116,6 +120,8 @@ endfunction
 function! Add_cscope_out()
     let cscope_out = Find_cscope_out_upward()
     if !empty(cscope_out) && filereadable(cscope_out)
+	" kill current connection, used for :so ~/.vimrc
+        silent exe "cs kill -1"
         silent exe "cs add" cscope_out
         set csre " make cscope aware of path of cscope.out instead of just search through relative path
     endif
@@ -144,7 +150,7 @@ if 1 " cscope_support
     nmap ZI :cs find i ^<C-R>=expand("<cfile>")<CR>$
     nmap ZD :cs find d <C-R>=expand("<cword>")<CR>
     let ret = Add_cscope_out()
-    nnoremap CS :cs kill -1<CR>:call Update_cscope_out()<CR>:call Add_cscope_out()<CR>
+    nnoremap CS :cs kill -1<CR>:call Update_cscope_out()<CR>:call Add_cscope_out()<CR>:echohl WarningMsg \| echo "cscope update done" \| echohl None<CR>
 endif
 
 if 1 " taglist_support
@@ -185,3 +191,37 @@ if 1 " fold_support
     onoremap <F10> <C-C>za
     vnoremap <F10> zf
 endif
+
+" tabline setting
+function! Tabline() abort
+    let l:line = ''
+    let l:current = tabpagenr()
+
+    for l:i in range(1, tabpagenr('$'))
+        if l:i == l:current
+            let l:line .= '%#TabLineSel#'
+        else
+            let l:line .= '%#TabLine#'
+        endif
+
+        let l:label = fnamemodify(
+            \ bufname(tabpagebuflist(l:i)[tabpagewinnr(l:i) - 1]),
+            \ ':t'
+        \ )
+
+        let l:line .= '%' . i . 'T' " Starts mouse click target region.
+        let l:line .= '  ' . l:label . '  '
+    endfor
+
+    let l:line .= '%#TabLineFill#'
+    let l:line .= '%T' " Ends mouse click target region(s).
+
+    return l:line
+endfunction
+
+" set tabline color
+hi TabLine ctermfg=none ctermbg=none
+hi TabLineFill ctermfg=none ctermbg=none
+hi TabLineSel ctermfg=Black ctermbg=DarkGreen
+" set tabline tab name be only filename instead of full path
+set tabline=%!Tabline()
