@@ -39,10 +39,10 @@ set smartcase
 
 " grep cword recursively
 nmap gr GR<CR>:copen<CR>
-nnoremap GR :tab vs<CR>:vimgrep <C-R>=expand("<cword>")<CR> **/*.c **/*.h **/*.cpp
+nnoremap GR :tab vs<CR>:vimgrep '<C-R>=expand("<cword>")<CR>' **/*.c **/*.h **/*.cpp
 " grep selected words recursively
 vmap gr GR<CR>:copen<CR>
-vnoremap GR y:tab vs<CR>:vimgrep <C-R>" **/*.c **/*.h **/*.cpp
+vnoremap GR y:tab vs<CR>:vimgrep '<C-R>"' **/*.c **/*.h **/*.cpp
 
 " Update cscope database if you don't want rerun vim
 "nnoremap CS :!cscope -Rbqk<CR>:cs reset<CR><CR>
