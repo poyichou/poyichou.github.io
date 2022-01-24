@@ -7,13 +7,20 @@ set fileencodings=utf-8,cp950,utf-16le
 syntax on        " 語法上色顯示
 set nocompatible " VIM 不使用和 VI 相容的模式
 
-set shiftwidth=4 " 設定 existing 縮排寬度 
-set tabstop=4    " inserting tab 的字元數
-set softtabstop=4 "方便在開啟了et後使用退格（backspace）鍵，每次退格將刪除X個空格
+if &filetype ==# 'python'
+    set shiftwidth=4 " 設定 existing 縮排寬度
+    set tabstop=4    " inserting tab 的字元數
+    set softtabstop=4 "方便在開啟了et後使用退格（backspace）鍵，每次退格將刪除X個空格
+    set expandtab   " 用 space 代替 tab
+else
+    set shiftwidth=8
+    set tabstop=8
+    set softtabstop=8
+    set noexpandtab
+endif
 
 set smarttab	 " 在行首按TAB將加入sw個空格，否則加入ts個空格
 "set autoindent
-set expandtab   " 用 space 代替 tab
 
 set ruler        " 顯示右下角設定值
 set backspace=2  " 在 insert 也可用 backspace
@@ -74,6 +81,8 @@ nmap mou :set mouse=a<CR>
 "   In ubuntu,
 "     apt install vim-python-jedi
 "     vim-addons install python-jedi
+"   Or simply,
+"     git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/pack/vendor/start/jedi-vim
 " No pop up completion after typing a dot
 let g:jedi#popup_on_dot = 0
 
@@ -198,11 +207,14 @@ function! Tabline() abort
     let l:current = tabpagenr()
 
     for l:i in range(1, tabpagenr('$'))
+        " set to current or not
         if l:i == l:current
             let l:line .= '%#TabLineSel#'
         else
             let l:line .= '%#TabLine#'
         endif
+        " get split number
+        let l:line .= tabpagewinnr(l:i, '$')
 
         let l:label = fnamemodify(
             \ bufname(tabpagebuflist(l:i)[tabpagewinnr(l:i) - 1]),
