@@ -187,13 +187,19 @@ if 1 " linediff_support
     "   download linediff.zip
     "   unzip then into ~/.vim
     vnoremap  LD :'<,'>Linediff<CR>
+    " comapre whole file
+    nmap <expr> LLD "gg" . "V" . "G " . "LD"
 endif
 
 if 1 " fold_support
     " Use F10 to toggle folding
-    set foldmethod=syntax
+    if &filetype ==# 'python'
+        set foldmethod=indent
+    else
+        set foldmethod=syntax
+    endif
     set nofoldenable " prevent closing all fold
-    set foldlevel=4 " higher than 0 to avoid za/zc closing all fold
+    set foldlevel=10 " higher than 0 to avoid za/zc closing all fold
     "toggle fold
     inoremap <F10> <C-O>za
     nnoremap <F10> za
@@ -237,3 +243,20 @@ hi TabLineFill ctermfg=none ctermbg=none
 hi TabLineSel ctermfg=Black ctermbg=DarkGreen
 " set tabline tab name be only filename instead of full path
 set tabline=%!Tabline()
+
+" List all the included files.
+nnoremap <F4> :checkpath!<CR>
+
+" To reload a file with different encoding:
+"   :e ++enc=utf-8
+let g:enc_index = 0
+function! ChangeFileencoding()
+  let encodings = ['utf-8', 'cp950', 'utf-16le']
+  execute 'e ++enc='.encodings[g:enc_index].' %:p'
+  if g:enc_index >=2
+	  let g:enc_index = 0
+  else
+	  let g:enc_index = g:enc_index + 1
+  endif
+endf
+nmap <F5> :call ChangeFileencoding()<CR>
