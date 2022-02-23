@@ -165,6 +165,22 @@ BGWHITE='\[\e[1;37m\]'
 
 PROMPT_COMMAND=smile_prompt
 
+parse_git_branch () {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+parse_git_tag () {
+    git describe --tags --exact-match 2>/dev/null
+}
+
+parse_git_branch_or_tag() {
+    local OUT="($(parse_git_tag))"
+    if [ "$OUT" == "()" ]; then
+	    OUT="$(parse_git_branch)";
+    fi
+    echo $OUT
+}
+
 function smile_prompt
 {
     if [ "$?" -eq "0" ]
@@ -191,7 +207,8 @@ function smile_prompt
     RC="${BCYAN}"
     #default color
     DF='\[\e[0m\]'
-    PS1="[${UC}\u${RC}@${HC}\h ${RC}\w${DF}] ${SC}\n${DF}\$ "
+    GB="${BBLUE}"
+    PS1="[${UC}\u${RC}@${HC}\h ${RC}\w${DF}] ${GB}$(parse_git_branch_or_tag) ${SC}\n${DF} \$ "
 }
 
 function count
