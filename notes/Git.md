@@ -32,7 +32,7 @@ Push
 git push origin <local branch>:refs/for/<remote branch>
 ```
 ---
-## UTF-16 problem  
+## UTF-16 diff problem  
 Situations on utf-16 encoded file  
 ```
 "git diff" and "git log -p <utf16 file>" shows "Binary files a/xxx and b/xxx differ" instead of text content,  
@@ -42,4 +42,11 @@ Solution
 ```
 git config --global diff.utf16.textconv "iconv -f utf-16 -t utf-8"
 echo "<utf16 file> diff=utf16" >> <repo root>/.gitattributes
+```
+---
+## Git is slow in windows  
+```
+git config --global core.preloadindex true
+git config --global core.fscache true
+git config --global gc.auto 256
 ```
