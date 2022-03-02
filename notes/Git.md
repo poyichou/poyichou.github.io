@@ -50,3 +50,19 @@ git config --global core.preloadindex true
 git config --global core.fscache true
 git config --global gc.auto 256
 ```
+---
+## Git fails because of key type
+```
+Unable to negotiate with XX.XX.XXX.XXX : no matching host key type found . their offer: ssh-rsa
+```
+Solution  
+copy content below into ~/.ssh/config  
+```
+Host XX.XX.XXX.XXX
+	HostkeyAlgorithms +ssh-rsa
+	PubkeyAcceptedKeyTypes +ssh-rsa
+	IdentityFile ~/.ssh/id_rsa
+	HostName XX.XX.XXX.XXX
+	User xxx
+	Port xxxx
+```
