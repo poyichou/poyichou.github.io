@@ -233,6 +233,20 @@ function update_config()
     curl -s -o ~/.bashrc -L poyichou.github.io/config_file/mybashrc
     source ~/.bashrc
 }
+
+# @param: git clone url
+function clone_vim_plugin()
+{
+	if [ $# -ne 1 ]; then
+		echo "repo name not found QQ"
+		return
+	fi
+	name=$(echo "$1" | rev | cut -d'/' -f1 | rev | sed s/.git//g)
+	mkdir -p ~/.vim && cd /tmp && rm -rf $name ; git clone $1 && cd $name
+	cp -r $(ls -d */ | grep -v 'example\|spec') ~/.vim
+	#cp -r autoload doc plugin nerdtree_plugin lib syntax ~/.vim
+}
+
 # find symbol in c/cpp code
 alias grepc="grep --include='*.[ch]' --include='*.cpp'"
 # show git commit graph

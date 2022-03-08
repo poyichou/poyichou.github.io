@@ -162,12 +162,17 @@ if 1 " cscope_support
     nnoremap CS :cs kill -1<CR>:call Update_cscope_out()<CR>:call Add_cscope_out()<CR>:echohl WarningMsg \| echo "cscope update done" \| echohl None<CR>
 endif
 
+" p.s. command 'clone_vim_plugin' is in https://poyichou.github.io/config_file/mybashrc
+
 if 1 " taglist_support
     " to install taglist,
-    "   1.install ctags
-    "   2.download taglist zip file
-    "     copy plugin/taglist.vim to ~/.vim/plugin
-    "     copy doc/taglist.txt to ~/.vim/doc
+    "   method 1:
+    "     1.install ctags
+    "     2.download taglist zip file
+    "       copy plugin/taglist.vim to ~/.vim/plugin
+    "       copy doc/taglist.txt to ~/.vim/doc
+    "   method 2:
+    "     clone_vim_plugin https://github.com/vim-scripts/taglist.vim.git
     nmap <F8> :TlistToggle<CR><CR>
     let Tlist_Show_One_File=1
     let Tlist_Exit_OnlyWindow=1
@@ -177,15 +182,20 @@ endif
 if 1 " NERDTree_support
     " NERDTree
     " To install for vim ver 8+
-    " git clone https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
-    " vim -u NONE -c "helptags ~/.vim/pack/vendor/start/nerdtree/doc" -c q
+    "   git clone https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
+    "   vim -u NONE -c "helptags ~/.vim/pack/vendor/start/nerdtree/doc" -c q
+    " else
+    "   clone_vim_plugin git://github.com/AndrewRadev/nerdtree.git
     nmap <F9> :NERDTreeToggle<CR>
 endif
 
 if 1 " linediff_support
     " to install linediff,
-    "   download linediff.zip
-    "   unzip then into ~/.vim
+    "   method 1:
+    "     download linediff.zip
+    "     unzip then into ~/.vim
+    "   method 2:
+    "     clone_vim_plugin git://github.com/AndrewRadev/linediff.vim.git
     vnoremap  LD :'<,'>Linediff<CR>
     " comapre whole file
     nmap <expr> LLD "gg" . "V" . "G " . "LD"
