@@ -7,6 +7,7 @@ set fileencodings=utf-8,cp950,utf-16le
 syntax on        " 語法上色顯示
 set nocompatible " VIM 不使用和 VI 相容的模式
 
+filetype detect
 if &filetype ==# 'python'
     set shiftwidth=4 " 設定 existing 縮排寬度
     set tabstop=4    " inserting tab 的字元數
