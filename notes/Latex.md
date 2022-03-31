@@ -1,11 +1,20 @@
 # Notes-Latex  
 
 ## Installation  
+Arch User
 ```bash
 # contains most TeX Live packages
 sudo pacman -S texlive-most
 # contains packages providing character sets and features for non-English languages
 sudo pacman -S texlive-lang
+```
+---
+Ubuntu User
+```
+# most TeX Live packages
+sudo apt install texlive-full
+# for certain font issues
+sudo apt install fonts-arphic-ukai msttcorefonts ttf-mscorefonts-installer
 ```
 ## To use chinese  
 ```latex
