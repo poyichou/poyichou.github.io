@@ -84,3 +84,51 @@ $ ln -s /data/data/com.termux/files/usr/lib/libgfortran.so.5 /data/data/com.term
 # -v for verbose mode to recognize problems if failed
 $ NPY_NUM_BUILD_JOBS=1 pip install scikit-learn==0.23.2 -v
 ```
+---
+## adb over WiFi(no root required)  
+Plug the device to PC through usb.  
+```bash
+# list plugged devices,
+# K1AXKN01F823YE5 is the ID of device in this case
+$ adb devices
+List of devices attached
+K1AXKN01F823YE5	device
+
+# show ip address of device,
+# 192.168.1.125 is the IP of device in this case
+$ adb -s K1AXKN01F823YE5 shell ip a show wlan0
+22: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 40:b0:76:bc:39:30 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.125/24 brd 192.168.1.255 scope global wlan0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42b0:76ff:febc:3930/64 scope link 
+       valid_lft forever preferred_lft forever
+
+# restart the adbd daemon listening on TCP on the 5555 port.
+$ adb -s K1AXKN01F823YE5 tcpip 5555
+
+# connect to the device via TCP/IP
+$ adb connect 192.168.1.125
+connected to 192.168.1.125:5555
+
+# show devices adb can find via usb and 192.168.1.125
+$ adb devices
+List of devices attached
+K1AXKN01F823YE5 device
+192.168.1.125:5555      device
+```
+Now you can connect to the device in following two ways.  
+```bash
+# through usb
+adb -s K1AXKN01F823YE5 [commands]
+# through WiFi
+adb -s 192.168.1.125:5555 [commands]
+```
+So it's OK to unplug the usb cable now.  
+To restart the adbd daemon listening on USB,  
+```bash
+# replace [ID of device] by K1AXKN01F823YE5 or 192.168.1.125:5555,
+# depending on how the device and the PC are connected
+$ adb -s [ID of device] usb
+restarting in USB mode
+```
