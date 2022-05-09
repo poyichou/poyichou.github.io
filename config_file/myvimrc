@@ -111,14 +111,23 @@ set clipboard=      " `:set clipboard` to check current value, if unnamed, vim w
 function! Find_cscope_out_upward()
     "let current_dir = getcwd()
     let full_file_path = expand("%:p:h")
-    let file_dir = fnamemodify(full_file_path, ":h")
+    if filereadable(full_file_path)
+        let file_dir = fnamemodify(full_file_path, ":h")
+    else
+        let file_dir = full_file_path " open dir with vim
+    endif
     let s:cscope_out = findfile("cscope.out", file_dir . ";") " find cscope.out upward, static variable
     return s:cscope_out
 endfunction
 
-function! Update_cscope_out()
+function! Update_cscope_out(option)
+    let g:cscope_out = ''
     let cscope_out = Find_cscope_out_upward() " find cscope.out upward
     if !empty(cscope_out) && filereadable(cscope_out)
+        if a:option == 'regenerate'
+            let cscope_prefix = split(cscope_out, '.out')[0]
+            let result = system("rm " . cscope_prefix . "*")
+        endif
         let src_root = fnamemodify(cscope_out, ":h")
         execute 'cd' fnameescape(src_root)
         let result = system("cscope -Rbqk")
@@ -128,11 +137,17 @@ endfunction
 
 " find cscope.out upward
 function! Add_cscope_out()
-    let cscope_out = Find_cscope_out_upward()
+    if exists('g:cscope_out')
+        let l:cscope_out = g:cscope_out
+    endif
+    let g:cscope_out = Find_cscope_out_upward()
+    if exists('l:cscope_out') && g:cscope_out == l:cscope_out
+        return
+    endif
     silent exe "cs kill -1"
-    if !empty(cscope_out) && filereadable(cscope_out)
+    if !empty(g:cscope_out) && filereadable(g:cscope_out)
 	" kill current connection, used for :so ~/.vimrc
-        silent exe "cs add" cscope_out
+        silent exe "cs add" g:cscope_out
         set csre " make cscope aware of path of cscope.out instead of just search through relative path
     endif
     set cscopeverbose
@@ -151,17 +166,33 @@ if 1 " cscope_support
     nmap zi ZI<CR>
     nmap zd ZD<CR>
 
-    nmap ZS :cs find s <C-R>=expand("<cword>")<CR>
-    nmap ZG :cs find g <C-R>=expand("<cword>")<CR>
-    nmap ZC :cs find c <C-R>=expand("<cword>")<CR>
-    nmap ZT :cs find t <C-R>=expand("<cword>")<CR>
-    nmap ZE :cs find e <C-R>=expand("<cword>")<CR>
-    nmap ZF :cs find f <C-R>=expand("<cfile>")<CR>
-    nmap ZI :cs find i ^<C-R>=expand("<cfile>")<CR>$
-    nmap ZD :cs find d <C-R>=expand("<cword>")<CR>
+    nmap ZS ZZS <C-R>=expand("<cword>")<CR>
+    nmap ZG ZZG <C-R>=expand("<cword>")<CR>
+    nmap ZC ZZC <C-R>=expand("<cword>")<CR>
+    nmap ZT ZZT <C-R>=expand("<cword>")<CR>
+    nmap ZE ZZE <C-R>=expand("<cword>")<CR>
+    nmap ZF ZZF <C-R>=expand("<cfile>")<CR>
+    nmap ZI ZZI ^<C-R>=expand("<cfile>")<CR>$
+    nmap ZD ZZD <C-R>=expand("<cword>")<CR>
+
+    nnoremap ZZS :cs find s
+    nnoremap ZZG :cs find g
+    nnoremap ZZC :cs find c
+    nnoremap ZZT :cs find t
+    nnoremap ZZE :cs find e
+    nnoremap ZZF :cs find f
+    nnoremap ZZI :cs find i
+    nnoremap ZZD :cs find d
     " move to new split
-    autocmd BufEnter * call Add_cscope_out()
-    nnoremap CS :cs kill -1<CR>:call Update_cscope_out()<CR>:call Add_cscope_out()<CR>:echohl WarningMsg \| echo "cscope update done" \| echohl None<CR>
+    if !exists('#UpdateCscopeWhenEnter#BufEnter')
+        augroup UpdateCscopeWhenEnter
+            autocmd!
+            autocmd BufEnter * call Add_cscope_out()
+        augroup END
+    endif
+    "call Add_cscope_out()
+    nnoremap CS :cs kill -1<CR>:call Update_cscope_out("update")<CR>:call Add_cscope_out()<CR>:echohl WarningMsg \| echo "cscope update done" \| echohl None<CR>
+    nnoremap CCS :cs kill -1<CR>:call Update_cscope_out("regenerate")<CR>:call Add_cscope_out()<CR>:echohl WarningMsg \| echo "cscope update done" \| echohl None<CR>
 endif
 
 " p.s. command 'clone_vim_plugin' is in https://poyichou.github.io/config_file/mybashrc
@@ -272,3 +303,6 @@ function! ChangeFileencoding()
   endif
 endf
 nmap <F5> :call ChangeFileencoding()<CR>
+
+"To install supertab
+"  clone_vim_plugin https://github.com/ervandew/supertab.git
