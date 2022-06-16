@@ -33,7 +33,12 @@ set smartindent  " 設定 smartindent, include autoindent
 set confirm      " 操作過程有衝突時，以明確的文字來詢問
 set history=100  " 保留 100 個使用過的指令
 
-colorscheme default
+try
+    colorscheme codedark
+catch /^Vim\%((\a\+)\)\=:E185/
+    colorscheme default
+endtry
+
 set cursorline   " 顯示目前的游標位置
 "hi CursorLine cterm=none ctermbg=DarkGrey ctermfg=White "set color of highlight
 
@@ -85,7 +90,7 @@ nmap mou :set mouse=a<CR>
 "   Or simply,
 "     git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/pack/vendor/start/jedi-vim
 " No pop up completion after typing a dot
-let g:jedi#popup_on_dot = 0
+let g:jedi#popup_on_dot = 1
 
 " COPY VISUAL BLOCK TO CLIPBOARD
 "   to check if supported :echo has('clipboard')
@@ -146,7 +151,7 @@ function! Add_cscope_out()
     endif
     silent exe "cs kill -1"
     if !empty(g:cscope_out) && filereadable(g:cscope_out)
-	" kill current connection, used for :so ~/.vimrc
+        " kill current connection, used for :so ~/.vimrc
         silent exe "cs add" g:cscope_out
         set csre " make cscope aware of path of cscope.out instead of just search through relative path
     endif
@@ -297,12 +302,51 @@ function! ChangeFileencoding()
   let encodings = ['utf-8', 'cp950', 'utf-16le']
   execute 'e ++enc='.encodings[g:enc_index].' %:p'
   if g:enc_index >=2
-	  let g:enc_index = 0
+      let g:enc_index = 0
   else
-	  let g:enc_index = g:enc_index + 1
+      let g:enc_index = g:enc_index + 1
   endif
 endf
 nmap <F5> :call ChangeFileencoding()<CR>
 
 "To install supertab
 "  clone_vim_plugin https://github.com/ervandew/supertab.git
+
+"To install CtrlP
+"  mkdir -p ~/.vim/pack/plugins/start
+"  git clone --depth=1 https://github.com/ctrlpvim/ctrlp.vim.git ~/.vim/pack/plugins/start/ctrlp
+"To install ag (the_silver_searcher, search file faster)
+"  pacman -S mingw-w64-{i686,x86_64}-ag (MSYS2)
+if 1 " CtrlP (fuzzy finder)
+    let g:ctrlp_map = '<c-p>'
+    let g:ctrlp_cmd = 'CtrlP'
+    if executable('ag')
+        " Use Ag over Grep
+        set grepprg=ag\ --nogroup\ --nocolor
+
+        if has('win32unix') || has('win32')
+            if executable('sed')
+                " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+                let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" | sed "s/\r//g"'
+            endif
+        else
+            " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+            let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+        endif
+    endif
+endif
+
+function! CheckPlugin()
+    let ret = system('mkdir -p ~/.vim/pack/plugins/start')
+    let repo_params = ['--recursive', '', '', '', '--depth=1', '', '']
+    let reops = ['https://github.com/davidhalter/jedi-vim.git', 'https://github.com/vim-scripts/taglist.vim.git', 'https://github.com/preservim/nerdtree.git', 'https://github.com/AndrewRadev/linediff.vim.git', 'https://github.com/ctrlpvim/ctrlp.vim.git', 'https://github.com/ervandew/supertab.git', 'https://github.com/tomasiser/vim-code-dark.git']
+    let index = 0
+    while index < len(reops)
+        let name = split(reops[index], '\.git')[0]
+        let name = split(name, '/')[4]
+        if !isdirectory(fnamemodify('~', ':p') . '.vim/pack/plugins/start/' . name)
+            echo 'git clone ' . repo_params[index] . ' ' . reops[index] . ' ~/.vim/pack/plugins/start/' . name
+        endif
+        let index += 1
+    endwhile
+endf
