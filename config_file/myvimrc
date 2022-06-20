@@ -35,7 +35,9 @@ set history=100  " 保留 100 個使用過的指令
 
 try
     colorscheme codedark
-catch /^Vim\%((\a\+)\)\=:E185/
+catch /^Vim\%((\a\+)\)\=:E185/ " not found
+    colorscheme default
+catch " other error, e.g. vim too old to compatible
     colorscheme default
 endtry
 
