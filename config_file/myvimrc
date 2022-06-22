@@ -1,3 +1,13 @@
+" ============= Plugin Supports, comment or unset to disable =============
+let g:cscope_support = 1
+let g:taglist_support = 1
+let g:NERDTree_support = 1
+let g:linediff_support = 1
+let g:fold_support = 1
+let g:ctrlp_support = 1
+let g:jedi_support = 1
+" ============================= Plugins End ==============================
+
 set nu
 set bg=dark
 filetype indent on
@@ -35,7 +45,7 @@ set history=100  " 保留 100 個使用過的指令
 
 try
     colorscheme codedark
-catch /^Vim\%((\a\+)\)\=:E185/ " not found
+catch /^Vim\%((\a\+)\)\=:E185/ " Cannot find
     colorscheme default
 catch " other error, e.g. vim too old to compatible
     colorscheme default
@@ -51,6 +61,13 @@ set noswapfile
 "for search
 set ignorecase
 set smartcase
+"disable bell/visual bell altogether
+set vb              " enable vim's internal visual bell
+set t_vb=           " set the effect of the vim visual bell to do nothing
+
+set clipboard=      " `:set clipboard` to check current value, if unnamed, vim will use system clipboard as copy/change buffer
+
+" ================== General Map ==================
 
 " grep cword recursively
 nmap gr GR<CR>:copen<CR>
@@ -85,14 +102,7 @@ nmap <A-Left> <C-H>
 " make vim more like gui
 nmap mou :set mouse=a<CR>
 
-" To use jedi
-"   In ubuntu,
-"     apt install vim-python-jedi
-"     vim-addons install python-jedi
-"   Or simply,
-"     git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/pack/vendor/start/jedi-vim
-" No pop up completion after typing a dot
-let g:jedi#popup_on_dot = 1
+nmap ta :tab vs<CR>
 
 " COPY VISUAL BLOCK TO CLIPBOARD
 "   to check if supported :echo has('clipboard')
@@ -108,59 +118,27 @@ endif
 "  to use, visually select, press '//'
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
-"disable bell/visual bell altogether
-set vb              " enable vim's internal visual bell
-set t_vb=           " set the effect of the vim visual bell to do nothing
+" List all the included files.
+nnoremap <F4> :checkpath!<CR>
 
-set clipboard=      " `:set clipboard` to check current value, if unnamed, vim will use system clipboard as copy/change buffer
+nmap <F5> :call ChangeFileencoding()<CR>
 
-" To generate cscope.out at first, cscope -Rbqk
-function! Find_cscope_out_upward()
-    "let current_dir = getcwd()
-    let full_file_path = expand("%:p:h")
-    if filereadable(full_file_path)
-        let file_dir = fnamemodify(full_file_path, ":h")
-    else
-        let file_dir = full_file_path " open dir with vim
-    endif
-    let s:cscope_out = findfile("cscope.out", file_dir . ";") " find cscope.out upward, static variable
-    return s:cscope_out
-endfunction
+" ================ General Map End ================
 
-function! Update_cscope_out(option)
-    let g:cscope_out = ''
-    let cscope_out = Find_cscope_out_upward() " find cscope.out upward
-    if !empty(cscope_out) && filereadable(cscope_out)
-        if a:option == 'regenerate'
-            let cscope_prefix = split(cscope_out, '.out')[0]
-            let result = system("rm " . cscope_prefix . "*")
-        endif
-        let src_root = fnamemodify(cscope_out, ":h")
-        execute 'cd' fnameescape(src_root)
-        let result = system("cscope -Rbqk")
-        cd - " cd back to last directory
-    endif
-endfunction
+" ======================= Plugin Config =======================
 
-" find cscope.out upward
-function! Add_cscope_out()
-    if exists('g:cscope_out')
-        let l:cscope_out = g:cscope_out
-    endif
-    let g:cscope_out = Find_cscope_out_upward()
-    if exists('l:cscope_out') && g:cscope_out == l:cscope_out
-        return
-    endif
-    silent exe "cs kill -1"
-    if !empty(g:cscope_out) && filereadable(g:cscope_out)
-        " kill current connection, used for :so ~/.vimrc
-        silent exe "cs add" g:cscope_out
-        set csre " make cscope aware of path of cscope.out instead of just search through relative path
-    endif
-    set cscopeverbose
-endfunction
+if exists('g:jedi_support') && g:jedi_support
+    " To use jedi
+    "   In ubuntu,
+    "     apt install vim-python-jedi
+    "     vim-addons install python-jedi
+    "   Or simply,
+    "     git clone --recursive https://github.com/davidhalter/jedi-vim.git ~/.vim/pack/vendor/start/jedi-vim
+    " No pop up completion after typing a dot
+    let g:jedi#popup_on_dot = 1
+endif
 
-if 1 " cscope_support
+if exists('g:cscope_support') && g:cscope_support " cscope_support
     " cscope color
     hi ModeMsg ctermfg=brown ctermbg=none
     " find
@@ -204,7 +182,7 @@ endif
 
 " p.s. command 'clone_vim_plugin' is in https://poyichou.github.io/config_file/mybashrc
 
-if 1 " taglist_support
+if exists('g:taglist_support') && g:taglist_support " taglist_support
     " to install taglist,
     "   method 1:
     "     1.install ctags
@@ -219,7 +197,7 @@ if 1 " taglist_support
     set ut=100
 endif
 
-if 1 " NERDTree_support
+if exists('g:NERDTree_support') && g:NERDTree_support " NERDTree_support
     " NERDTree
     " To install for vim ver 8+
     "   git clone https://github.com/preservim/nerdtree.git ~/.vim/pack/vendor/start/nerdtree
@@ -229,7 +207,7 @@ if 1 " NERDTree_support
     nmap <F9> :NERDTreeToggle<CR>
 endif
 
-if 1 " linediff_support
+if exists('g:linediff_support') && g:linediff_support " linediff_support
     " to install linediff,
     "   method 1:
     "     download linediff.zip
@@ -241,7 +219,7 @@ if 1 " linediff_support
     nmap <expr> LLD "gg" . "V" . "G " . "LD"
 endif
 
-if 1 " fold_support
+if exists('g:fold_support') && g:fold_support " fold_support
     " Use F10 to toggle folding
     if &filetype ==# 'python'
         set foldmethod=indent
@@ -257,8 +235,88 @@ if 1 " fold_support
     vnoremap <F10> zf
 endif
 
-" tabline setting
+if exists('g:ctrlp_support') && g:ctrlp_support " CtrlP (fuzzy finder)
+    "To install CtrlP
+    "  mkdir -p ~/.vim/pack/plugins/start
+    "  git clone --depth=1 https://github.com/ctrlpvim/ctrlp.vim.git ~/.vim/pack/plugins/start/ctrlp
+    "To install ag (the_silver_searcher, search file faster)
+    "  pacman -S mingw-w64-{i686,x86_64}-ag (MSYS2)
+    let g:ctrlp_map = '<c-p>'
+    let g:ctrlp_cmd = 'CtrlP'
+    let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+    if executable('ag')
+        " Use Ag over Grep
+        set grepprg=ag\ --nogroup\ --nocolor
+
+        if has('win32unix') || has('win32')
+            if executable('sed')
+                " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+                let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" | sed "s/\r//g"'
+            endif
+        else
+            " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+            let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+        endif
+    endif
+
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.exe
+    " 'link': 'some_bad_symbolic_links',
+    let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+      \ 'file': '\v\.(exe|so|dll)$',
+      \ }
+endif
+
+" ===================== Plugin Config End =====================
+
+function! Find_cscope_out_upward()
+    " To generate cscope.out at first, cscope -Rbqk
+    "let current_dir = getcwd()
+    let full_file_path = expand("%:p:h")
+    if filereadable(full_file_path)
+        let file_dir = fnamemodify(full_file_path, ":h")
+    else
+        let file_dir = full_file_path " open dir with vim
+    endif
+    let s:cscope_out = findfile("cscope.out", file_dir . ";") " find cscope.out upward, static variable
+    return s:cscope_out
+endfunction
+
+function! Update_cscope_out(option)
+    let g:cscope_out = ''
+    let cscope_out = Find_cscope_out_upward() " find cscope.out upward
+    if !empty(cscope_out) && filereadable(cscope_out)
+        if a:option == 'regenerate'
+            let cscope_prefix = split(cscope_out, '.out')[0]
+            let result = system("rm " . cscope_prefix . "*")
+        endif
+        let src_root = fnamemodify(cscope_out, ":h")
+        execute 'cd' fnameescape(src_root)
+        let result = system("cscope -Rbqk")
+        cd - " cd back to last directory
+    endif
+endfunction
+
+function! Add_cscope_out()
+    " find cscope.out upward
+    if exists('g:cscope_out')
+        let l:cscope_out = g:cscope_out
+    endif
+    let g:cscope_out = Find_cscope_out_upward()
+    if exists('l:cscope_out') && g:cscope_out == l:cscope_out
+        return
+    endif
+    silent exe "cs kill -1"
+    if !empty(g:cscope_out) && filereadable(g:cscope_out)
+        " kill current connection, used for :so ~/.vimrc
+        silent exe "cs add" g:cscope_out
+        set csre " make cscope aware of path of cscope.out instead of just search through relative path
+    endif
+    set cscopeverbose
+endfunction
+
 function! Tabline() abort
+    " tabline setting
     let l:line = ''
     let l:current = tabpagenr()
 
@@ -294,9 +352,6 @@ hi TabLineSel ctermfg=Black ctermbg=DarkGreen
 " set tabline tab name be only filename instead of full path
 set tabline=%!Tabline()
 
-" List all the included files.
-nnoremap <F4> :checkpath!<CR>
-
 " To reload a file with different encoding:
 "   :e ++enc=utf-8
 let g:enc_index = 0
@@ -309,39 +364,25 @@ function! ChangeFileencoding()
       let g:enc_index = g:enc_index + 1
   endif
 endf
-nmap <F5> :call ChangeFileencoding()<CR>
-
-"To install supertab
-"  clone_vim_plugin https://github.com/ervandew/supertab.git
-
-"To install CtrlP
-"  mkdir -p ~/.vim/pack/plugins/start
-"  git clone --depth=1 https://github.com/ctrlpvim/ctrlp.vim.git ~/.vim/pack/plugins/start/ctrlp
-"To install ag (the_silver_searcher, search file faster)
-"  pacman -S mingw-w64-{i686,x86_64}-ag (MSYS2)
-if 1 " CtrlP (fuzzy finder)
-    let g:ctrlp_map = '<c-p>'
-    let g:ctrlp_cmd = 'CtrlP'
-    if executable('ag')
-        " Use Ag over Grep
-        set grepprg=ag\ --nogroup\ --nocolor
-
-        if has('win32unix') || has('win32')
-            if executable('sed')
-                " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-                let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" | sed "s/\r//g"'
-            endif
-        else
-            " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-            let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-        endif
-    endif
-endif
 
 function! CheckPlugin()
     let ret = system('mkdir -p ~/.vim/pack/plugins/start')
-    let repo_params = ['--recursive', '', '', '', '--depth=1', '', '']
-    let reops = ['https://github.com/davidhalter/jedi-vim.git', 'https://github.com/vim-scripts/taglist.vim.git', 'https://github.com/preservim/nerdtree.git', 'https://github.com/AndrewRadev/linediff.vim.git', 'https://github.com/ctrlpvim/ctrlp.vim.git', 'https://github.com/ervandew/supertab.git', 'https://github.com/tomasiser/vim-code-dark.git']
+    let repo_params = [
+      \ '--recursive',
+      \ '',
+      \ '',
+      \ '',
+      \ '--depth=1',
+      \ '',
+      \ '' ]
+    let reops = [
+      \ 'https://github.com/davidhalter/jedi-vim.git',
+      \ 'https://github.com/vim-scripts/taglist.vim.git',
+      \ 'https://github.com/preservim/nerdtree.git',
+      \ 'https://github.com/AndrewRadev/linediff.vim.git',
+      \ 'https://github.com/ctrlpvim/ctrlp.vim.git',
+      \ 'https://github.com/ervandew/supertab.git',
+      \ 'https://github.com/tomasiser/vim-code-dark.git' ]
     let index = 0
     while index < len(reops)
         let name = split(reops[index], '\.git')[0]
