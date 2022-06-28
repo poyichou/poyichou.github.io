@@ -176,8 +176,8 @@ if exists('g:cscope_support') && g:cscope_support " cscope_support
         augroup END
     endif
     "call Add_cscope_out()
-    nnoremap CS :cs kill -1<CR>:call Update_cscope_out("update")<CR>:call Add_cscope_out()<CR>:echohl WarningMsg \| echo "cscope update done" \| echohl None<CR>
-    nnoremap CCS :cs kill -1<CR>:call Update_cscope_out("regenerate")<CR>:call Add_cscope_out()<CR>:echohl WarningMsg \| echo "cscope update done" \| echohl None<CR>
+    nnoremap CS :cs kill -1<CR>:call Update_cscope_out("update")<CR>
+    nnoremap CCS :cs kill -1<CR>:call Update_cscope_out("regenerate")<CR>
 endif
 
 " p.s. command 'clone_vim_plugin' is in https://poyichou.github.io/config_file/mybashrc
@@ -245,7 +245,9 @@ if exists('g:ctrlp_support') && g:ctrlp_support " CtrlP (fuzzy finder)
     "  pacman -S mingw-w64-{i686,x86_64}-ag (MSYS2)
     let g:ctrlp_map = '<c-p>'
     let g:ctrlp_cmd = 'CtrlP'
-    let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+    "let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+    let g:ctrlp_use_caching = 0
+    let g:ctrlp_max_files=0
     if executable('ag')
         " Use Ag over Grep
         set grepprg=ag\ --nogroup\ --nocolor
@@ -294,7 +296,15 @@ function! Update_cscope_out(option)
         endif
         let src_root = fnamemodify(cscope_out, ":h")
         execute 'cd' fnameescape(src_root)
-        let result = system("cscope -Rbqk")
+	echo "Updating cscope.out..."
+	if has('job')
+            exe 'cclose'
+	    let g:job = job_start(["cscope", "-Rbqk"], {"exit_cb": "Update_cscope_out_handler"})
+        else
+            let result = system("cscope -Rbqk")
+            call Add_cscope_out()
+            exe 'echohl WarningMsg | echo "cscope update done" | echohl None'
+        endif
         cd - " cd back to last directory
     endif
 endfunction
@@ -315,6 +325,12 @@ function! Add_cscope_out()
         set csre " make cscope aware of path of cscope.out instead of just search through relative path
     endif
     set cscopeverbose
+endfunction
+
+function! Update_cscope_out_handler(channel, msg)
+    call Add_cscope_out()
+    " exe 'echohl WarningMsg | echo "cscope update done" | echohl None'
+    exe 'cexpr system("echo cscope update done") | copen 1 | call matchadd("Search", "cscope update done") | wincmd p'
 endfunction
 
 function! Tabline() abort
