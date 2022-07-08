@@ -6,6 +6,7 @@ let g:linediff_support = 1
 let g:fold_support = 1
 let g:ctrlp_support = 1
 let g:jedi_support = 1
+let g:srcexpl_support = 1
 " ============================= Plugins End ==============================
 
 set nu
@@ -236,6 +237,17 @@ if exists('g:fold_support') && g:fold_support " fold_support
     onoremap <F10> <C-C>za
     vnoremap <F10> zf
 endif
+if exists('g:srcexpl_support') && g:srcexpl_support " SrcExpl
+    nmap <F7> :SrcExplToggle<CR>
+    " // In order to avoid conflicts, the Source Explorer should know what plugins except
+    " // itself are using buffers. And you need add their buffer names into below list
+    " // according to the command ":buffers!"
+    let g:SrcExpl_pluginList = [
+            \ "__Tag_List__",
+            \ "_NERD_tree_",
+            \ "Source_Explorer"
+        \ ]
+endif
 
 if exists('g:ctrlp_support') && g:ctrlp_support " CtrlP (fuzzy finder)
     "To install CtrlP
@@ -392,6 +404,7 @@ function! CheckPlugin()
       \ '',
       \ '--depth=1',
       \ '',
+      \ '',
       \ '' ]
     let reops = [
       \ 'https://github.com/davidhalter/jedi-vim.git',
@@ -400,7 +413,8 @@ function! CheckPlugin()
       \ 'https://github.com/AndrewRadev/linediff.vim.git',
       \ 'https://github.com/ctrlpvim/ctrlp.vim.git',
       \ 'https://github.com/ervandew/supertab.git',
-      \ 'https://github.com/tomasiser/vim-code-dark.git' ]
+      \ 'https://github.com/tomasiser/vim-code-dark.git' 
+      \ 'https://github.com/wenlongche/SrcExpl.git']
     let index = 0
     while index < len(reops)
         let name = split(reops[index], '\.git')[0]
