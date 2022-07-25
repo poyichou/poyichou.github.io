@@ -7,6 +7,8 @@ let g:fold_support = 1
 let g:ctrlp_support = 1
 let g:jedi_support = 1
 let g:srcexpl_support = 1
+" append log to quickfix
+let g:verbose_level = 0
 " ============================= Plugins End ==============================
 
 set nu
@@ -19,7 +21,7 @@ syntax on        " 語法上色顯示
 set nocompatible " VIM 不使用和 VI 相容的模式
 
 filetype detect
-if &filetype ==# 'python'
+if &filetype ==# 'python' || &filetype ==# 'vim'
     set shiftwidth=4 " 設定 existing 縮排寬度
     set tabstop=4    " inserting tab 的字元數
     set softtabstop=4 "方便在開啟了et後使用退格（backspace）鍵，每次退格將刪除X個空格
@@ -67,6 +69,10 @@ set vb              " enable vim's internal visual bell
 set t_vb=           " set the effect of the vim visual bell to do nothing
 
 set clipboard=      " `:set clipboard` to check current value, if unnamed, vim will use system clipboard as copy/change buffer
+
+" make vim cycling through tab auto-completion
+set wildmode=longest,list,full
+set wildmenu
 
 " ================== General Map ==================
 
@@ -123,6 +129,26 @@ vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 nnoremap <F4> :checkpath!<CR>
 
 nmap <F5> :call ChangeFileencoding()<CR>
+
+nmap <F3> :call ToggleHorizenVertical()<CR>
+" change vertical split to horizental
+"   ctrl-w t ctrl-w H
+" change vertical split to horizental
+"   ctrl-w t ctrl-w K
+let g:split_idx = 0
+function! ToggleHorizenVertical()
+  if g:split_idx >=1
+      call feedkeys("\<C-W>t\<C-W>H")
+      "normal <Ctrl-W>t<Ctrl-W>H
+      echo g:split_idx
+      let g:split_idx = 0
+  else
+      call feedkeys("\<C-W>t\<C-W>K")
+      "normal <Ctrl-W>t<Ctrl-W>K
+      echo g:split_idx
+      let g:split_idx = g:split_idx + 1
+  endif
+endf
 
 " ================ General Map End ================
 
@@ -237,6 +263,7 @@ if exists('g:fold_support') && g:fold_support " fold_support
     onoremap <F10> <C-C>za
     vnoremap <F10> zf
 endif
+
 if exists('g:srcexpl_support') && g:srcexpl_support " SrcExpl
     nmap <F7> :SrcExplToggle<CR>
     " // In order to avoid conflicts, the Source Explorer should know what plugins except
@@ -305,13 +332,16 @@ function! Update_cscope_out(option)
         if a:option == 'regenerate'
             let cscope_prefix = split(cscope_out, '.out')[0]
             let result = system("rm " . cscope_prefix . "*")
+            echo "Regenerating cscope.out..."
+        else
+            echo "Updating cscope.out..."
         endif
         let src_root = fnamemodify(cscope_out, ":h")
         execute 'cd' fnameescape(src_root)
-	echo "Updating cscope.out..."
-	if has('job')
+        if has('job')
+            " close existing quickfix
             exe 'cclose'
-	    let g:job = job_start(["cscope", "-Rbqk"], {"exit_cb": "Update_cscope_out_handler"})
+            let g:job = job_start(["cscope", "-Rbqk"], {"exit_cb": "Update_cscope_out_handler"})
         else
             let result = system("cscope -Rbqk")
             call Add_cscope_out()
@@ -413,8 +443,8 @@ function! CheckPlugin()
       \ 'https://github.com/AndrewRadev/linediff.vim.git',
       \ 'https://github.com/ctrlpvim/ctrlp.vim.git',
       \ 'https://github.com/ervandew/supertab.git',
-      \ 'https://github.com/tomasiser/vim-code-dark.git' 
-      \ 'https://github.com/wenlongche/SrcExpl.git']
+      \ 'https://github.com/tomasiser/vim-code-dark.git',
+      \ 'https://github.com/wenlongche/SrcExpl.git' ]
     let index = 0
     while index < len(reops)
         let name = split(reops[index], '\.git')[0]
