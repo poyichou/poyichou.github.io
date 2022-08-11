@@ -435,6 +435,7 @@ function! CheckPlugin()
       \ '--depth=1',
       \ '',
       \ '',
+      \ '',
       \ '' ]
     let reops = [
       \ 'https://github.com/davidhalter/jedi-vim.git',
@@ -444,7 +445,8 @@ function! CheckPlugin()
       \ 'https://github.com/ctrlpvim/ctrlp.vim.git',
       \ 'https://github.com/ervandew/supertab.git',
       \ 'https://github.com/tomasiser/vim-code-dark.git',
-      \ 'https://github.com/wenlongche/SrcExpl.git' ]
+      \ 'https://github.com/wenlongche/SrcExpl.git',
+      \ 'https://github.com/skywind3000/vim-quickui.git' ]
     let index = 0
     while index < len(reops)
         let name = split(reops[index], '\.git')[0]
@@ -454,4 +456,39 @@ function! CheckPlugin()
         endif
         let index += 1
     endwhile
+endf
+
+function! Cscope_menu()
+	if !has('popupwin')
+		echohl WarningMsg \| echo "you don't have popup feature" \| echohl None<CR>
+		return
+	endif
+	let cscope_options = [
+            \ "update cscope.out",
+            \ "regenerate cscope.out",
+            \ "s: Find this C symbol",
+            \ "g: Find this definition",
+            \ "c: Find functions calling this function",
+            \ "d: Find functions called by this function",
+            \ "t: Find this text string",
+            \ "e: Find this egrep pattern",
+            \ "f: Find this file",
+            \ "i: Find files #including this file",
+            \ "a: Find places where this symbol is assigned a value",
+            \ ]
+	let opts = {'index':g:quickui#listbox#cursor, 'title': 'cs find #'}
+	let index = quickui#listbox#inputlist(cscope_options, opts)
+	if index >= 2
+		let cscope_cmd = 'cs find '. split(cscope_options[index], ':')[0]
+		let cscope_cmd = cscope_cmd . ' ' . quickui#input#open(cscope_cmd, expand("<cword>"))
+		silent exe cscope_cmd
+		echo cscope_cmd
+	elseif index >= 0
+		silent exe 'cs kill -1'
+		if index == 0
+			call Update_cscope_out("update")
+		else
+			call Update_cscope_out("regenerate")
+		endif
+	endif
 endf
