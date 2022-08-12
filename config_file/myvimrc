@@ -205,6 +205,7 @@ if exists('g:cscope_support') && g:cscope_support " cscope_support
     "call Add_cscope_out()
     nnoremap CS :cs kill -1<CR>:call Update_cscope_out("update")<CR>
     nnoremap CCS :cs kill -1<CR>:call Update_cscope_out("regenerate")<CR>
+    nnoremap <F2> :call Cscope_menu()<CR>
 endif
 
 " p.s. command 'clone_vim_plugin' is in https://poyichou.github.io/config_file/mybashrc
@@ -372,7 +373,12 @@ endfunction
 function! Update_cscope_out_handler(channel, msg)
     call Add_cscope_out()
     " exe 'echohl WarningMsg | echo "cscope update done" | echohl None'
-    exe 'cexpr system("echo cscope update done") | copen 1 | call matchadd("Search", "cscope update done") | wincmd p'
+    if has('popupwin')
+        let opts = {"close":"button", "title":"Vim Message", "h": "1"}
+        call quickui#textbox#open('cscope update done', opts)
+    else
+        exe 'cexpr system("echo cscope update done") | copen 1 | call matchadd("Search", "cscope update done") | wincmd p'
+    endif
 endfunction
 
 function! Tabline() abort
