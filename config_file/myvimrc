@@ -311,6 +311,10 @@ if exists('g:ctrlp_support') && g:ctrlp_support " CtrlP (fuzzy finder)
       \ }
 endif
 
+if exists('g:popterm_support') && g:popterm_support " Popup terminal
+    nnoremap <F12> :call PopupTerminal()<CR>
+endif
+
 " ===================== Plugin Config End =====================
 
 function! Find_cscope_out_upward()
@@ -497,4 +501,20 @@ function! Cscope_menu()
 			call Update_cscope_out("regenerate")
 		endif
 	endif
+endf
+
+function! TermExit(code)
+    let opts = {"close":"button", "title": "Message", "h": "1"}
+    call quickui#textbox#open("terminal exit code: ". a:code, opts)
+endfunc
+
+function! PopupTerminal()
+	if !has('popupwin')
+		echohl WarningMsg | echo "you don't have popup feature" | echohl None<CR>
+		return
+	endif
+	let cmd = quickui#input#open('cmd', "bash")
+    let opts = {'w':60, 'h':8, 'callback':'TermExit'}
+    let opts.title = 'Terminal Popup'
+    call quickui#terminal#open(cmd, opts)
 endf
