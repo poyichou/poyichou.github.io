@@ -466,7 +466,7 @@ endf
 
 function! Cscope_menu()
 	if !has('popupwin')
-		echohl WarningMsg \| echo "you don't have popup feature" \| echohl None<CR>
+		echohl WarningMsg | echo "you don't have popup feature" | echohl None<CR>
 		return
 	endif
 	let cscope_options = [
