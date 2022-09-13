@@ -7,6 +7,8 @@ let g:fold_support = 1
 let g:ctrlp_support = 1
 let g:jedi_support = 1
 let g:srcexpl_support = 1
+let g:popterm_support = 1
+let g:gitgutter_support = 1
 " append log to quickfix
 let g:verbose_level = 0
 " ============================= Plugins End ==============================
@@ -94,7 +96,7 @@ nnoremap gcc I/* <ESC>A */<ESC>
 " toggle nu
 nmap nu :set nu!<CR>
 
-" keys for easy navigation between splits 
+" keys for easy navigation between splits
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -195,6 +197,12 @@ if exists('g:cscope_support') && g:cscope_support " cscope_support
     nnoremap ZZF :cs find f
     nnoremap ZZI :cs find i
     nnoremap ZZD :cs find d
+    " Tips for multiple result
+    "   :help tag-matchlist to learn more
+    "   :tnext goes to next match and
+    "   :tprev goes to the previous one
+    "   @: to repeat last command
+
     " move to new split
     if !exists('#UpdateCscopeWhenEnter#BufEnter')
         augroup UpdateCscopeWhenEnter
@@ -311,6 +319,14 @@ if exists('g:ctrlp_support') && g:ctrlp_support " CtrlP (fuzzy finder)
       \ }
 endif
 
+if exists('g:gitgutter_support') && g:gitgutter_support " gitgutter
+    nnoremap <F6> :GitGutterToggle<CR>
+    let g:gitgutter_highlight_lines = 1
+    let g:gitgutter_preview_win_floating = 1
+    " preview: <leader>hp
+    " let g:gitgutter_diff_base = '<commit SHA>'
+endif
+
 if exists('g:popterm_support') && g:popterm_support " Popup terminal
     nnoremap <F12> :call PopupTerminal()<CR>
 endif
@@ -379,6 +395,7 @@ function! Update_cscope_out_handler(channel, msg)
     " exe 'echohl WarningMsg | echo "cscope update done" | echohl None'
     if has('popupwin')
         let opts = {"close":"button", "title":"Vim Message", "h": "1"}
+        exe 'echohl WarningMsg | echo "cscope update done" | echohl None'
         call quickui#textbox#open('cscope update done', opts)
     else
         exe 'cexpr system("echo cscope update done") | copen 1 | call matchadd("Search", "cscope update done") | wincmd p'
@@ -446,6 +463,7 @@ function! CheckPlugin()
       \ '',
       \ '',
       \ '',
+      \ '',
       \ '' ]
     let reops = [
       \ 'https://github.com/davidhalter/jedi-vim.git',
@@ -456,6 +474,7 @@ function! CheckPlugin()
       \ 'https://github.com/ervandew/supertab.git',
       \ 'https://github.com/tomasiser/vim-code-dark.git',
       \ 'https://github.com/wenlongche/SrcExpl.git',
+      \ 'https://github.com/airblade/vim-gitgutter.git',
       \ 'https://github.com/skywind3000/vim-quickui.git' ]
     let index = 0
     while index < len(reops)
@@ -466,6 +485,43 @@ function! CheckPlugin()
         endif
         let index += 1
     endwhile
+endf
+
+function! Function_menu()
+	if !has('popupwin')
+		echohl WarningMsg | echo "you don't have popup feature" | echohl None<CR>
+		return
+	endif
+	let function_list = [
+            \ "cscope menu\tF2",
+            \ "toggle split direction\tF3",
+            \ "checkpath!\tF4",
+            \ "change file read encoding\tF5",
+            \ "toggle GitGutter\tF6",
+            \ "source explore\tF7",
+            \ "tag list toggle\tF8",
+            \ "NerdTree toggle\tF9",
+            \ "Fold\tF10",
+            \ "Popup Terminal\tF12",
+            \ ]
+	let function_keys = [
+            \ "\<F2>",
+            \ "\<F3>",
+            \ "\<F4>",
+            \ "\<F5>",
+            \ "\<F6>",
+            \ "\<F7>",
+            \ "\<F8>",
+            \ "\<F9>",
+            \ "\<F10>",
+            \ "\<F12>",
+            \ ]
+	let opts = {'index':g:quickui#listbox#cursor, 'title': 'Function Menu'}
+	let index = quickui#listbox#inputlist(function_list, opts)
+	if index >= 0
+        call feedkeys(function_keys[index])
+        "call feedkeys("\<F2>")
+	endif
 endf
 
 function! Cscope_menu()
@@ -491,7 +547,7 @@ function! Cscope_menu()
 	if index >= 2
 		let cscope_cmd = 'cs find '. split(cscope_options[index], ':')[0]
 		let cscope_cmd = cscope_cmd . ' ' . quickui#input#open(cscope_cmd, expand("<cword>"))
-		silent exe cscope_cmd
+		exe cscope_cmd
 		echo cscope_cmd
 	elseif index >= 0
 		silent exe 'cs kill -1'
