@@ -152,6 +152,8 @@ function! ToggleHorizenVertical()
   endif
 endf
 
+command PYhelp call Function_menu()
+
 " ================ General Map End ================
 
 " ======================= Plugin Config =======================
