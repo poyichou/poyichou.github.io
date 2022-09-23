@@ -241,10 +241,83 @@ function clone_vim_plugin()
 		echo "repo name not found QQ"
 		return
 	fi
+	curr_dir="$(pwd)"
 	name=$(echo "$1" | rev | cut -d'/' -f1 | rev | sed s/.git//g)
 	mkdir -p ~/.vim && cd /tmp && rm -rf $name ; git clone $1 && cd $name
 	cp -r $(ls -d */ | grep -v 'example\|spec') ~/.vim
 	#cp -r autoload doc plugin nerdtree_plugin lib syntax ~/.vim
+	cd $curr_dir
+}
+
+function gerrit_auto_rebase()
+{
+	branch=$(git rev-parse --abbrev-ref HEAD)
+	if [ -z "$branch" ];then
+		return
+	fi
+	trail=0;
+	rebase_times=0;
+	while [ 1 ];do
+		rebase_date=""
+		echo -ne "trail: $trail, rebase_times: $rebase_times $rebase_date\r" && trail="$(expr $trail + 1)"
+		git fetch origin
+		if [ $(git rev-parse FETCH_HEAD) != $(git rev-parse HEAD^) ]; then # someone merged
+			git merge-base --is-ancestor HEAD^ FETCH_HEAD
+			if [ $? -ne 0 ];then
+				echo 'ancestor compare fail '$(date)
+				break
+			fi
+			git pull --rebase
+			if [ $? -ne 0 ];then
+				echo 'pull fail '$(date)
+				break
+			fi
+			git merge-base --is-ancestor HEAD FETCH_HEAD
+			if [ $? -eq 0 ];then # self merged
+				echo 'self merged '$(date)
+				break
+			fi
+			git push origin "$branch":refs/for/"$branch"
+			rebase_times="$(expr $rebase_times + 1)"
+			rebase_date="$(date)"
+		fi
+		sleep 5
+	done
+}
+
+function hex_diff()
+{
+    POSITIONAL_ARGS=()
+    COLUMN=10
+    GROUPSIZE=1
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -c|--column)
+                COLUMN="$2"
+                shift # past argument
+                shift # past value
+                ;;
+            -g|--groupsize)
+                GROUPSIZE="$2"
+                shift # past argument
+                shift # past value
+                ;;
+            -*|--*)
+                echo "Unknown option $1"
+                exit 1
+                ;;
+            *)
+                POSITIONAL_ARGS+=("$1") # save positional arg
+                shift # past argument
+                ;;
+        esac
+    done
+    if [ "${#POSITIONAL_ARGS[@]}" -ne 2 ]; then
+        echo "usage: ${FUNCNAME[0]} [-c|--column BYTES_PER_LINE] [-g|--groupsize BYTES_PER_GROUP] FILE1 FILE2"
+        return
+    fi
+    set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
+    vimdiff <(xxd -g ${GROUPSIZE} -c ${COLUMN} ${POSITIONAL_ARGS[0]}) <(xxd -g ${GROUPSIZE} -c ${COLUMN} ${POSITIONAL_ARGS[1]})
 }
 
 # find symbol in c/cpp code
