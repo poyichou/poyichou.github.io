@@ -285,7 +285,7 @@ function gerrit_auto_rebase()
 	done
 }
 
-function hex_diff()
+function hexdiff()
 {
     POSITIONAL_ARGS=()
     COLUMN=10

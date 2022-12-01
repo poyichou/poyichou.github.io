@@ -176,3 +176,9 @@ Resizing the filesystem on /dev/sdd2 to 29912827 (4k) blocks.
 The filesystem on /dev/sdd2 is now 29912827 (4k) blocks long.
 
 ```
+---
+## Find out Windows disk device name
+```
+# inside msys shell
+cat /proc/partitions
+```
