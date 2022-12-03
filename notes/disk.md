@@ -177,8 +177,129 @@ The filesystem on /dev/sdd2 is now 29912827 (4k) blocks long.
 
 ```
 ---
-## Find out Windows disk device name
+## clone disk in windows (msys, slow speed but easy)
 ```
-# inside msys shell
-cat /proc/partitions
+# find out device names
+ $ cat /proc/partitions
+major minor  #blocks  name   win-mounts
+
+    8     0 1953514584 sda
+    8     1     16384 sda1
+    8     2 1023983616 sda2   D:\
+    8     3 929512448 sda3   F:\
+    8    16 244198584 sdb
+    8    17    460800 sdb1
+    8    18    102400 sdb2
+    8    19     16384 sdb3
+    8    20 242815689 sdb4   C:\
+    8    21    800768 sdb5
+    8    32 3907018584 sdc
+    8    33     16384 sdc1
+    8    34 1023983616 sdc2
+    8    35 929512448 sdc3
+# may need to run msys in administrator mode 
+# specify bs since default value (512 bytes) might causing slow speed
+ $ dd if=/dev/sda of=/dev/sdc status=progress bs=128K
+```
+---
+## clone disk in windows (native, cmd, fast)
+download [dd for windows](http://www.chrysocome.net/downloads/dd-0.5.zip) in [website](http://www.chrysocome.net/dd)  
+find out device names, Partition0 is the entire disk  
+```
+C:\Dowload\Path\dd-0.5>dd --list
+rawwrite dd for windows version 0.5.
+Written by John Newbigin <jn@it.swin.edu.au>
+This program is covered by the GPL.  See copying.txt for details
+Win32 Available Volume Information
+\\.\Volume{xxx-xxx-xxx-xxx-xxx}\
+  link to \\?\Device\HarddiskVolume2
+  fixed media
+  Mounted on \\.\d:
+
+\\.\Volume{xxx-xxx-xxx-xxx-xxx}\
+  link to \\?\Device\HarddiskVolume3
+  fixed media
+  Mounted on \\.\f:
+
+\\.\Volume{xxx-xxx-xxx-xxx-xxx}\
+  link to \\?\Device\HarddiskVolume4
+  fixed media
+  Not mounted
+
+\\.\Volume{xxx-xxx-xxx-xxx-xxx}\
+  link to \\?\Device\HarddiskVolume7
+  fixed media
+  Mounted on \\.\c:
+
+\\.\Volume{xxx-xxx-xxx-xxx-xxx}\
+  link to \\?\Device\HarddiskVolume8
+  fixed media
+  Not mounted
+
+\\.\Volume{xxx-xxx-xxx-xxx-xxx}\
+  link to \\?\Device\HarddiskVolume5
+  fixed media
+  Not mounted
+
+\\.\Volume{xxx-xxx-xxx-xxx-xxx}\
+  link to \\?\Device\CdRom0
+  CD-ROM
+  Mounted on \\.\e:
+
+
+NT Block Device Objects
+\\?\Device\CdRom0
+  size is 2147483647 bytes
+\\?\Device\Harddisk0\Partition0
+  link to \\?\Device\Harddisk0\DR0
+  Fixed hard disk media. Block size = 512
+  size is 2000398934016 bytes
+\\?\Device\Harddisk0\Partition1
+  link to \\?\Device\HarddiskVolume1
+  Fixed hard disk media. Block size = 512
+  size is 16777216 bytes
+\\?\Device\Harddisk0\Partition2
+  link to \\?\Device\HarddiskVolume2
+\\?\Device\Harddisk0\Partition3
+  link to \\?\Device\HarddiskVolume3
+\\?\Device\Harddisk1\Partition0
+  link to \\?\Device\Harddisk1\DR1
+  Fixed hard disk media. Block size = 512
+  size is 250059350016 bytes
+\\?\Device\Harddisk1\Partition1
+  link to \\?\Device\HarddiskVolume4
+  Fixed hard disk media. Block size = 512
+  size is 471859200 bytes
+\\?\Device\Harddisk1\Partition2
+  link to \\?\Device\HarddiskVolume5
+  Fixed hard disk media. Block size = 512
+  size is 104857600 bytes
+\\?\Device\Harddisk1\Partition3
+  link to \\?\Device\HarddiskVolume6
+  Fixed hard disk media. Block size = 512
+  size is 16777216 bytes
+\\?\Device\Harddisk1\Partition4
+  link to \\?\Device\HarddiskVolume7
+\\?\Device\Harddisk1\Partition5
+  link to \\?\Device\HarddiskVolume8
+  Fixed hard disk media. Block size = 512
+  size is 819986432 bytes
+\\?\Device\Harddisk2\Partition0
+  link to \\?\Device\Harddisk2\DR4
+  Fixed hard disk media. Block size = 512
+  size is 4000787030016 bytes
+
+Virtual input devices
+ /dev/zero   (null data)
+ /dev/random (pseudo-random data)
+ -           (standard input)
+
+Virtual output devices
+ -           (standard output)
+```
+--progress make it show copied block  
+--size makes sure dd not to read past end of an entire device  
+specify bs since default value (512 bytes) might causing slow speed  
+```
+C:\Dowload\Path\dd-0.5>dd if=\\?\Device\Harddisk0\Partition0 of=\\?\Device\Harddisk2\Partition0 bs=16M --progress --size
 ```
