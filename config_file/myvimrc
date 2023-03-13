@@ -9,6 +9,8 @@ let g:jedi_support = 1
 let g:srcexpl_support = 1
 let g:popterm_support = 1
 let g:gitgutter_support = 1
+let g:git_blame_support = 1
+let g:vim_fugitive_support = 1
 " append log to quickfix
 let g:verbose_level = 0
 " ============================= Plugins End ==============================
@@ -28,6 +30,11 @@ if &filetype ==# 'python' || &filetype ==# 'vim'
     set tabstop=4    " inserting tab 的字元數
     set softtabstop=4 "方便在開啟了et後使用退格（backspace）鍵，每次退格將刪除X個空格
     set expandtab   " 用 space 代替 tab
+elseif &filetype ==# 'dosbatch'
+    set shiftwidth=3
+    set tabstop=3
+    set softtabstop=3
+    set noexpandtab
 else
     set shiftwidth=8
     set tabstop=8
@@ -121,6 +128,9 @@ nmap ta :tab vs<CR>
 if has('clipboard') " copy/cut to system clipboard
     noremap YY "+y
     noremap XX "+x
+elseif system('uname -r')=~ "Microsoft" " WSL2
+    noremap YY y:call system('clip.exe ',@")<CR>
+    noremap XX x:call system('clip.exe ',@")<CR>
 endif
 
 " search visually selected text
@@ -152,7 +162,9 @@ function! ToggleHorizenVertical()
   endif
 endf
 
-command PYhelp call Function_menu()
+command! Amend call Search_amend("")
+command! Damend call Search_amend("clear")
+command! PYhelp call Function_menu()
 
 " ================ General Map End ================
 
@@ -255,7 +267,7 @@ if exists('g:linediff_support') && g:linediff_support " linediff_support
 
     ":'<,'>Linediff<CR>
     vnoremap  LD :Linediff<CR>
-    " comapre whole file
+    " comapre whole file, could be substituted with :windo diffthis
     nmap <expr> LLD "gg" . "V" . "G " . "LD"
 endif
 
@@ -333,6 +345,14 @@ if exists('g:popterm_support') && g:popterm_support " Popup terminal
     nnoremap <F12> :call PopupTerminal()<CR>
 endif
 
+if exists('g:git_blame_support') && g:git_blame_support " git-blame support
+    nnoremap <Leader>b :<C-u>call gitblame#echo()<CR>
+endif
+
+if exists('g:vim_fugitive_support') && g:vim_fugitive_support " vim-fugitive support
+    nnoremap <Leader>gb :Git blame<CR><C-W><S-T><CR>
+endif
+
 " ===================== Plugin Config End =====================
 
 function! Find_cscope_out_upward()
@@ -348,7 +368,25 @@ function! Find_cscope_out_upward()
     return s:cscope_out
 endfunction
 
+function! Get_job_status(job_id)
+    if has('nvim') " nvim
+        " timeout = 0, ret == -1 means timout, implying job running
+        let running = jobwait([a:job_id], 0)[0]
+        if running == -1
+            return "run"
+        else
+            return "stop"
+        endif
+    elseif has('job') "vim and has job
+        return job_status(a:job_id)
+    endif
+endfunction
+
 function! Update_cscope_out(option)
+    " cscope update is still running
+    if exists('g:job') && Get_job_status(g:job) == "run"
+        return
+    endif
     let g:cscope_out = ''
     let cscope_out = Find_cscope_out_upward() " find cscope.out upward
     if !empty(cscope_out) && filereadable(cscope_out)
@@ -361,11 +399,15 @@ function! Update_cscope_out(option)
         endif
         let src_root = fnamemodify(cscope_out, ":h")
         execute 'cd' fnameescape(src_root)
-        if has('job')
+        if has('nvim') "nvim
+            " close existing quickfix
+            exe 'cclose'
+            let g:job = jobstart(["cscope", "-Rbqk"], {"on_exit": "Update_cscope_out_handler_nvim"})
+        elseif has('job') "newer vim
             " close existing quickfix
             exe 'cclose'
             let g:job = job_start(["cscope", "-Rbqk"], {"exit_cb": "Update_cscope_out_handler"})
-        else
+        else " old vim
             let result = system("cscope -Rbqk")
             call Add_cscope_out()
             exe 'echohl WarningMsg | echo "cscope update done" | echohl None'
@@ -375,6 +417,10 @@ function! Update_cscope_out(option)
 endfunction
 
 function! Add_cscope_out()
+    " cscope update is still running
+    if exists('g:job') && Get_job_status(g:job) == "run"
+	    return
+    endif
     " find cscope.out upward
     if exists('g:cscope_out')
         let l:cscope_out = g:cscope_out
@@ -392,6 +438,11 @@ function! Add_cscope_out()
     set cscopeverbose
 endfunction
 
+function! Update_cscope_out_handler_nvim(job_id, data, event)
+    call Add_cscope_out()
+    exe 'cexpr system("echo cscope update done, :ccl to close") | copen 1 | call matchadd("Search", "cscope update done") | wincmd p'
+endfunction
+
 function! Update_cscope_out_handler(channel, msg)
     call Add_cscope_out()
     " exe 'echohl WarningMsg | echo "cscope update done" | echohl None'
@@ -400,7 +451,7 @@ function! Update_cscope_out_handler(channel, msg)
         exe 'echohl WarningMsg | echo "cscope update done" | echohl None'
         call quickui#textbox#open('cscope update done', opts)
     else
-        exe 'cexpr system("echo cscope update done") | copen 1 | call matchadd("Search", "cscope update done") | wincmd p'
+        exe 'cexpr system("echo cscope update done, :ccl to close") | copen 1 | call matchadd("Search", "cscope update done") | wincmd p'
     endif
 endfunction
 
@@ -455,38 +506,35 @@ function! ChangeFileencoding()
 endf
 
 function! CheckPlugin()
+    " do 'git config --global core.autocrlf false'
+    " before git clone if you're in WSL
     let ret = system('mkdir -p ~/.vim/pack/plugins/start')
-    let repo_params = [
-      \ '--recursive',
-      \ '',
-      \ '',
-      \ '',
-      \ '--depth=1',
-      \ '',
-      \ '',
-      \ '',
-      \ '',
-      \ '' ]
-    let reops = [
-      \ 'https://github.com/davidhalter/jedi-vim.git',
-      \ 'https://github.com/vim-scripts/taglist.vim.git',
-      \ 'https://github.com/preservim/nerdtree.git',
-      \ 'https://github.com/AndrewRadev/linediff.vim.git',
-      \ 'https://github.com/ctrlpvim/ctrlp.vim.git',
-      \ 'https://github.com/ervandew/supertab.git',
-      \ 'https://github.com/tomasiser/vim-code-dark.git',
-      \ 'https://github.com/wenlongche/SrcExpl.git',
-      \ 'https://github.com/airblade/vim-gitgutter.git',
-      \ 'https://github.com/skywind3000/vim-quickui.git' ]
-    let index = 0
-    while index < len(reops)
-        let name = split(reops[index], '\.git')[0]
+    let reops_dict = {
+      \ 'https://github.com/davidhalter/jedi-vim.git': '--recursive',
+      \ 'https://github.com/vim-scripts/taglist.vim.git': '',
+      \ 'https://github.com/preservim/nerdtree.git': '',
+      \ 'https://github.com/AndrewRadev/linediff.vim.git': '',
+      \ 'https://github.com/ctrlpvim/ctrlp.vim.git': '--depth=1',
+      \ 'https://github.com/tomasiser/vim-code-dark.git': '',
+      \ 'https://github.com/wenlongche/SrcExpl.git': '',
+      \ 'https://github.com/airblade/vim-gitgutter.git': '',
+      \ 'https://github.com/vim-scripts/MultipleSearch.git': '',
+      \ 'https://github.com/zivyangll/git-blame.vim.git': '',
+      \ 'https://github.com/tpope/vim-fugitive.git': '',
+      \ 'https://github.com/skywind3000/vim-quickui.git': ''}
+    let links = keys(reops_dict)
+    for repo in links
+        let name = split(repo, '\.git')[0]
         let name = split(name, '/')[4]
         if !isdirectory(fnamemodify('~', ':p') . '.vim/pack/plugins/start/' . name)
-            echo 'git clone ' . repo_params[index] . ' ' . reops[index] . ' ~/.vim/pack/plugins/start/' . name
+            echo 'git clone ' . reops_dict[repo] . ' ' . repo . ' ~/.vim/pack/plugins/start/' . name
         endif
-        let index += 1
-    endwhile
+    endfor
+endf
+function! CheckNvimPlugin()
+    if !has('nvim')
+        return
+    endif
 endf
 
 function! Function_menu()
@@ -576,3 +624,25 @@ function! PopupTerminal()
     let opts.title = 'Terminal Popup'
     call quickui#terminal#open(cmd, opts)
 endf
+
+function GitDiff()
+    :silent write
+    :silent execute '!git diff --color=always -- ' . expand('%:p') . ' | less --RAW-CONTROL-CHARS'
+    :redraw!
+endfunction
+
+let g:search_str = ""
+function! Search_amend(option)
+    if a:option == 'clear'
+        let @/ = ""
+        let g:search_str = ""
+        return
+    endif
+    if g:search_str == ""
+        let g:search_str = expand("<cword>")
+    else
+        let g:search_str .= "\\|" . expand("<cword>")
+    endif
+
+    let @/ = g:search_str
+endfunction
