@@ -119,6 +119,7 @@ nmap <A-Left> <C-H>
 nmap mou :set mouse=a<CR>
 
 nmap ta :tab vs<CR>
+nmap TA :tab vs 
 
 " COPY VISUAL BLOCK TO CLIPBOARD
 "   to check if supported :echo has('clipboard')
@@ -138,7 +139,8 @@ endif
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " List all the included files.
-nnoremap <F4> :checkpath!<CR>
+" nnoremap <F4> :checkpath!<CR>
+nnoremap <F4> :cexpr execute('checkpath!')<CR>:copen<CR>
 
 nmap <F5> :call ChangeFileencoding()<CR>
 
@@ -194,23 +196,23 @@ if exists('g:cscope_support') && g:cscope_support " cscope_support
     nmap zi ZI<CR>
     nmap zd ZD<CR>
 
-    nmap ZS ZZS <C-R>=expand("<cword>")<CR>
-    nmap ZG ZZG <C-R>=expand("<cword>")<CR>
-    nmap ZC ZZC <C-R>=expand("<cword>")<CR>
-    nmap ZT ZZT <C-R>=expand("<cword>")<CR>
-    nmap ZE ZZE <C-R>=expand("<cword>")<CR>
-    nmap ZF ZZF <C-R>=expand("<cfile>")<CR>
-    nmap ZI ZZI ^<C-R>=expand("<cfile>")<CR>$
-    nmap ZD ZZD <C-R>=expand("<cword>")<CR>
+    nmap ZS ZZS<C-R>=expand("<cword>")<CR>
+    nmap ZG ZZG<C-R>=expand("<cword>")<CR>
+    nmap ZC ZZC<C-R>=expand("<cword>")<CR>
+    nmap ZT ZZT<C-R>=expand("<cword>")<CR>
+    nmap ZE ZZE<C-R>=expand("<cword>")<CR>
+    nmap ZF ZZF<C-R>=expand("<cfile>")<CR>
+    nmap ZI ZZI^<C-R>=expand("<cfile>")<CR>$
+    nmap ZD ZZD<C-R>=expand("<cword>")<CR>
 
-    nnoremap ZZS :cs find s
-    nnoremap ZZG :cs find g
-    nnoremap ZZC :cs find c
-    nnoremap ZZT :cs find t
-    nnoremap ZZE :cs find e
-    nnoremap ZZF :cs find f
-    nnoremap ZZI :cs find i
-    nnoremap ZZD :cs find d
+    nnoremap ZZS :cs find s 
+    nnoremap ZZG :cs find g 
+    nnoremap ZZC :cs find c 
+    nnoremap ZZT :cs find t 
+    nnoremap ZZE :cs find e 
+    nnoremap ZZF :cs find f 
+    nnoremap ZZI :cs find i 
+    nnoremap ZZD :cs find d 
     " Tips for multiple result
     "   :help tag-matchlist to learn more
     "   :tnext goes to next match and
@@ -521,6 +523,9 @@ function! CheckPlugin()
       \ 'https://github.com/vim-scripts/MultipleSearch.git': '',
       \ 'https://github.com/zivyangll/git-blame.vim.git': '',
       \ 'https://github.com/tpope/vim-fugitive.git': '',
+      \ 'https://github.com/kristijanhusak/vim-simple-notifications.git': '',
+      \ 'https://github.com/junegunn/fzf.vim.git': '',
+      \ 'https://github.com/junegunn/fzf.git': '',
       \ 'https://github.com/skywind3000/vim-quickui.git': ''}
     let links = keys(reops_dict)
     for repo in links
@@ -537,6 +542,24 @@ function! CheckNvimPlugin()
     endif
 endf
 
+function! GitGutter_menu()
+    let function_list = [
+        \ "GitGutterToggle\tF6",
+        \ "change diff_base",
+        \ ]
+    let opts = {'index':g:quickui#listbox#cursor, 'title': 'GitGutter Menu'}
+    let index = quickui#listbox#inputlist(function_list, opts)
+    if index == 0
+        silent exe "GitGutterToggle"
+    elseif index == 1
+        let hash = quickui#input#open("input hash", "HEAD^")
+        let g:gitgutter_diff_base = hash
+	" toggle to apply
+        silent exe "GitGutterToggle"
+        silent exe "GitGutterToggle"
+    endif
+endf
+
 function! Function_menu()
 	if !has('popupwin')
 		echohl WarningMsg | echo "you don't have popup feature" | echohl None<CR>
@@ -547,7 +570,7 @@ function! Function_menu()
             \ "toggle split direction\tF3",
             \ "checkpath!\tF4",
             \ "change file read encoding\tF5",
-            \ "toggle GitGutter\tF6",
+            \ "GitGutter menu, toggle key\tF6",
             \ "source explore\tF7",
             \ "tag list toggle\tF8",
             \ "NerdTree toggle\tF9",
@@ -568,7 +591,9 @@ function! Function_menu()
             \ ]
 	let opts = {'index':g:quickui#listbox#cursor, 'title': 'Function Menu'}
 	let index = quickui#listbox#inputlist(function_list, opts)
-	if index >= 0
+    if index == 4
+        call GitGutter_menu()
+    elseif index >= 0
         call feedkeys(function_keys[index])
         "call feedkeys("\<F2>")
 	endif
