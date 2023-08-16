@@ -251,6 +251,11 @@ function clone_vim_plugin()
 
 function gerrit_auto_rebase()
 {
+	sleep_time=5
+	if [ $# -gt 0 ]; then
+		sleep_time=$1
+	fi
+	echo "sleep time = $sleep_time s"
 	branch=$(git rev-parse --abbrev-ref HEAD)
 	if [ -z "$branch" ];then
 		return
@@ -281,7 +286,7 @@ function gerrit_auto_rebase()
 			rebase_times="$(expr $rebase_times + 1)"
 			rebase_date="$(date)"
 		fi
-		sleep 5
+		sleep $sleep_time
 	done
 }
 
@@ -320,6 +325,32 @@ function hexdiff()
     vimdiff <(xxd -g ${GROUPSIZE} -c ${COLUMN} ${POSITIONAL_ARGS[0]}) <(xxd -g ${GROUPSIZE} -c ${COLUMN} ${POSITIONAL_ARGS[1]})
 }
 
+function rmconflict()
+{
+    git diff --name-only --diff-filter=U | xargs git rm
+}
+
+function rmuntrack()
+{
+    git ls-files . --exclude-standard --others | xargs rm
+}
+
+function mount_share()
+{
+    mkdir /mnt/mountedshare
+    mount -t drvfs '\\$1\$2' /mnt/mountedshare
+}
+
+function case_insensitive_completion()
+{
+	# If ~/.inputrc doesn't exist yet: First include the original /etc/inputrc
+	# so it won't get overriden
+	if [ ! -a ~/.inputrc ]; then echo '$include /etc/inputrc' > ~/.inputrc; fi
+	
+	# Add shell-option to ~/.inputrc to enable case-insensitive tab completion
+	echo 'set completion-ignore-case On' >> ~/.inputrc
+}
+case_insensitive_completion
 # find symbol in c/cpp code
 alias grepc="grep --include='*.[ch]' --include='*.cpp'"
 # show git commit graph
