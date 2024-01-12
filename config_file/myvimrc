@@ -167,6 +167,7 @@ endf
 command! Amend call Search_amend("")
 command! Damend call Search_amend("clear")
 command! PYhelp call Function_menu()
+command! FZFmenu call FZF_menu()
 
 " ================ General Map End ================
 
@@ -227,8 +228,8 @@ if exists('g:cscope_support') && g:cscope_support " cscope_support
         augroup END
     endif
     "call Add_cscope_out()
-    nnoremap CS :cs kill -1<CR>:call Update_cscope_out("update")<CR>
-    nnoremap CCS :cs kill -1<CR>:call Update_cscope_out("regenerate")<CR>
+    nnoremap CS :call Update_cscope_out("update")<CR>
+    nnoremap CCS :call Update_cscope_out("regenerate")<CR>
     nnoremap <F2> :call Cscope_menu()<CR>
 endif
 
@@ -392,6 +393,7 @@ function! Update_cscope_out(option)
     let g:cscope_out = ''
     let cscope_out = Find_cscope_out_upward() " find cscope.out upward
     if !empty(cscope_out) && filereadable(cscope_out)
+	    silent exe 'cs kill -1'
         if a:option == 'regenerate'
             let cscope_prefix = split(cscope_out, '.out')[0]
             let result = system("rm " . cscope_prefix . "*")
@@ -436,6 +438,8 @@ function! Add_cscope_out()
         " kill current connection, used for :so ~/.vimrc
         silent exe "cs add" g:cscope_out
         set csre " make cscope aware of path of cscope.out instead of just search through relative path
+    else
+	    exe 'echohl WarningMsg | echo "cscope.out not found" | echohl None'
     endif
     set cscopeverbose
 endfunction
@@ -536,6 +540,7 @@ function! CheckPlugin()
         endif
     endfor
 endf
+
 function! CheckNvimPlugin()
     if !has('nvim')
         return
@@ -599,6 +604,37 @@ function! Function_menu()
 	endif
 endf
 
+function! FZF_menu()
+	if !has('popupwin')
+		echohl WarningMsg | echo "you don't have popup feature" | echohl None<CR>
+		return
+	endif
+	let fzf_options = [
+            \ "Files",
+            \ "Tags",
+            \ "Rg",
+            \ "History",
+            \ "Colors",
+            \ ]
+	let fzf_notes = [
+            \ "| Files (runs $FZF_DEFAULT_COMMAND if defined)",
+            \ "| Tags in the project (ctags -R)",
+            \ "| rg search result; relaunch ripgrep on every keystroke (ALT-A to select all, ALT-D to deselect all)",
+            \ "| v:oldfiles and open buffers",
+            \ "| Color schemes",
+            \ ]
+	let menu_content = []
+	for l:i in range(0, len(fzf_options) - 1)
+        call add(menu_content, fzf_options[l:i] . "\t" . fzf_notes[l:i])
+	endfor
+
+	let menu = {'index':g:quickui#listbox#cursor, 'title': 'FZF_menu'}
+	let index = quickui#listbox#inputlist(menu_content, menu)
+    if index >= 0
+        exe fzf_options[index]
+    endif
+endf
+
 function! Cscope_menu()
 	if !has('popupwin')
 		echohl WarningMsg | echo "you don't have popup feature" | echohl None<CR>
@@ -625,7 +661,6 @@ function! Cscope_menu()
 		exe cscope_cmd
 		echo cscope_cmd
 	elseif index >= 0
-		silent exe 'cs kill -1'
 		if index == 0
 			call Update_cscope_out("update")
 		else
